@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div id="content-wrapper" class="container">
+        <div id="session-messages" class="flash-messages">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} flash-{{ label }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        {% block content %}{%  endblock %}
+    </div>
+
+{%  endblock %}

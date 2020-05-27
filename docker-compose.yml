@@ -1,0 +1,21 @@
+
+version: '3.2'
+
+services:
+  symfony:
+    image: 'reciphpes'
+    build:
+      context: './docker/symfony'
+      args:
+        webapp_uid: '${WEBAPP_UID}'
+    ports:
+      - '8000:80'
+    volumes:
+      - './docker/symfony/etc/php.ini:/usr/local/etc/php/php.ini:ro'
+      - './docker/symfony/etc/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
+      - './:/var/www/webapp:rw'
+
+  mongodb:
+    image: 'mongo'
+    ports:
+      - '27017:27017'

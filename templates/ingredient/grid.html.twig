@@ -1,0 +1,28 @@
+{% extends 'content.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+
+    {% block dtc_grid_javascripts %}
+        <script src="{{ dtc_grid_jquery.url }}"
+                {% if dtc_grid_jquery.integrity is not empty  %} integrity="{{ dtc_grid_jquery.integrity }}"{% endif %}
+                {% if dtc_grid_jquery.crossorigin is not empty  %} crossorigin="{{ dtc_grid_jquery.crossorigin }}"{% endif %}>
+        </script>
+        <script src="{{ dtc_grid_purl }}"></script>
+        {% for javascript in dtc_grid_datatables_js %}
+            <script src="{{ javascript }}"></script>
+        {% endfor %}
+    {% endblock %}
+{%  endblock %}
+
+{% block content %}
+    {{ dtc_grid.render | raw }}
+{%  endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% for javascript in dtc_grid_local_js %}
+        <script src="{{ app.request.baseUrl }}{{ javascript }}"></script>
+    {% endfor %}
+{% endblock %}

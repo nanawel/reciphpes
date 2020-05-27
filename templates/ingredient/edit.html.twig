@@ -1,0 +1,12 @@
+{%  extends 'content.html.twig' %}
+
+
+{% block content %}
+    {% if ingredient.id %}
+        <h1>{{ ingredient.name }}</h1>
+    {% else %}
+        <h1>Nouvel ingrédient</h1>
+    {%  endif %}
+
+    {{ form(form) }}
+{%  endblock %}

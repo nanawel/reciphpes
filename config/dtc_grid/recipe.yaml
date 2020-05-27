@@ -1,0 +1,16 @@
+App\Document\Recipe:
+  columns:
+    name:
+      sortable: true
+      searchable: true
+  actions:
+    -
+      label: Voir
+      type: show
+      route: recipe_grid_edit
+    -
+      label: Supprimer
+      type: delete
+      route: recipe_grid_delete
+  sort:
+    name: ASC

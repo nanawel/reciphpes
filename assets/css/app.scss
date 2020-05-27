@@ -1,0 +1,18 @@
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+@import "~datatables.net-bs4";
+@import "~@fortawesome/fontawesome-free";
+
+body {
+    background-color: lightgray;
+}
+
+#content-wrapper {
+    padding: 2em;
+}
+
+table.dataTable {
+    background-color: #fff;
+}

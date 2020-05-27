@@ -1,0 +1,16 @@
+App\Document\Ingredient:
+  columns:
+    name:
+      sortable: true
+      searchable: true
+  actions:
+    -
+      label: Voir
+      type: show
+      route: ingredient_grid_edit
+    -
+      label: Supprimer
+      type: delete
+      route: ingredient_grid_delete
+  sort:
+    name: ASC
