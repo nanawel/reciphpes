@@ -9,13 +9,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RecipeType extends AbstractType
+class Ingredient extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-        ;
+            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
     }
 }

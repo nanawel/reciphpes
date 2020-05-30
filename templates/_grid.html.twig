@@ -14,7 +14,7 @@
             {% for row in gridConfig.items %}
                 <tr>
                     {% for header, headerLabel in gridConfig.headers %}
-                    <td>{{ gridConfig.getColumn(header).render(row, header) }}</td>
+                        <td>{{ gridConfig.getColumn(header).render(row, header) | raw }}</td>
                     {% endfor %}
 
                     {% if gridConfig.shouldShowActions() %}

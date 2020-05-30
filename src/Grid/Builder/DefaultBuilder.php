@@ -122,7 +122,7 @@ class DefaultBuilder implements Builder
     protected function getColumns(array $headers) {
         $columns = $this->columns;
         foreach ($headers as $header) {
-            if (!in_array($header, $columns)) {
+            if (! array_key_exists($header, $columns)) {
                 $columns[$header] = new DefaultColumn();
             }
         }

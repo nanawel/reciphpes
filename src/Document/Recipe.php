@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass=App\Repository\RecipeRepository::class)
  */
 class Recipe extends AbstractDocument
 {

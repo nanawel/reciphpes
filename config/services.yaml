@@ -48,7 +48,7 @@ services:
         public: true
 
     grid.builder.recipe:
-        class: App\Grid\Builder\DefaultBuilder
+        class: App\Grid\Builder\RecipeBuilder
         tags: [{ name: 'grid.builder', key: 'recipe' }]
         public: true
 

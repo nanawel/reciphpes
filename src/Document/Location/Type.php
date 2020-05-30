@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Document;
+namespace App\Document\Location;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use App\Document\AbstractDocument;
 
-/**
- * @MongoDB\Document(repositoryClass=App\Repository\IngredientRepository::class)
- */
-class Ingredient extends AbstractDocument
+class Type extends AbstractDocument
 {
     /** @MongoDB\Id */
     public $id;
