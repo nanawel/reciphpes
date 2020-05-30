@@ -13,7 +13,7 @@ app_index_index:
 ### RECIPE
 app_recipe:
   path: /recipe
-  controller: App\Controller\RecipeController::index
+  controller: App\Controller\RecipeController::grid
 
 app_recipe_grid:
   path: /recipe/grid
@@ -35,39 +35,55 @@ app_recipe_delete:
   path: /recipe/delete/{id}
   controller: App\Controller\RecipeController::delete
 
-### LOCATION
-app_location:
-  path: /location
-  controller: App\Controller\LocationController::index
-
-app_location_grid:
-  path: /location/grid
-  controller: App\Controller\LocationController::grid
-
-app_location_edit:
-  path: /location/edit
-  controller: App\Controller\LocationController::edit
-
-app_location_delete:
-  path: /location/delete/{id}
-  controller: App\Controller\LocationController::delete
-
 ### INGREDIENT
 app_ingredient:
   path: /ingredient
-  controller: App\Controller\IngredientController::index
+  controller: App\Controller\IngredientController::grid
 
 app_ingredient_grid:
   path: /ingredient/grid
   controller: App\Controller\IngredientController::grid
 
-app_ingredient_edit:
+app_ingredient_show:
+  path: /ingredient/show/{id}
+  controller: App\Controller\IngredientController::show
+
+app_ingredient_new:
   path: /ingredient/edit
+  controller: App\Controller\IngredientController::edit
+
+app_ingredient_edit:
+  path: /ingredient/edit/{id}
   controller: App\Controller\IngredientController::edit
 
 app_ingredient_delete:
   path: /ingredient/delete/{id}
   controller: App\Controller\IngredientController::delete
+
+### LOCATION
+app_location:
+  path: /location
+  controller: App\Controller\LocationController::grid
+
+app_location_grid:
+  path: /location/grid
+  controller: App\Controller\LocationController::grid
+
+app_location_show:
+  path: /location/show/{id}
+  controller: App\Controller\LocationController::show
+
+app_location_new:
+  path: /location/edit
+  controller: App\Controller\LocationController::edit
+
+app_location_edit:
+  path: /location/edit/{id}
+  controller: App\Controller\LocationController::edit
+
+app_location_delete:
+  path: /location/delete/{id}
+  controller: App\Controller\LocationController::delete
 
 ### SEARCH
 search_results:

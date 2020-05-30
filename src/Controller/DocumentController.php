@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class DocumentController extends AbstractController
 {
-    public function index(\App\Grid\Builder\Registry $registry, Request $request) {
+    public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
         /** @var Builder $gridBuilder */
         $gridBuilder = $registry->getGridBuilder($this->getDocumentConfig('type'))
             ->withDocumentConfig($this->getDocumentConfig())

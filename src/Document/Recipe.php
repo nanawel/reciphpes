@@ -2,7 +2,6 @@
 
 namespace App\Document;
 
-use App\Repository\RecipeRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 

@@ -1,0 +1,17 @@
+{%  extends 'content.html.twig' %}
+
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group mr-2" role="group" aria-label="Actions">
+                <a href="{{ path('app_ingredient_edit', {id: ingredient.id}) }}" class="btn action btn-secondary"><span>Modifier</span></a>
+                <a href="{{ path('app_ingredient_delete', {id: ingredient.id}) }}" class="btn action btn-danger"><span>Supprimer</span></a>
+            </div>
+        </div>
+        <h1 class="display-4">{{ ingredient.name }}</h1>
+        {% if ingredient.createdAt %}
+            <p><span class="badge badge-secondary">Créée le {{ ingredient.createdAt | localizeddate() }}</span></p>
+        {% endif %}
+    </div>
+{%  endblock %}

@@ -79,7 +79,7 @@ class DefaultBuilder implements Builder
             ->setHeaders($headers)
             ->setColumns($this->getColumns(array_keys($headers)))
             ->setItems(
-                $this->documentManager->getRepository(\App\Document\Recipe::class)->findAll()
+                $this->documentManager->getRepository($this->getDocumentConfig('class'))->findAll()
             )
         ;
 

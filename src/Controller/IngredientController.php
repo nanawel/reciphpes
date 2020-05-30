@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use App\Document\Ingredient;
 use App\Form\IngredientType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 class IngredientController extends DocumentController
 {
@@ -17,5 +19,23 @@ class IngredientController extends DocumentController
             'route_prefix'    => 'ingredient',
             'template_prefix' => 'ingredient',
         ];
+    }
+
+    /**
+     * @ParamConverter("document", class="App:Ingredient")
+     *
+     * @inheritDoc
+     */
+    public function show($document) {
+        return parent::show($document);
+    }
+
+    /**
+     * @ParamConverter("document", class="App:Ingredient", isOptional="true")
+     *
+     * @inheritDoc
+     */
+    public function edit(Request $request, object $document = null) {
+        return parent::edit($request, $document);
     }
 }

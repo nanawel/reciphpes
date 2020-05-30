@@ -29,6 +29,7 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    ### SYSTEM / EXTENSIONS
     doctrine_mongo_db_param_converter:
         class: Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter
         arguments: ['@doctrine_mongodb']
@@ -39,6 +40,7 @@ services:
         tags:
             - { name: twig.extension }
 
+    ### GRIDS
     App\Grid\Builder\Registry:
         class: ~
         arguments:
@@ -47,7 +49,15 @@ services:
 
     grid.builder.recipe:
         class: App\Grid\Builder\DefaultBuilder
-#        arguments:
-#            - '@doctrine_mongodb.odm.document_manager'
         tags: [{ name: 'grid.builder', key: 'recipe' }]
+        public: true
+
+    grid.builder.ingredient:
+        class: App\Grid\Builder\DefaultBuilder
+        tags: [{ name: 'grid.builder', key: 'ingredient' }]
+        public: true
+
+    grid.builder.location:
+        class: App\Grid\Builder\DefaultBuilder
+        tags: [{ name: 'grid.builder', key: 'location' }]
         public: true
