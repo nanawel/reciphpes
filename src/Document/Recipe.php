@@ -9,12 +9,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @MongoDB\Document
  */
-class Recipe
+class Recipe extends AbstractDocument
 {
     /** @MongoDB\Id */
     public $id;
 
-    /** @MongoDB\Field(type="string") */
+    /** @MongoDB\Field(type="string") @MongoDB\Index */
     public $name;
 
     /** @MongoDB\ReferenceMany(targetDocument=Location::class) */
@@ -22,6 +22,12 @@ class Recipe
 
     /** @MongoDB\ReferenceMany(targetDocument=Ingredient::class) */
     public $ingredients;
+
+    /** @MongoDB\Field(type="string") */
+    public $instructions;
+
+    /** @MongoDB\Field(type="date") */
+    public $createdAt;
 
     public function __construct() {
         $this->ingredients = new ArrayCollection();
@@ -53,5 +59,19 @@ class Recipe
      */
     public function getIngredients(): ArrayCollection {
         return $this->ingredients;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstructions() {
+        return $this->instructions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt() {
+        return $this->createdAt;
     }
 }

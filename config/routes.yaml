@@ -19,12 +19,20 @@ app_recipe_grid:
   path: /recipe/grid
   controller: App\Controller\RecipeController::grid
 
-app_recipe_edit:
+app_recipe_show:
+  path: /recipe/show/{id}
+  controller: App\Controller\RecipeController::show
+
+app_recipe_new:
   path: /recipe/edit
   controller: App\Controller\RecipeController::edit
 
+app_recipe_edit:
+  path: /recipe/edit/{id}
+  controller: App\Controller\RecipeController::edit
+
 app_recipe_delete:
-  path: /recipe/delete
+  path: /recipe/delete/{id}
   controller: App\Controller\RecipeController::delete
 
 ### LOCATION
@@ -41,7 +49,7 @@ app_location_edit:
   controller: App\Controller\LocationController::edit
 
 app_location_delete:
-  path: /location/delete
+  path: /location/delete/{id}
   controller: App\Controller\LocationController::delete
 
 ### INGREDIENT
@@ -58,9 +66,10 @@ app_ingredient_edit:
   controller: App\Controller\IngredientController::edit
 
 app_ingredient_delete:
-  path: /ingredient/delete
+  path: /ingredient/delete/{id}
   controller: App\Controller\IngredientController::delete
 
-# --------------
-dtc_grid:
-  resource: '@DtcGridBundle/Resources/config/routing.yml'
+### SEARCH
+search_results:
+  path: /search/results
+  controller: App\Controller\SearchController::results

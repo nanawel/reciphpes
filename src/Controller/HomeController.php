@@ -1,5 +1,5 @@
 <?php
-// src/Controller/LuckyController.php
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

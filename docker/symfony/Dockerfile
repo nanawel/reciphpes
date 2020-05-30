@@ -1,6 +1,6 @@
 FROM php:7-apache
 
-RUN curl --location --output /usr/local/bin/composer https://getcomposer.org/composer.phar \
+RUN curl --location --output /usr/local/bin/composer https://github.com/composer/getcomposer.org/raw/master/web/download/1.10.6/composer.phar \
     && chmod +x /usr/local/bin/composer
 
 RUN apt-get update && apt-get install --no-install-recommends -y \

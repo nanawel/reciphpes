@@ -12,7 +12,8 @@ const $ = require('jquery');
 window.$ = window.jQuery = $;
 
 require('@allmarkedup/purl/purl');
-require('@fortawesome/fontawesome-free');
+require('@fortawesome/fontawesome-free/css/all.min.css');
+//require('@fortawesome/fontawesome-free/js/all.js');
 require('bootstrap');
 require('datatables.net');
 require('datatables.net-responsive-bs4');

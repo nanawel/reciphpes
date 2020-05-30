@@ -7,29 +7,25 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_recipe') }}">Recettes</a>
+                <a class="nav-link" href="{{ path('app_recipe') }}"><i class="fas fa-pizza-slice"></i>Recettes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_location') }}">Emplacements</a>
+                <a class="nav-link" href="{{ path('app_ingredient') }}"><i class="fas fa-carrot"></i>Ingrédients</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_ingredient') }}">Ingrédients</a>
+                <a class="nav-link" href="{{ path('app_location') }}"><i class="fas fa-map-marked-alt"></i>Emplacements</a>
             </li>
-            <!--
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-            -->
         </ul>
         <div>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Créer...
+                        <i class="fas fa-plus-circle"></i>Créer...
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ path('app_recipe_edit')}}">Recette</a>
-                        <a class="dropdown-item" href="{{ path('app_ingredient_edit')}}">Ingrédient</a>
+                        <a class="dropdown-item" href="{{ path('app_recipe_new')}}"><i class="fas fa-pizza-slice"></i>Recette</a>
+                        <a class="dropdown-item" href="{{ path('app_ingredient_edit')}}"><i class="fas fa-carrot"></i>Ingrédient</a>
+                        <a class="dropdown-item" href="{{ path('app_location_edit')}}"><i class="fas fa-map-marked-alt"></i>Emplacement</a>
                         <!--
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
@@ -37,9 +33,9 @@
                     </div>
                 </li>
                 <li>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+                    <form class="form-inline my-2 my-lg-0" action="{{ path('search_results') }}" method="get">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher" name="q">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>Rechercher</button>
                     </form>
                 </li>
             </ul>

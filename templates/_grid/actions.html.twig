@@ -1,0 +1,5 @@
+<div class="actions btn-group" role="group" aria-label="Actions">
+    {% for action in gridConfig.actions %}
+        {{ action.render(row, '_action') | raw }}
+    {% endfor %}
+</div>

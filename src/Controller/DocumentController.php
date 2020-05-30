@@ -1,48 +1,57 @@
 <?php
 
-
 namespace App\Controller;
 
-
+use App\Grid\Builder;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class DocumentController extends AbstractController
 {
-    public function index() {
-        $renderer = $this->get('dtc_grid.renderer.factory')->create('datatables');
-        /** @var \Dtc\GridBundle\Manager\GridSourceManager $gridSourceManager */
-        $gridSourceManager = $this->get('dtc_grid.manager.source');
-        $gridSource = $gridSourceManager->get($this->getDocumentConfig('type_id'));
-        $renderer->bind($gridSource);
+    public function index(\App\Grid\Builder\Registry $registry, Request $request) {
+        /** @var Builder $gridBuilder */
+        $gridBuilder = $registry->getGridBuilder($this->getDocumentConfig('type'))
+            ->withDocumentConfig($this->getDocumentConfig())
+            ->withRequest($request);
 
         return $this->render(
             sprintf('%s/grid.html.twig', $this->getDocumentConfig('template_prefix')),
-            $renderer->getParams()
+            ['gridConfig' => $gridBuilder->build()]
         );
     }
 
     /**
-     * ADMIN / DEBUG ONLY
+     * @param object $document
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function grid() {
-        $renderer = $this->get('dtc_grid.renderer.factory')->create('datatables');
-        $gridSource = $this->get('dtc_grid.manager.source')->get($this->getDocumentConfig('type_id'));
-        $renderer->bind($gridSource);
-
-        return $this->render('@DtcGrid/Page/datatables.html.twig', $renderer->getParams());
+    public function show($document) {
+        return $this->render(sprintf('%s/show.html.twig', $this->getDocumentConfig('template_prefix')),
+            [
+                'document' => $document,
+                $this->getDocumentConfig('type') => $document,
+            ]
+        );
     }
 
-    public function edit(Request $request) {
-        $documentClass = $this->getDocumentConfig('class');
-        $document = new $documentClass();
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function edit(Request $request, object $document = null) {
+        if (!$document) {
+            $documentClass = $this->getDocumentConfig('class');
+            $document = new $documentClass();
+        }
         $form = $this->createForm($this->getDocumentConfig('form_class'), $document);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $document = $form->getData();
+                if (!$document->getId()) {
+                    $document->createdAt = time();
+                }
 
                 /** @var DocumentManager $entityManager */
                 $entityManager = $this->get('doctrine_mongodb.odm.document_manager');
@@ -57,7 +66,7 @@ abstract class DocumentController extends AbstractController
             return $this->redirectToRoute(sprintf(
                 'app_%s_edit',
                 $this->getDocumentConfig('route_prefix')
-            ));
+            ), ['id' => $document->getId()]);
         }
 
         return $this->render(sprintf('%s/edit.html.twig', $this->getDocumentConfig('template_prefix')),

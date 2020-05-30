@@ -3,18 +3,20 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Dtc\GridBundle\Annotation as Grid;
 
 /**
  * @MongoDB\Document
  */
-class Ingredient
+class Ingredient extends AbstractDocument
 {
     /** @MongoDB\Id */
     public $id;
 
     /** @MongoDB\Field(type="string") */
     public $name;
+
+    /** @MongoDB\Field(type="date") */
+    public $createdAt;
 
     /**
      * @inheritDoc
@@ -28,5 +30,12 @@ class Ingredient
      */
     public function getName() {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt() {
+        return $this->createdAt;
     }
 }

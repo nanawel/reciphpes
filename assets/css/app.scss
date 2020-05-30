@@ -9,10 +9,19 @@ body {
     background-color: lightgray;
 }
 
+nav i.fas {
+    margin-right: 1rem;
+}
+
 #content-wrapper {
     padding: 2em;
 }
 
-table.dataTable {
+table {
     background-color: #fff;
+}
+
+/* Fix incompatibility between DTC Grid and FA5 */
+i.fa-circle-o-notch {
+    display: none;
 }

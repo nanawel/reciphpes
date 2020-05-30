@@ -1,0 +1,34 @@
+{%  extends 'content.html.twig' %}
+
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group mr-2" role="group" aria-label="Actions">
+                <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action btn-secondary"><span>Modifier</span></a>
+                <a href="{{ path('app_recipe_delete', {id: recipe.id}) }}" class="btn action btn-danger"><span>Supprimer</span></a>
+            </div>
+        </div>
+        <h1 class="display-4">{{ recipe.name }}</h1>
+        {% if recipe.ingredients.count() %}
+            <p class="lead">Emplacement : ...</p>
+        {% else %}
+            <div class="alert alert-light" role="alert">Pas d'emplacement associé.</div>
+        {% endif %}
+        <hr class="my-4">
+        {% if recipe.ingredients.count() %}
+            <p>{{ recipe.ingredients }}</p>
+        {% else %}
+            <div class="alert alert-danger" role="alert">Pas d'ingrédients associés !</div>
+        {% endif %}
+        <hr class="my-4">
+        {% if recipe.instructions %}
+            <p>{{ recipe.instructions }}</p>
+        {% else %}
+            <div class="alert alert-light" role="alert">Pas d'instructions associées.</div>
+        {% endif %}
+        {% if recipe.createdAt %}
+            <p><span class="badge badge-secondary">Créée le {{ recipe.createdAt | localizeddate() }}</span></p>
+        {% endif %}
+    </div>
+{%  endblock %}
