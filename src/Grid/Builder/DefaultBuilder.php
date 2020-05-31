@@ -160,10 +160,12 @@ class DefaultBuilder implements Builder
             return $this->documentManager->createQueryBuilder($this->getDocumentConfig('class'))
                 ->text($this->searchQuery)
                 ->getQuery()
-                ->execute();
+                ->execute()
+                ->toArray();
         }
         else {
-            return $this->documentManager->getRepository($this->getDocumentConfig('class'))->findAll();
+            return $this->documentManager->getRepository($this->getDocumentConfig('class'))
+                ->findAll();
         }
     }
 }

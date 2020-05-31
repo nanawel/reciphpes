@@ -7,19 +7,25 @@
             {% endfor %}
             {% if gridConfig.shouldShowActions() %}
                 <th scope="col" style="width:10%">Actions</th>
-            {%  endif %}
+            {% endif %}
         </tr>
         </thead>
         <tbody>
-            {% for row in gridConfig.items %}
-                <tr>
-                    {% for header, headerLabel in gridConfig.headers %}
-                        <td>{{ gridConfig.getColumn(header).render(row, header) }}</td>
-                    {% endfor %}
+        {% if not gridConfig.items %}
+            <tr class="no-item-notice">
+                <td colspan="{{ gridConfig.headers | length + 1 }}">Aucun élément.</td>
+            </tr>
+        {% endif %}
 
-                    {% if gridConfig.shouldShowActions() %}
-                        <td>
-                            {% include '_grid/actions.html.twig' %}
+        {% for row in gridConfig.items %}
+            <tr>
+                {% for header, headerLabel in gridConfig.headers %}
+                    <td>{{ gridConfig.getColumn(header).render(row, header) }}</td>
+                {% endfor %}
+
+                {% if gridConfig.shouldShowActions() %}
+                    <td>
+                        {% include '_grid/actions.html.twig' %}
                         </td>
                     {%  endif %}
                 </tr>
