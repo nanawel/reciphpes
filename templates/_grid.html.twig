@@ -6,7 +6,7 @@
                 <th scope="col">{{ headerLabel }}</th>
             {% endfor %}
             {% if gridConfig.shouldShowActions() %}
-                <th scope="col" style="width:10%">Actions</th>
+                <th scope="col" style="max-width:20%">Actions</th>
             {%  endif %}
         </tr>
         </thead>
@@ -14,7 +14,7 @@
             {% for row in gridConfig.items %}
                 <tr>
                     {% for header, headerLabel in gridConfig.headers %}
-                        <td>{{ gridConfig.getColumn(header).render(row, header) | raw }}</td>
+                        <td>{{ gridConfig.getColumn(header).render(row, header) }}</td>
                     {% endfor %}
 
                     {% if gridConfig.shouldShowActions() %}

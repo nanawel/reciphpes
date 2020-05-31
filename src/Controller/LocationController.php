@@ -3,26 +3,24 @@
 namespace App\Controller;
 
 
-use App\Document\Location;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class RecipeController extends DocumentController
+class LocationController extends DocumentController
 {
     protected function _getDocumentConfig($config = null) {
         return [
-            'class' => \App\Document\Recipe::class,
-            'form_class' => \App\Form\Recipe::class,
-            'type_id' => 'App:Recipe',
-            'type' => 'recipe',
-            'route_prefix' => 'recipe',
-            'template_prefix' => 'recipe',
+            'class' => \App\Document\Location::class,
+            'form_class' => \App\Form\Location::class,
+            'type_id' => 'App:Location',
+            'type' => 'location',
+            'route_prefix' => 'location',
+            'template_prefix' => 'location',
         ];
     }
 
     /**
-     * @ParamConverter("document", class="App:Recipe")
+     * @ParamConverter("document", class="App:Location")
      *
      * @inheritDoc
      */
@@ -31,7 +29,7 @@ class RecipeController extends DocumentController
     }
 
     /**
-     * @ParamConverter("document", class="App:Recipe", isOptional="true")
+     * @ParamConverter("document", class="App:Location", isOptional="true")
      *
      * @inheritDoc
      */

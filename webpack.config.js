@@ -73,7 +73,8 @@ Encore
 
     .addPlugin(new CopyWebpackPlugin({
         patterns: [
-            { from: './assets/json', to: 'json' }
+            {from: './assets/images', to: 'images'},
+            {from: './assets/json', to: 'json'},
         ]
     }))
 ;

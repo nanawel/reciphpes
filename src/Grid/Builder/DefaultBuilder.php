@@ -114,7 +114,7 @@ class DefaultBuilder implements Builder
 
     protected function getDefaultHeaders() {
         return [
-            'id' => 'ID',
+            //'id' => 'ID',
             'name' => 'Nom',
         ];
     }

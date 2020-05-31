@@ -5,23 +5,37 @@
     <div class="jumbotron">
         <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
             <div class="btn-group mr-2" role="group" aria-label="Actions">
-                <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action btn-secondary"><span>Modifier</span></a>
-                <a href="{{ path('app_recipe_delete', {id: recipe.id}) }}" class="btn action btn-danger"><span>Supprimer</span></a>
+                <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action edit btn-secondary"><span>Modifier</span></a>
+                <a href="{{ path('app_recipe_delete', {id: recipe.id}) }}" class="btn action delete btn-danger"><span>Supprimer</span></a>
             </div>
         </div>
         <h1 class="display-4">{{ recipe.name }}</h1>
-        {% if recipe.ingredients.count() %}
-            <p class="lead">Emplacement : ...</p>
+        {% if recipe.location %}
+            <p class="lead" style="font-size: 2em">
+                <a class="badge badge-info" href="{{ path('app_location_show', {id: recipe.location.id}) }}">
+                    <i class="fas fa-map-marked-alt"></i>
+                    {{ recipe.location.name }}
+                </a>
+                <span class="badge badge-info">
+                    {{ recipe.locationDetails }}
+                </span>
+            </p>
         {% else %}
             <div class="alert alert-light" role="alert">Pas d'emplacement associé.</div>
         {% endif %}
         <hr class="my-4">
+        <h2 class="ingredients">Ingrédients</h2>
         {% if recipe.ingredients.count() %}
-            <p>{{ recipe.ingredients }}</p>
+            <ul>
+                {% for i in recipe.ingredients %}
+                    <li>{{ i.name }}</li>
+                {% endfor %}
+            </ul>
         {% else %}
             <div class="alert alert-danger" role="alert">Pas d'ingrédients associés !</div>
         {% endif %}
         <hr class="my-4">
+        <h2 class="instructions">Instructions</h2>
         {% if recipe.instructions %}
             <p>{{ recipe.instructions }}</p>
         {% else %}

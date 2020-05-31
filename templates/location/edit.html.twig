@@ -1,0 +1,12 @@
+{% extends 'content.html.twig' %}
+
+
+{% block content %}
+    {% if location.id %}
+        <h1>{{ location.name }}</h1>
+    {% else %}
+        <h1>Nouvel emplacement</h1>
+    {% endif %}
+
+    {{ form(form) }}
+{% endblock %}

@@ -4,9 +4,19 @@ $primary: darken(#428bca, 20%);
 @import "~bootstrap/scss/bootstrap";
 @import "~datatables.net-bs4";
 @import "~@fortawesome/fontawesome-free";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
 body {
     background-color: lightgray;
+}
+
+#navbar-logo {
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: .5em;
 }
 
 nav i.fas {
@@ -25,3 +35,29 @@ table {
 i.fa-circle-o-notch {
     display: none;
 }
+
+#recipe_instructions {
+    height: 10em;
+}
+
+//.btn.show > i {
+//    @extend %fa-icon;
+//    @extend .far;
+//    &:before {
+//        content: fa-content($fa-var-eye);
+//    }
+//}
+//.btn.edit > i {
+//    @extend %fa-icon;
+//    @extend .far;
+//    &:before {
+//        content: fa-content($fa-var-edit);
+//    }
+//}
+//.btn.delete > i {
+//    @extend %fa-icon;
+//    @extend .fas;
+//    &:before {
+//        content: fa-content($fa-var-trash);
+//    }
+//}

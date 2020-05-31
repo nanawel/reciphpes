@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-class IngredientRepository extends AbstractRepository
+class LocationRepository extends AbstractRepository
 {
     public function findBy(array $criteria, ?array $sort = null, $limit = null, $skip = null): array {
         // Force default sort order by name

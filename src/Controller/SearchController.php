@@ -11,6 +11,8 @@ class SearchController extends AbstractController
     {
         $query = $request->query->get('q');
 
+        // Voir https://www.doctrine-project.org/projects/doctrine-mongodb-odm/en/2.0/cookbook/simple-search-engine.html#simple-search-engine
+
         return $this->render('search/results.html.twig', ['query' => $query]);
     }
 }

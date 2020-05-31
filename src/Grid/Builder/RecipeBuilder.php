@@ -18,10 +18,24 @@ class RecipeBuilder extends DefaultBuilder
     public function reset() {
         parent::reset();
 
+        $this->headers = [
+            'name' => 'Nom',
+            'location' => 'Emplacement',
+            'locationDetails' => 'Détails',
+        ];
+
         $this->columns['name'] = new TwigColumn(
             $this->twig,
             '_grid/field_with_link.html.twig',
-            'app_recipe_show'
+            ['link_route' => 'app_recipe_show']
+        );
+        $this->columns['location'] = new TwigColumn(
+            $this->twig,
+            '_grid/location.html.twig'
+        );
+        $this->columns['locationDetails'] = new TwigColumn(
+            $this->twig,
+            '_grid/locationDetails.html.twig'
         );
 
         return $this;

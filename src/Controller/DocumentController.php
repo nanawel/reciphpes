@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Grid\Builder;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Twig\Markup;
 
 abstract class DocumentController extends AbstractController
 {
@@ -49,7 +51,7 @@ abstract class DocumentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $document = $form->getData();
-                if (!$document->getId()) {
+                if (! $document->getId()) {
                     $document->createdAt = time();
                 }
 
@@ -57,16 +59,52 @@ abstract class DocumentController extends AbstractController
                 $entityManager = $this->get('doctrine_mongodb.odm.document_manager');
                 $entityManager->persist($document);
                 $entityManager->flush();
-                $this->addFlash('success', "Nouvel élément enregistré avec succès !");
-            }
-            catch (\Throwable $e) {
+
+                $message = new Markup(
+                    sprintf(
+                        'Élément enregistré avec succès ! '
+                        . '<a href="%s"><i class="fas fa-link"></i> Cliquez ici pour le voir.</a>',
+                        $this->get('router')->generate(
+                            sprintf(
+                                'app_%s_show',
+                                $this->getDocumentConfig('route_prefix')
+                            ),
+                            ['id' => $document->getId()]
+                        )
+                    ), 'utf-8'
+                );
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $message
+                );
+            } catch (\Throwable $e) {
                 $this->addFlash('danger', "Impossible d'enregistrer l'élément : {$e->getMessage()}");
+
+                if (isset($document) && $document->getId()) {
+                    return $this->redirectToRoute(
+                        sprintf(
+                            'app_%s_edit',
+                            $this->getDocumentConfig('route_prefix')
+                        ),
+                        ['id' => $document->getId()]
+                    );
+                }
+
+                return $this->redirectToRoute(
+                    sprintf(
+                        'app_%s_new',
+                        $this->getDocumentConfig('route_prefix')
+                    )
+                );
             }
 
-            return $this->redirectToRoute(sprintf(
-                'app_%s_edit',
-                $this->getDocumentConfig('route_prefix')
-            ), ['id' => $document->getId()]);
+            return $this->redirectToRoute(
+                sprintf(
+                    'app_%s_grid',
+                    $this->getDocumentConfig('route_prefix')
+                ),
+                ['id' => $document->getId()]
+            );
         }
 
         return $this->render(sprintf('%s/edit.html.twig', $this->getDocumentConfig('template_prefix')),

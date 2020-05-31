@@ -2,8 +2,9 @@
 
 namespace App\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @MongoDB\Document(repositoryClass=App\Repository\RecipeRepository::class)
@@ -16,10 +17,13 @@ class Recipe extends AbstractDocument
     /** @MongoDB\Field(type="string") @MongoDB\Index */
     public $name;
 
-    /** @MongoDB\ReferenceMany(targetDocument=Location::class) */
+    /** @MongoDB\ReferenceOne(targetDocument=Location::class, storeAs="id") */
     public $location;
 
-    /** @MongoDB\ReferenceMany(targetDocument=Ingredient::class) */
+    /** @MongoDB\Field(type="string") */
+    public $locationDetails;
+
+    /** @MongoDB\ReferenceMany(targetDocument=Ingredient::class, storeAs="id") */
     public $ingredients;
 
     /** @MongoDB\Field(type="string") */
@@ -54,9 +58,16 @@ class Recipe extends AbstractDocument
     }
 
     /**
-     * @return ArrayCollection
+     * @return string
      */
-    public function getIngredients(): ArrayCollection {
+    public function getLocationDetails() {
+        return $this->locationDetails;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getIngredients(): Collection {
         return $this->ingredients;
     }
 
