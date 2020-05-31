@@ -142,11 +142,11 @@ class DefaultBuilder implements Builder
             ->setRoute(sprintf('app_%s_edit', $this->getDocumentConfig('type')))
             ->setClass('edit btn-primary')
             ->setSortOrder(20);
-        $actions[] = (new Action($this->twig))
-            ->setLabel('Supprimer')
-            ->setRoute(sprintf('app_%s_delete', $this->getDocumentConfig('type')))
-            ->setClass('delete btn-danger')
-            ->setSortOrder(30);
+//        $actions[] = (new Action($this->twig))
+//            ->setLabel('Supprimer')
+//            ->setRoute(sprintf('app_%s_delete', $this->getDocumentConfig('type')))
+//            ->setClass('delete btn-danger')
+//            ->setSortOrder(30);
 
         return $actions;
     }

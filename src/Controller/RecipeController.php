@@ -38,4 +38,13 @@ class RecipeController extends DocumentController
     public function edit(Request $request, object $document = null) {
         return parent::edit($request, $document);
     }
+
+    /**
+     * @ParamConverter("document", class="App:Recipe", isOptional="true")
+     *
+     * @inheritDoc
+     */
+    public function delete(Request $request, object $document = null) {
+        return parent::delete($request, $document);
+    }
 }

@@ -18,4 +18,4 @@ require('bootstrap');
 require('datatables.net');
 require('datatables.net-responsive-bs4');
 
-//console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+//$('.autocomplete-tags').

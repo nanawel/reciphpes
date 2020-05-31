@@ -13,7 +13,20 @@ class Ingredient extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('name', TextType::class, ['label' => 'Nom'])
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'label' => 'Nom',
+                    'required' => true,
+                ]
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'label' => 'Enregistrer'
+                ]
+            );
     }
 }

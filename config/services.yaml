@@ -40,6 +40,12 @@ services:
         tags:
             - { name: twig.extension }
 
+    ### LISTENERS
+    App\EventListener\AddOrUpdateRecipeTags:
+        tags:
+            - name: 'doctrine_mongodb.odm.event_listener'
+              event: 'onFlush'
+
     ### GRIDS
     App\Grid\Builder\Registry:
         class: ~

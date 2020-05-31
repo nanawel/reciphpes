@@ -11,7 +11,7 @@
         </div>
         <h1 class="display-4">{{ recipe.name }}</h1>
         {% if recipe.location %}
-            <p class="lead" style="font-size: 2em">
+            <p class="location lead" style="font-size: 2em">
                 <a class="badge badge-info" href="{{ path('app_location_show', {id: recipe.location.id}) }}">
                     <i class="fas fa-map-marked-alt"></i>
                     {{ recipe.location.name }}
@@ -23,6 +23,11 @@
         {% else %}
             <div class="alert alert-light" role="alert">Pas d'emplacement associé.</div>
         {% endif %}
+        <div class="tags">
+            {% for tag in recipe.tags %}
+                <span class="tag badge badge-secondary">{{ tag }}</span>
+            {% endfor %}
+        </div>
         <hr class="my-4">
         <h2 class="ingredients">Ingrédients</h2>
         {% if recipe.ingredients.count() %}

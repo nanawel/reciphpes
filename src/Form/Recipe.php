@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Form\DataTransformer\IngredientsToIdsTransformer;
 use App\Form\DataTransformer\LocationToIdTransformer;
+use App\Form\DataTransformer\TagsArrayToStringTransformer;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
@@ -21,6 +22,9 @@ class Recipe extends AbstractType
     protected $documentManager;
 
     /** @var LocationToIdTransformer */
+    protected $tagsArrayToStringTransformer;
+
+    /** @var LocationToIdTransformer */
     protected $locationToIdTransformer;
 
     /** @var IngredientsToIdsTransformer */
@@ -28,10 +32,12 @@ class Recipe extends AbstractType
 
     public function __construct(
         DocumentManager $documentManager,
+        TagsArrayToStringTransformer $tagsArrayToStringTransformer,
         LocationToIdTransformer $locationToIdTransformer,
         IngredientsToIdsTransformer $ingredientsToIdsTransformer
     ) {
         $this->documentManager = $documentManager;
+        $this->tagsArrayToStringTransformer = $tagsArrayToStringTransformer;
         $this->locationToIdTransformer = $locationToIdTransformer;
         $this->ingredientsToIdsTransformer = $ingredientsToIdsTransformer;
     }
@@ -47,7 +53,23 @@ class Recipe extends AbstractType
         }
 
         $builder
-            ->add('name', TextType::class, ['label' => 'Nom'])
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'label' => 'Nom',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'tags',
+                TextType::class,
+                [
+                    'label' => 'Tags',
+                    'required' => false,
+                    'attr' => ['class' => 'autocomplete autocomplete-tags'],
+                ]
+            )
             ->add(
                 'location',
                 ChoiceType::class,
@@ -56,6 +78,7 @@ class Recipe extends AbstractType
                     'choices' => $locations,
                     'placeholder' => 'Choisissez un emplacement...',
                     'help' => 'Facultatif',
+                    'required' => false
                 ]
             )
             ->add(
@@ -64,6 +87,7 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Emplacement (détails)',
                     'help' => 'N° de page, chemin, etc.',
+                    'required' => false
                 ]
             )
             ->add(
@@ -76,6 +100,7 @@ class Recipe extends AbstractType
                     'multiple' => true,
                     'placeholder' => 'Choisissez des ingrédients...',
                     'help' => 'Facultatif. Plusieurs valeurs possibles.',
+                    'required' => false
                 ]
             )
             ->add(
@@ -84,10 +109,13 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Instructions',
                     'help' => 'Facultatif.',
+                    'required' => false
                 ]
             )
             ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
 
+        $builder->get('tags')
+            ->addModelTransformer($this->tagsArrayToStringTransformer);
         $builder->get('location')
             ->addModelTransformer($this->locationToIdTransformer);
         $builder->get('ingredients')

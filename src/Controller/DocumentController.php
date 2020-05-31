@@ -38,6 +38,7 @@ abstract class DocumentController extends AbstractController
 
     /**
      * @param Request $request
+     * @param object|null $document
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(Request $request, object $document = null) {
@@ -107,11 +108,44 @@ abstract class DocumentController extends AbstractController
             );
         }
 
-        return $this->render(sprintf('%s/edit.html.twig', $this->getDocumentConfig('template_prefix')),
+        return $this->render(
+            sprintf('%s/edit.html.twig', $this->getDocumentConfig('template_prefix')),
             [
                 $this->getDocumentConfig('type') => $document,
-                'form'                           => $form->createView(),
+                'form' => $form->createView(),
             ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param object $document
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function delete(Request $request, object $document) {
+        try {
+            $this->getDocumentManager()->remove($document);
+            $this->getDocumentManager()->flush();
+
+            $this->addFlash('success', 'Élément supprimé avec succès.');
+        } catch (\Throwable $e) {
+            $this->addFlash('danger', "Impossible de supprimer l'élément : {$e->getMessage()}");
+
+            return $this->redirectToRoute(
+                sprintf(
+                    'app_%s_show',
+                    $this->getDocumentConfig('route_prefix')
+                ),
+                ['id' => $document->getId()]
+            );
+        }
+
+        return $this->redirectToRoute(
+            sprintf(
+                'app_%s_grid',
+                $this->getDocumentConfig('route_prefix')
+            ),
+            ['id' => $document->getId()]
         );
     }
 

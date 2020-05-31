@@ -17,6 +17,9 @@ class Recipe extends AbstractDocument
     /** @MongoDB\Field(type="string") @MongoDB\Index */
     public $name;
 
+    /** @MongoDB\Field(type="collection") @MongoDB\Index */
+    public $tags;
+
     /** @MongoDB\ReferenceOne(targetDocument=Location::class, storeAs="id") */
     public $location;
 
@@ -48,6 +51,13 @@ class Recipe extends AbstractDocument
      */
     public function getName() {
         return $this->name;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTags() {
+        return $this->tags;
     }
 
     /**

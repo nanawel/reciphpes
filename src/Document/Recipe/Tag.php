@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Document\Location;
+namespace App\Document\Recipe;
 
 use App\Document\AbstractDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -8,23 +8,13 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * @MongoDB\Document
  */
-class Type extends AbstractDocument
+class Tag extends AbstractDocument
 {
-    /** @MongoDB\Id */
-    public $id;
-
-    /** @MongoDB\Field(type="string") */
+    /** @MongoDB\Id(strategy="NONE", type="string") */
     public $name;
 
     /** @MongoDB\Field(type="date") */
     public $createdAt;
-
-    /**
-     * @inheritDoc
-     */
-    public function getId() {
-        return $this->id;
-    }
 
     /**
      * @return string
