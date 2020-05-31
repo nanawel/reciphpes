@@ -9,14 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class IngredientController extends DocumentController
 {
     protected function _getDocumentConfig($config = null) {
-        return [
-            'class' => \App\Document\Ingredient::class,
-            'form_class' => \App\Form\Ingredient::class,
-            'type_id' => 'App:Ingredient',
-            'type' => 'ingredient',
-            'route_prefix' => 'ingredient',
-            'template_prefix' => 'ingredient',
-        ];
+        return $this->getDocumentRegistry()->getDocumentConfig('ingredient', $config);
     }
 
     /**

@@ -34,6 +34,9 @@ class DefaultBuilder implements Builder
     /** @var Action[]|null */
     protected $actions = [];
 
+    /** @var string|null */
+    protected $searchQuery = null;
+
     public function __construct(
         DocumentManager $documentManager,
         Environment $twig
@@ -50,7 +53,9 @@ class DefaultBuilder implements Builder
     }
 
     public function withRequest(Request $request) {
-        // TODO
+        if ($query = trim($request->get('q'))) {
+            $this->searchQuery = $query;
+        }
 
         return $this;
     }
@@ -78,9 +83,7 @@ class DefaultBuilder implements Builder
         $this->gridConfiguration
             ->setHeaders($headers)
             ->setColumns($this->getColumns(array_keys($headers)))
-            ->setItems(
-                $this->documentManager->getRepository($this->getDocumentConfig('class'))->findAll()
-            )
+            ->setItems($this->getItems())
         ;
 
         $actions = $this->actions ?: $this->getDefaultActions();
@@ -98,6 +101,7 @@ class DefaultBuilder implements Builder
         $this->headers = [];
         $this->columns = [];
         $this->actions = [];
+        $this->searchQuery = null;
 
         return $this;
     }
@@ -149,5 +153,17 @@ class DefaultBuilder implements Builder
 //            ->setSortOrder(30);
 
         return $actions;
+    }
+
+    protected function getItems() {
+        if ($this->searchQuery) {
+            return $this->documentManager->createQueryBuilder($this->getDocumentConfig('class'))
+                ->text($this->searchQuery)
+                ->getQuery()
+                ->execute();
+        }
+        else {
+            return $this->documentManager->getRepository($this->getDocumentConfig('class'))->findAll();
+        }
     }
 }

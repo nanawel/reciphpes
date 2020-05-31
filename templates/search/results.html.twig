@@ -13,15 +13,15 @@
     <div class="results-container">
         <div class="mb-2">
             <h2>Recettes</h2>
-            <p>...</p>
+            {% include grids.recipes.template with {gridConfig: grids.recipes.gridConfig} %}
         </div>
         <div class="mb-2">
             <h2>Ingrédients</h2>
-            <p>...</p>
+            {% include grids.ingredients.template with {gridConfig: grids.ingredients.gridConfig} %}
         </div>
         <div class="mb-2">
             <h2>Emplacements</h2>
-            <p>...</p>
+            {% include grids.locations.template with {gridConfig: grids.locations.gridConfig} %}
         </div>
     </div>
 {% endblock %}

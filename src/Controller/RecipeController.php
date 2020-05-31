@@ -13,14 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RecipeController extends DocumentController
 {
     protected function _getDocumentConfig($config = null) {
-        return [
-            'class' => \App\Document\Recipe::class,
-            'form_class' => \App\Form\Recipe::class,
-            'type_id' => 'App:Recipe',
-            'type' => 'recipe',
-            'route_prefix' => 'recipe',
-            'template_prefix' => 'recipe',
-        ];
+        return $this->getDocumentRegistry()->getDocumentConfig('recipe', $config);
     }
 
     /**

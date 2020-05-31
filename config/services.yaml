@@ -46,6 +46,33 @@ services:
             - name: 'doctrine_mongodb.odm.event_listener'
               event: 'onFlush'
 
+    ### MODELS
+    App\Document\Registry:
+        class: App\Document\Registry
+        arguments:
+            $documentConfigurations:
+                recipe:
+                    class: App\Document\Recipe
+                    form_class: App\Form\Recipe
+                    type_id: App:Recipe
+                    type: recipe
+                    route_prefix: recipe
+                    template_prefix: recipe
+                ingredient:
+                    class: App\Document\Ingredient
+                    form_class: App\Form\Ingredient
+                    type_id: App:Ingredient
+                    type: ingredient
+                    route_prefix: ingredient
+                    template_prefix: ingredient
+                location:
+                    class: App\Document\Location
+                    form_class: App\Form\Location
+                    type_id: App:Location
+                    type: location
+                    route_prefix: location
+                    template_prefix: location
+
     ### GRIDS
     App\Grid\Builder\Registry:
         class: ~

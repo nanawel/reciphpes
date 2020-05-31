@@ -9,14 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class LocationController extends DocumentController
 {
     protected function _getDocumentConfig($config = null) {
-        return [
-            'class' => \App\Document\Location::class,
-            'form_class' => \App\Form\Location::class,
-            'type_id' => 'App:Location',
-            'type' => 'location',
-            'route_prefix' => 'location',
-            'template_prefix' => 'location',
-        ];
+        return $this->getDocumentRegistry()->getDocumentConfig('location', $config);
     }
 
     /**
