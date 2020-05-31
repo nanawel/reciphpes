@@ -6,27 +6,35 @@ use App\Document\AbstractDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document
+ * @MongoDB\Document(collection="Recipe_Tag", repositoryClass="App\Repository\Recipe\TagRepository")
+ * @MongoDB\Index(keys={"id"="text"})
  */
 class Tag extends AbstractDocument
 {
     /** @MongoDB\Id(strategy="NONE", type="string") */
-    public $name;
+    public $id;
 
-    /** @MongoDB\Field(type="date") */
-    public $createdAt;
+//    /** @MongoDB\Field(type="string") */
+//    public $language = 'french';
+
+    /**
+     * @return string
+     */
+    public function getId() {
+        return $this->id;
+    }
 
     /**
      * @return string
      */
     public function getName() {
-        return $this->name;
+        return $this->getId();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt() {
-        return $this->createdAt;
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getLanguage() {
+//        return $this->language;
+//    }
 }

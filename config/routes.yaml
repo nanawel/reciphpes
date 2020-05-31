@@ -35,6 +35,10 @@ app_recipe_delete:
   path: /recipe/delete/{id}
   controller: App\Controller\RecipeController::delete
 
+app_recipe_tags_search:
+  path: /recipe_tags/search
+  controller: App\Controller\RecipeController::searchTags
+
 ### INGREDIENT
 app_ingredient:
   path: /ingredient

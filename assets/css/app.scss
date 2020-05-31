@@ -8,6 +8,7 @@ $primary: darken(#428bca, 20%);
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@yaireo/tagify/src/tagify.scss";
 
 body {
     background-color: lightgray;

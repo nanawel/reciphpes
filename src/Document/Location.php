@@ -5,7 +5,8 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document(repositoryClass=App\Repository\LocationRepository::class)
+ * @MongoDB\Document(collection="Location", repositoryClass=App\Repository\LocationRepository::class)
+ * @MongoDB\Index(keys={"name"="text"})
  */
 class Location extends AbstractDocument
 {

@@ -15,11 +15,15 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class Recipe extends AbstractType
 {
     /** @var DocumentManager */
     protected $documentManager;
+
+    /** @var RouterInterface */
+    protected $router;
 
     /** @var LocationToIdTransformer */
     protected $tagsArrayToStringTransformer;
@@ -32,11 +36,13 @@ class Recipe extends AbstractType
 
     public function __construct(
         DocumentManager $documentManager,
+        RouterInterface $router,
         TagsArrayToStringTransformer $tagsArrayToStringTransformer,
         LocationToIdTransformer $locationToIdTransformer,
         IngredientsToIdsTransformer $ingredientsToIdsTransformer
     ) {
         $this->documentManager = $documentManager;
+        $this->router = $router;
         $this->tagsArrayToStringTransformer = $tagsArrayToStringTransformer;
         $this->locationToIdTransformer = $locationToIdTransformer;
         $this->ingredientsToIdsTransformer = $ingredientsToIdsTransformer;
@@ -67,7 +73,10 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Tags',
                     'required' => false,
-                    'attr' => ['class' => 'autocomplete autocomplete-tags'],
+                    'attr' => [
+                        'class' => 'autocomplete autocomplete-recipe-tags',
+                        'data-fetch-url' => $this->router->generate('app_recipe_tags_search')
+                    ],
                 ]
             )
             ->add(

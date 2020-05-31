@@ -7,7 +7,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @MongoDB\Document(repositoryClass=App\Repository\RecipeRepository::class)
+ * @MongoDB\Document(collection="Recipe", repositoryClass=App\Repository\RecipeRepository::class)
+ * @MongoDB\Index(keys={"name"="text", "tags"="text", "instructions"="text"})
  */
 class Recipe extends AbstractDocument
 {

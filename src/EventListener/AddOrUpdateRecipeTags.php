@@ -34,7 +34,7 @@ class AddOrUpdateRecipeTags
         foreach ($recipe->getTags() as $tagName) {
             if (! $tagRepository->find($tagName)) {
                 $tag = (new Recipe\Tag());
-                $tag->name = $tagName;
+                $tag->id = $tagName;
 
                 $documentManager->persist($tag);
             }

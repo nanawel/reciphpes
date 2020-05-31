@@ -4,6 +4,8 @@ namespace App\Controller;
 
 
 use App\Document\Location;
+use App\Document\Recipe\Tag;
+use App\Repository\Recipe\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,5 +48,19 @@ class RecipeController extends DocumentController
      */
     public function delete(Request $request, object $document = null) {
         return parent::delete($request, $document);
+    }
+
+    public function searchTags(Request $request) {
+        $term = $request->get('term');
+
+        /** @var TagRepository $repository */
+        $repository = $this->getDocumentManager()->getRepository(Tag::class);
+
+        $result = [];
+        foreach ($repository->findLike($term) as $tag) {
+            $result[] = $tag->getName();
+        }
+
+        return $this->json($result);
     }
 }

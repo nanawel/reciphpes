@@ -21,8 +21,9 @@
     "dependencies": {
         "@allmarkedup/purl": "https://github.com/allmarkedup/purl.git",
         "@fortawesome/fontawesome-free": "^5.13.0",
+        "@yaireo/tagify": "^3.10.1",
         "copy-webpack-plugin": "^6.0.1",
         "datatables.net-responsive-bs4": "^2.2.5",
-        "jquery-autocomplete": "^1.2.8"
+        "jquery-ui": "^1.12.1"
     }
 }
