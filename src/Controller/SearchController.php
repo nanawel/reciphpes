@@ -13,6 +13,8 @@ class SearchController extends AbstractController
 
         // Voir https://www.doctrine-project.org/projects/doctrine-mongodb-odm/en/2.0/cookbook/simple-search-engine.html#simple-search-engine
 
+        $this->addFlash('danger', 'Pas encore implémentée :(');
+
         return $this->render('search/results.html.twig', ['query' => $query]);
     }
 }

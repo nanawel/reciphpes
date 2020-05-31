@@ -2,10 +2,13 @@
 
 {% block content %}
     <div class="jumbotron">
+        <img src="{{ asset('build/images/logo.svg') }}" id="home-logo" alt="Logo" class="float-left">
         <h1 class="display-4">Reciphpes!</h1>
-        <p class="lead">There should be some welcome message soon here.</p>
+        <p class="lead">Bienvenue <i class="far fa-smile-beam"></i></p>
         <hr class="my-4">
-        <p>Lorem ipsum...</p>
-        <a class="btn btn-primary btn-lg" href="{{ path('app_recipe') }}" role="button">Go to recipes</a>
+        <div style="text-align: center">
+            <a class="btn btn-primary btn-lg" href="{{ path('app_recipe') }}" role="button"><i
+                        class="fa fa-pizza-slice"></i> Voir les recettes</a>
+        </div>
     </div>
 {% endblock %}
