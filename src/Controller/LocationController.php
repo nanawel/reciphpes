@@ -8,34 +8,34 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LocationController extends DocumentController
 {
-    protected function _getDocumentConfig($config = null) {
-        return $this->getDocumentRegistry()->getDocumentConfig('location', $config);
+    protected function _getEntityConfig($config = null) {
+        return $this->getEntityRegistry()->getEntityConfig('location', $config);
     }
 
     /**
-     * @ParamConverter("document", class="App:Location")
+     * @ParamConverter("entity", class="App:Location")
      *
      * @inheritDoc
      */
-    public function show($document) {
-        return parent::show($document);
+    public function show($entity) {
+        return parent::show($entity);
     }
 
     /**
-     * @ParamConverter("document", class="App:Location", isOptional="true")
+     * @ParamConverter("entity", class="App:Location", isOptional="true")
      *
      * @inheritDoc
      */
-    public function edit(Request $request, object $document = null) {
-        return parent::edit($request, $document);
+    public function edit(Request $request, object $entity = null) {
+        return parent::edit($request, $entity);
     }
 
     /**
-     * @ParamConverter("document", class="App:Recipe", isOptional="true")
+     * @ParamConverter("entity", class="App:Recipe", isOptional="true")
      *
      * @inheritDoc
      */
-    public function delete(Request $request, object $document = null) {
-        return parent::delete($request, $document);
+    public function delete(Request $request, object $entity = null) {
+        return parent::delete($request, $entity);
     }
 }

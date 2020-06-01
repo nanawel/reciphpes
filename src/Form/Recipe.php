@@ -7,9 +7,8 @@ namespace App\Form;
 use App\Form\DataTransformer\IngredientsToIdsTransformer;
 use App\Form\DataTransformer\LocationToIdTransformer;
 use App\Form\DataTransformer\TagsArrayToStringTransformer;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,8 +18,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 class Recipe extends AbstractType
 {
-    /** @var DocumentManager */
-    protected $documentManager;
+    /** @var EntityManagerInterface */
+    protected $entityManager;
 
     /** @var RouterInterface */
     protected $router;
@@ -35,13 +34,13 @@ class Recipe extends AbstractType
     protected $ingredientsToIdsTransformer;
 
     public function __construct(
-        DocumentManager $documentManager,
+        EntityManagerInterface $entityManager,
         RouterInterface $router,
         TagsArrayToStringTransformer $tagsArrayToStringTransformer,
         LocationToIdTransformer $locationToIdTransformer,
         IngredientsToIdsTransformer $ingredientsToIdsTransformer
     ) {
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
         $this->router = $router;
         $this->tagsArrayToStringTransformer = $tagsArrayToStringTransformer;
         $this->locationToIdTransformer = $locationToIdTransformer;
@@ -50,11 +49,11 @@ class Recipe extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $locations = [];
-        foreach ($this->documentManager->getRepository(\App\Document\Location::class)->findAll() as $location) {
+        foreach ($this->entityManager->getRepository(\App\Entity\Location::class)->findAll() as $location) {
             $locations[$location->getName()] = $location->getId();
         }
         $ingredients = [];
-        foreach ($this->documentManager->getRepository(\App\Document\Ingredient::class)->findAll() as $ingredient) {
+        foreach ($this->entityManager->getRepository(\App\Entity\Ingredient::class)->findAll() as $ingredient) {
             $ingredients[$ingredient->getName()] = $ingredient->getId();
         }
 

@@ -7,14 +7,14 @@ use App\Grid\Column\Action;
 use App\Grid\Column\ColumnInterface;
 use App\Grid\Column\DefaultColumn;
 use App\Grid\Configuration;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 class DefaultBuilder implements Builder
 {
-    /** @var DocumentManager */
-    protected $documentManager;
+    /** @var EntityManagerInterface */
+    protected $entityManager;
 
     /** @var Environment */
     protected $twig;
@@ -23,7 +23,7 @@ class DefaultBuilder implements Builder
     protected $gridConfiguration;
 
     /** @var array */
-    protected $documentConfig;
+    protected $entityConfig;
 
     /** @var string[] */
     protected $headers = [];
@@ -38,16 +38,16 @@ class DefaultBuilder implements Builder
     protected $searchQuery = null;
 
     public function __construct(
-        DocumentManager $documentManager,
+        EntityManagerInterface $entityManager,
         Environment $twig
     ) {
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
         $this->twig = $twig;
         $this->reset();
     }
 
-    public function withDocumentConfig(array $documentConfig) {
-        $this->documentConfig = $documentConfig;
+    public function withEntityConfig(array $entityConfig) {
+        $this->entityConfig = $entityConfig;
 
         return $this;
     }
@@ -97,7 +97,7 @@ class DefaultBuilder implements Builder
 
     public function reset() {
         $this->gridConfiguration = new Configuration();
-        $this->documentConfig = [];
+        $this->entityConfig = [];
         $this->headers = [];
         $this->columns = [];
         $this->actions = [];
@@ -110,10 +110,10 @@ class DefaultBuilder implements Builder
      * @param null|string $config
      * @return mixed|array
      */
-    protected function getDocumentConfig($config = null) {
+    protected function getEntityConfig($config = null) {
         return $config === null
-            ? $this->documentConfig
-            : $this->documentConfig[$config] ?? null;
+            ? $this->entityConfig
+            : $this->entityConfig[$config] ?? null;
     }
 
     protected function getDefaultHeaders() {
@@ -138,17 +138,17 @@ class DefaultBuilder implements Builder
         $actions = [];
         $actions[] = (new Action($this->twig))
             ->setLabel('Voir')
-            ->setRoute(sprintf('app_%s_show', $this->getDocumentConfig('type')))
+            ->setRoute(sprintf('app_%s_show', $this->getEntityConfig('type')))
             ->setClass('show btn-primary')
             ->setSortOrder(10);
         $actions[] = (new Action($this->twig))
             ->setLabel('Modifier')
-            ->setRoute(sprintf('app_%s_edit', $this->getDocumentConfig('type')))
+            ->setRoute(sprintf('app_%s_edit', $this->getEntityConfig('type')))
             ->setClass('edit btn-primary')
             ->setSortOrder(20);
 //        $actions[] = (new Action($this->twig))
 //            ->setLabel('Supprimer')
-//            ->setRoute(sprintf('app_%s_delete', $this->getDocumentConfig('type')))
+//            ->setRoute(sprintf('app_%s_delete', $this->getEntityConfig('type')))
 //            ->setClass('delete btn-danger')
 //            ->setSortOrder(30);
 
@@ -157,15 +157,14 @@ class DefaultBuilder implements Builder
 
     protected function getItems() {
         if ($this->searchQuery) {
-            return $this->documentManager->createQueryBuilder($this->getDocumentConfig('class'))
+            return $this->entityManager->createQueryBuilder($this->getEntityConfig('class'))
                 ->text($this->searchQuery)
                 ->getQuery()
                 ->execute()
                 ->toArray();
         }
-        else {
-            return $this->documentManager->getRepository($this->getDocumentConfig('class'))
-                ->findAll();
-        }
+
+        return $this->entityManager->getRepository($this->getEntityConfig('class'))
+            ->findAll();
     }
 }

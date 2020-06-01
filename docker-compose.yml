@@ -14,8 +14,5 @@ services:
       - './docker/symfony/etc/php.ini:/usr/local/etc/php/php.ini:ro'
       - './docker/symfony/etc/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
       - './:/var/www/webapp:rw'
-
-  mongodb:
-    image: 'mongo'
-    ports:
-      - '27017:27017'
+    environment:
+      PHP_IDE_CONFIG: 'serverName=reciphpes-docker'

@@ -4,8 +4,8 @@
 namespace App\Form\DataTransformer;
 
 
-use App\Document\Ingredient;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Entity\Ingredient;
+use Doctrine\ORPM;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 

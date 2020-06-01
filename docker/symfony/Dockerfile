@@ -5,17 +5,21 @@ RUN curl --location --output /usr/local/bin/composer https://github.com/composer
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         wget \
+        zip \
         unzip \
         git \
         libfreetype6-dev \
         libicu-dev \
+        libzip-dev \
         time \
+        nano \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install -j$(nproc) pdo_mysql \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) opcache \
+    && docker-php-ext-install -j$(nproc) zip \
     && pecl install mongodb-1.7.4 \
     && docker-php-ext-enable mongodb \
     && rm -rf /tmp/*

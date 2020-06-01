@@ -4,18 +4,18 @@
 namespace App\Form\DataTransformer;
 
 
-use App\Document\Ingredient;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Entity\Ingredient;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class IngredientsToIdsTransformer implements DataTransformerInterface
 {
-    /** @var DocumentManager */
-    private $documentManager;
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
-    public function __construct(DocumentManager $documentManager) {
-        $this->documentManager = $documentManager;
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -41,7 +41,7 @@ class IngredientsToIdsTransformer implements DataTransformerInterface
         }
 
         /** @var Ingredient[]|null $ingredients */
-        return $this->documentManager
+        return $this->entityManager
             ->getRepository(Ingredient::class)
             ->findAllByIds($ingredientIds)
             ->toArray();

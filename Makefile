@@ -5,11 +5,17 @@ bash:
 shell:
 	docker-compose exec -u www-data symfony bash
 
+shell-root:
+	docker-compose exec symfony bash
+
 pull:
 	docker-compose pull
 
+build:
+	docker-compose build
+
 start:
-	docker-compose up -d
+	docker-compose up
 
 startd:
 	docker-compose up -d
@@ -19,3 +25,6 @@ stop:
 
 down:
 	docker-compose down --remove-orphans
+
+logs:
+	docker-compose logs -f --tail=50

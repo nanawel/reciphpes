@@ -3,14 +3,9 @@
 namespace App\Repository;
 
 
-use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use Doctrine\ORM\EntityRepository;
 
-abstract class AbstractRepository extends DocumentRepository
+abstract class AbstractRepository extends EntityRepository
 {
-    public function findAllByIds(array $ids) {
-        $qb = $this->createQueryBuilder()->field('id')->in($ids)
-            ->getQuery();
 
-        return $qb->execute();
-    }
 }

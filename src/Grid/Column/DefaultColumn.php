@@ -3,7 +3,7 @@
 namespace App\Grid\Column;
 
 
-use App\Document\AbstractDocument;
+use App\Entity\AbstractEntity;
 use Symfony\Component\DependencyInjection\Container;
 
 class DefaultColumn implements ColumnInterface
@@ -11,7 +11,7 @@ class DefaultColumn implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function render(AbstractDocument $document, string $field) {
-        return $document->{'get' . Container::camelize($field)}();
+    public function render(AbstractEntity $entity, string $field) {
+        return $entity->{'get' . Container::camelize($field)}();
     }
 }

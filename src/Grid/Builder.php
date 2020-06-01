@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 interface Builder
 {
     /**
-     * @param array $documentConfig
+     * @param array $entityConfig
      * @return $this
      */
-    public function withDocumentConfig(array $documentConfig);
+    public function withEntityConfig(array $entityConfig);
 
     /**
      * @param Request $request

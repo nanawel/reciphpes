@@ -3,7 +3,7 @@
 namespace App\Grid\Column;
 
 
-use App\Document\AbstractDocument;
+use App\Entity\AbstractEntity;
 use Twig\Environment;
 
 class Action implements ColumnInterface
@@ -30,12 +30,12 @@ class Action implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function render(AbstractDocument $document, string $field) {
+    public function render(AbstractEntity $entity, string $field) {
         return $this->twig->render(
             '_grid/action.html.twig',
             [
                 'action' => $this,
-                'document' => $document
+                'entity' => $entity
             ]
         );
     }

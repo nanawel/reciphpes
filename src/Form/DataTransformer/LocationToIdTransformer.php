@@ -4,18 +4,18 @@
 namespace App\Form\DataTransformer;
 
 
-use App\Document\Location;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Entity\Location;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class LocationToIdTransformer implements DataTransformerInterface
 {
-    /** @var DocumentManager */
-    private $documentManager;
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
-    public function __construct(DocumentManager $documentManager) {
-        $this->documentManager = $documentManager;
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -41,7 +41,7 @@ class LocationToIdTransformer implements DataTransformerInterface
         }
 
         /** @var Location|null $location */
-        $location = $this->documentManager
+        $location = $this->entityManager
             ->getRepository(Location::class)
             ->find($locationId);
 

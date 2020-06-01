@@ -24,8 +24,8 @@ class Configuration
     /** @var object[] */
     protected $items;
 
-    public function renderField($document, $field) {
-        return $document->{$field} ?? '';
+    public function renderField($entity, $field) {
+        return $entity->{$field} ?? '';
     }
 
     /**

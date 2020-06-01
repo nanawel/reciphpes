@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Recipe;
+namespace App\Repository;
 
 use App\Repository\AbstractRepository;
 

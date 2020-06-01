@@ -1,6 +1,6 @@
-{% if attribute(document, field) %}
-    <a class="badge badge-info" href="{{ path('app_location_show', {id: attribute(document, field).id}) }}">
+{% if attribute(entity, field) %}
+    <a class="badge badge-info" href="{{ path('app_location_show', {id: attribute(entity, field).id}) }}">
         <i class="fas fa-map-marked-alt"></i>
-        {{ attribute(document, field).name }}
+        {{ attribute(entity, field).name }}
     </a>
 {% endif %}

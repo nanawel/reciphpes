@@ -3,14 +3,14 @@
 namespace App\Grid\Column;
 
 
-use App\Document\AbstractDocument;
+use App\Entity\AbstractEntity;
 
 interface ColumnInterface
 {
     /**
-     * @param AbstractDocument $document
+     * @param AbstractEntity $entity
      * @param string $field
      * @return string
      */
-    public function render(AbstractDocument $document, string $field);
+    public function render(AbstractEntity $entity, string $field);
 }

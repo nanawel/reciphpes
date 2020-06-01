@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Grid\Builder;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -13,52 +13,53 @@ abstract class DocumentController extends AbstractController
 {
     public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
         /** @var Builder $gridBuilder */
-        $gridBuilder = $registry->getGridBuilder($this->getDocumentConfig('type'))
-            ->withDocumentConfig($this->getDocumentConfig())
+        $gridBuilder = $registry->getGridBuilder($this->getEntityConfig('type'))
+            ->withEntityConfig($this->getEntityConfig())
             ->withRequest($request);
 
         return $this->render(
-            sprintf('%s/grid.html.twig', $this->getDocumentConfig('template_prefix')),
+            sprintf('%s/grid.html.twig', $this->getEntityConfig('template_prefix')),
             ['gridConfig' => $gridBuilder->build()]
         );
     }
 
     /**
-     * @param object $document
+     * @param object $entity
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show($document) {
-        return $this->render(sprintf('%s/show.html.twig', $this->getDocumentConfig('template_prefix')),
+    public function show($entity) {
+        return $this->render(
+            sprintf('%s/show.html.twig', $this->getEntityConfig('template_prefix')),
             [
-                'document' => $document,
-                $this->getDocumentConfig('type') => $document,
+                'entity' => $entity,
+                $this->getEntityConfig('type') => $entity,
             ]
         );
     }
 
     /**
      * @param Request $request
-     * @param object|null $document
+     * @param object|null $entity
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Request $request, object $document = null) {
-        if (!$document) {
-            $documentClass = $this->getDocumentConfig('class');
-            $document = new $documentClass();
+    public function edit(Request $request, object $entity = null) {
+        if (! $entity) {
+            $entityClass = $this->getEntityConfig('class');
+            $entity = new $entityClass();
         }
-        $form = $this->createForm($this->getDocumentConfig('form_class'), $document);
+        $form = $this->createForm($this->getEntityConfig('form_class'), $entity);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $document = $form->getData();
-                if (! $document->getId()) {
-                    $document->createdAt = time();
+                $entity = $form->getData();
+                if (! $entity->getId()) {
+                    $entity->createdAt = time();
                 }
 
-                /** @var DocumentManager $entityManager */
-                $entityManager = $this->get('doctrine_mongodb.odm.document_manager');
-                $entityManager->persist($document);
+                /** @var EntityManagerInterface $entityManager */
+                $entityManager = $this->get('doctrine_mongodb.odm.entity_manager');
+                $entityManager->persist($entity);
                 $entityManager->flush();
 
                 $message = new Markup(
@@ -68,9 +69,9 @@ abstract class DocumentController extends AbstractController
                         $this->get('router')->generate(
                             sprintf(
                                 'app_%s_show',
-                                $this->getDocumentConfig('route_prefix')
+                                $this->getEntityConfig('route_prefix')
                             ),
-                            ['id' => $document->getId()]
+                            ['id' => $entity->getId()]
                         )
                     ), 'utf-8'
                 );
@@ -81,20 +82,20 @@ abstract class DocumentController extends AbstractController
             } catch (\Throwable $e) {
                 $this->addFlash('danger', "Impossible d'enregistrer l'élément : {$e->getMessage()}");
 
-                if (isset($document) && $document->getId()) {
+                if (isset($entity) && $entity->getId()) {
                     return $this->redirectToRoute(
                         sprintf(
                             'app_%s_edit',
-                            $this->getDocumentConfig('route_prefix')
+                            $this->getEntityConfig('route_prefix')
                         ),
-                        ['id' => $document->getId()]
+                        ['id' => $entity->getId()]
                     );
                 }
 
                 return $this->redirectToRoute(
                     sprintf(
                         'app_%s_new',
-                        $this->getDocumentConfig('route_prefix')
+                        $this->getEntityConfig('route_prefix')
                     )
                 );
             }
@@ -102,16 +103,16 @@ abstract class DocumentController extends AbstractController
             return $this->redirectToRoute(
                 sprintf(
                     'app_%s_grid',
-                    $this->getDocumentConfig('route_prefix')
+                    $this->getEntityConfig('route_prefix')
                 ),
-                ['id' => $document->getId()]
+                ['id' => $entity->getId()]
             );
         }
 
         return $this->render(
-            sprintf('%s/edit.html.twig', $this->getDocumentConfig('template_prefix')),
+            sprintf('%s/edit.html.twig', $this->getEntityConfig('template_prefix')),
             [
-                $this->getDocumentConfig('type') => $document,
+                $this->getEntityConfig('type') => $entity,
                 'form' => $form->createView(),
             ]
         );
@@ -119,13 +120,13 @@ abstract class DocumentController extends AbstractController
 
     /**
      * @param Request $request
-     * @param object $document
+     * @param object $entity
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete(Request $request, object $document) {
+    public function delete(Request $request, object $entity) {
         try {
-            $this->getDocumentManager()->remove($document);
-            $this->getDocumentManager()->flush();
+            $this->getEntityManager()->remove($entity);
+            $this->getEntityManager()->flush();
 
             $this->addFlash('success', 'Élément supprimé avec succès.');
         } catch (\Throwable $e) {
@@ -134,18 +135,18 @@ abstract class DocumentController extends AbstractController
             return $this->redirectToRoute(
                 sprintf(
                     'app_%s_show',
-                    $this->getDocumentConfig('route_prefix')
+                    $this->getEntityConfig('route_prefix')
                 ),
-                ['id' => $document->getId()]
+                ['id' => $entity->getId()]
             );
         }
 
         return $this->redirectToRoute(
             sprintf(
                 'app_%s_grid',
-                $this->getDocumentConfig('route_prefix')
+                $this->getEntityConfig('route_prefix')
             ),
-            ['id' => $document->getId()]
+            ['id' => $entity->getId()]
         );
     }
 
@@ -153,11 +154,11 @@ abstract class DocumentController extends AbstractController
      * @param null|string $config
      * @return mixed|array
      */
-    protected function getDocumentConfig($config = null) {
+    protected function getEntityConfig($config = null) {
         return $config === null
-            ? $this->_getDocumentConfig()
-            : $this->_getDocumentConfig()[$config] ?? null;
+            ? $this->_getEntityConfig()
+            : $this->_getEntityConfig()[$config] ?? null;
     }
 
-    abstract protected function _getDocumentConfig();
+    abstract protected function _getEntityConfig();
 }

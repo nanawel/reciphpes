@@ -8,34 +8,34 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IngredientController extends DocumentController
 {
-    protected function _getDocumentConfig($config = null) {
-        return $this->getDocumentRegistry()->getDocumentConfig('ingredient', $config);
+    protected function _getEntityConfig($config = null) {
+        return $this->getEntityRegistry()->getEntityConfig('ingredient', $config);
     }
 
     /**
-     * @ParamConverter("document", class="App:Ingredient")
+     * @ParamConverter("entity", class="App:Ingredient")
      *
      * @inheritDoc
      */
-    public function show($document) {
-        return parent::show($document);
+    public function show($entity) {
+        return parent::show($entity);
     }
 
     /**
-     * @ParamConverter("document", class="App:Ingredient", isOptional="true")
+     * @ParamConverter("entity", class="App:Ingredient", isOptional="true")
      *
      * @inheritDoc
      */
-    public function edit(Request $request, object $document = null) {
-        return parent::edit($request, $document);
+    public function edit(Request $request, object $entity = null) {
+        return parent::edit($request, $entity);
     }
 
     /**
-     * @ParamConverter("document", class="App:Ingredient", isOptional="true")
+     * @ParamConverter("entity", class="App:Ingredient", isOptional="true")
      *
      * @inheritDoc
      */
-    public function delete(Request $request, object $document = null) {
-        return parent::delete($request, $document);
+    public function delete(Request $request, object $entity = null) {
+        return parent::delete($request, $entity);
     }
 }

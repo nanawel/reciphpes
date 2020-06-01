@@ -3,7 +3,7 @@
 namespace App\Grid\Column;
 
 
-use App\Document\AbstractDocument;
+use App\Entity\AbstractEntity;
 use Symfony\Component\DependencyInjection\Container;
 use Twig\Environment;
 use Twig\Markup;
@@ -28,12 +28,12 @@ class TwigColumn implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function render(AbstractDocument $document, string $field) {
+    public function render(AbstractEntity $entity, string $field) {
         return new Markup(
             $this->twig->render(
                 $this->template,
                 [
-                    'document' => $document,
+                    'entity' => $entity,
                     'field' => $field,
                 ] + $this->options
             ), 'utf-8'

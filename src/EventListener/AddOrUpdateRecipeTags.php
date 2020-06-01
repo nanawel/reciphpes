@@ -1,43 +1,40 @@
 <?php
 
-
 namespace App\EventListener;
 
 
-use App\Document\Recipe;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Event\OnFlushEventArgs;
-use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use App\Entity\Recipe;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AddOrUpdateRecipeTags
 {
-    public function __invoke(OnFlushEventArgs $event) {
-        $documentManager = $event->getDocumentManager();
-        $uow = $documentManager->getUnitOfWork();
-
-        foreach ($uow->getScheduledDocumentInsertions() as $keyEntity => $entity) {
-            if ($entity instanceof Recipe) {
-                $this->upsertTags($documentManager, $entity);
-            }
-        }
-        foreach ($uow->getScheduledDocumentUpdates() as $keyEntity => $entity) {
-            if ($entity instanceof Recipe) {
-                $this->upsertTags($documentManager, $entity);
-            }
-        }
-    }
-
-    protected function upsertTags(DocumentManager $documentManager, Recipe $recipe) {
-        /** @var DocumentRepository $tagRepository */
-        $tagRepository = $documentManager->getRepository(Recipe\Tag::class);
-
-        foreach ($recipe->getTags() as $tagName) {
-            if (! $tagRepository->find($tagName)) {
-                $tag = (new Recipe\Tag());
-                $tag->id = $tagName;
-
-                $documentManager->persist($tag);
-            }
-        }
-    }
+//    public function __invoke(OnFlushEventArgs $event) {
+//        $entityManager = $event->getEntityManager();
+//        $uow = $entityManager->getUnitOfWork();
+//
+//        foreach ($uow->getScheduledDocumentInsertions() as $keyEntity => $entity) {
+//            if ($entity instanceof Recipe) {
+//                $this->upsertTags($entityManager, $entity);
+//            }
+//        }
+//        foreach ($uow->getScheduledDocumentUpdates() as $keyEntity => $entity) {
+//            if ($entity instanceof Recipe) {
+//                $this->upsertTags($entityManager, $entity);
+//            }
+//        }
+//    }
+//
+//    protected function upsertTags(EntityManagerInterface $entityManager, Recipe $recipe) {
+//        /** @var DocumentRepository $tagRepository */
+//        $tagRepository = $entityManager->getRepository(Tag::class);
+//
+//        foreach ($recipe->getTags() as $tagName) {
+//            if (! $tagRepository->find($tagName)) {
+//                $tag = (new Tag());
+//                $tag->id = $tagName;
+//
+//                $entityManager->persist($tag);
+//            }
+//        }
+//    }
 }

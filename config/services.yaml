@@ -4,8 +4,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    env(MONGODB_URL): ''
-    env(MONGODB_DB): ''
     locale: fr_FR
 
 services:
@@ -29,44 +27,38 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    ### SYSTEM / EXTENSIONS
-    doctrine_mongo_db_param_converter:
-        class: Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter
-        arguments: ['@doctrine_mongodb']
-        tags: ['request.param_converter']
-
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
 
     ### LISTENERS
-    App\EventListener\AddOrUpdateRecipeTags:
-        tags:
-            - name: 'doctrine_mongodb.odm.event_listener'
-              event: 'onFlush'
+    #    App\EventListener\AddOrUpdateRecipeTags:
+    #        tags:
+    #            - name: 'doctrine_mongodb.odm.event_listener'
+    #              event: 'onFlush'
 
     ### MODELS
-    App\Document\Registry:
-        class: App\Document\Registry
+    App\Entity\Registry:
+        class: App\Entity\Registry
         arguments:
-            $documentConfigurations:
+            $entityConfigurations:
                 recipe:
-                    class: App\Document\Recipe
+                    class: App\Entity\Recipe
                     form_class: App\Form\Recipe
                     type_id: App:Recipe
                     type: recipe
                     route_prefix: recipe
                     template_prefix: recipe
                 ingredient:
-                    class: App\Document\Ingredient
+                    class: App\Entity\Ingredient
                     form_class: App\Form\Ingredient
                     type_id: App:Ingredient
                     type: ingredient
                     route_prefix: ingredient
                     template_prefix: ingredient
                 location:
-                    class: App\Document\Location
+                    class: App\Entity\Location
                     form_class: App\Form\Location
                     type_id: App:Location
                     type: location

@@ -2,31 +2,30 @@
 
 namespace App\Controller;
 
-use App\Grid\Builder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends AbstractController
 {
     public function results(
-        \App\Document\Registry $documentRegistry,
+        \App\Entity\Registry $entityRegistry,
         \App\Grid\Builder\Registry $gridRegistry,
         Request $request
     ) {
         $query = $request->query->get('q');
 
-        $recipesGridConfig = $gridRegistry->getGridBuilder($documentRegistry->getDocumentConfig('recipe', 'type'))
-            ->withDocumentConfig($documentRegistry->getDocumentConfig('recipe'))
+        $recipesGridConfig = $gridRegistry->getGridBuilder($entityRegistry->getEntityConfig('recipe', 'type'))
+            ->withEntityConfig($entityRegistry->getEntityConfig('recipe'))
             ->withRequest($request)
             ->build();
         $ingredientsGridConfig = $gridRegistry->getGridBuilder(
-            $documentRegistry->getDocumentConfig('ingredient', 'type')
+            $entityRegistry->getEntityConfig('ingredient', 'type')
         )
-            ->withDocumentConfig($documentRegistry->getDocumentConfig('ingredient'))
+            ->withEntityConfig($entityRegistry->getEntityConfig('ingredient'))
             ->withRequest($request)
             ->build();
-        $locationsGridConfig = $gridRegistry->getGridBuilder($documentRegistry->getDocumentConfig('location', 'type'))
-            ->withDocumentConfig($documentRegistry->getDocumentConfig('location'))
+        $locationsGridConfig = $gridRegistry->getGridBuilder($entityRegistry->getEntityConfig('location', 'type'))
+            ->withEntityConfig($entityRegistry->getEntityConfig('location'))
             ->withRequest($request)
             ->build();
 

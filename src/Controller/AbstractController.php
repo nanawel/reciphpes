@@ -4,31 +4,30 @@
 namespace App\Controller;
 
 
-use App\Document\Registry;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Entity\Registry;
+use Doctrine\ORM\EntityManagerInterface;
 
 abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
     public static function getSubscribedServices() {
         return parent::getSubscribedServices() + [
-                'doctrine_mongodb.odm.document_manager' => 'Doctrine\ODM\MongoDB\DocumentManager',
                 'router' => 'Symfony\Component\Routing\Generator\UrlGeneratorInterface',
                 'session' => 'Symfony\Component\HttpFoundation\Session\Session',
-                'document_registry' => 'App\Document\Registry'
+                'entity_registry' => 'App\Entity\Registry'
             ];
     }
 
     /**
-     * @return DocumentManager
+     * @return EntityManagerInterface
      */
-    protected function getDocumentManager() {
-        return $this->get('doctrine_mongodb.odm.document_manager');
+    protected function getEntityManager() {
+        return $this->get('doctrine_mongodb.odm.entity_manager');
     }
 
     /**
      * @return Registry
      */
-    protected function getDocumentRegistry() {
-        return $this->get('document_registry');
+    protected function getEntityRegistry() {
+        return $this->get('entity_registry');
     }
 }
