@@ -24,7 +24,8 @@ $('.autocomplete-recipe-tags').tagify({
     whitelist: [
         {"id": 1, "value": "some string"}
     ],
-    originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+    //originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+    //originalInputValueFormat: valuesArr => valuesArr.map(item => item.value)
 })
     .on('input', function (e, input) {
         const value = input.value;
@@ -39,8 +40,6 @@ $('.autocomplete-recipe-tags').tagify({
             fetchUrl,
             {term: value},
             function (data, textStatus, jqXHR) {
-                console.log(data);
-                console.log(tagify.settings.whitelist);
                 tagify.settings.whitelist.splice(0, data.length, ...data);
                 tagify.loading(false).dropdown.show.call(tagify, value);
             }

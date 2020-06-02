@@ -6,7 +6,7 @@ namespace App\Form;
 
 use App\Form\DataTransformer\IngredientsToIdsTransformer;
 use App\Form\DataTransformer\LocationToIdTransformer;
-use App\Form\DataTransformer\TagsArrayToStringTransformer;
+use App\Form\DataTransformer\TagsToJsonTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,8 +24,8 @@ class Recipe extends AbstractType
     /** @var RouterInterface */
     protected $router;
 
-    /** @var LocationToIdTransformer */
-    protected $tagsArrayToStringTransformer;
+    /** @var TagsToJsonTransformer */
+    protected $tagsToJsonTransformer;
 
     /** @var LocationToIdTransformer */
     protected $locationToIdTransformer;
@@ -36,13 +36,13 @@ class Recipe extends AbstractType
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        TagsArrayToStringTransformer $tagsArrayToStringTransformer,
+        TagsToJsonTransformer $tagsToJsonTransformer,
         LocationToIdTransformer $locationToIdTransformer,
         IngredientsToIdsTransformer $ingredientsToIdsTransformer
     ) {
         $this->entityManager = $entityManager;
         $this->router = $router;
-        $this->tagsArrayToStringTransformer = $tagsArrayToStringTransformer;
+        $this->tagsToJsonTransformer = $tagsToJsonTransformer;
         $this->locationToIdTransformer = $locationToIdTransformer;
         $this->ingredientsToIdsTransformer = $ingredientsToIdsTransformer;
     }
@@ -86,7 +86,7 @@ class Recipe extends AbstractType
                     'choices' => $locations,
                     'placeholder' => 'Choisissez un emplacement...',
                     'help' => 'Facultatif',
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -108,7 +108,7 @@ class Recipe extends AbstractType
                     'multiple' => true,
                     'placeholder' => 'Choisissez des ingrédients...',
                     'help' => 'Facultatif. Plusieurs valeurs possibles.',
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -123,7 +123,7 @@ class Recipe extends AbstractType
             ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
 
         $builder->get('tags')
-            ->addModelTransformer($this->tagsArrayToStringTransformer);
+            ->addModelTransformer($this->tagsToJsonTransformer);
         $builder->get('location')
             ->addModelTransformer($this->locationToIdTransformer);
         $builder->get('ingredients')

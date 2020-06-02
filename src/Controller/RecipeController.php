@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Location;
 use App\Entity\Tag;
+use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
@@ -43,16 +44,13 @@ class RecipeController extends DocumentController
         return parent::delete($request, $entity);
     }
 
-    public function searchTags(Request $request) {
+    public function searchTags(Request $request, TagsToJsonTransformer $tagsToJsonTransformer) {
         $term = $request->get('term');
 
         /** @var TagRepository $repository */
         $repository = $this->getEntityManager()->getRepository(Tag::class);
 
-        $result = [];
-        foreach ($repository->findLike($term) as $tag) {
-            $result[] = $tag->getName();
-        }
+        $result = $tagsToJsonTransformer->transformToArray($repository->findLike($term));
 
         return $this->json($result);
     }

@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\Grid\Builder;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Twig\Markup;
 
 abstract class DocumentController extends AbstractController
@@ -53,14 +51,9 @@ abstract class DocumentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $entity = $form->getData();
-                if (! $entity->getId()) {
-                    $entity->createdAt = time();
-                }
 
-                /** @var EntityManagerInterface $entityManager */
-                $entityManager = $this->get('doctrine_mongodb.odm.entity_manager');
-                $entityManager->persist($entity);
-                $entityManager->flush();
+                $this->getEntityManager()->persist($entity);
+                $this->getEntityManager()->flush();
 
                 $message = new Markup(
                     sprintf(
@@ -80,6 +73,7 @@ abstract class DocumentController extends AbstractController
                     $message
                 );
             } catch (\Throwable $e) {
+                $this->getLogger()->error($e);
                 $this->addFlash('danger', "Impossible d'enregistrer l'élément : {$e->getMessage()}");
 
                 if (isset($entity) && $entity->getId()) {

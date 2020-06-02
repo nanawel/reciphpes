@@ -2,8 +2,6 @@
 
 namespace App\Repository;
 
-use App\Repository\AbstractRepository;
-
 class TagRepository extends AbstractRepository
 {
     public function findBy(array $criteria, ?array $sort = null, $limit = null, $skip = null): array {
@@ -12,6 +10,10 @@ class TagRepository extends AbstractRepository
     }
 
     public function findLike($term) {
-        return $this->findBy(['_id' => ['$regex' => $term, '$options' => 'i']]);
+        return $this->createQueryBuilder('t')
+            ->where('t.name LIKE :pattern')
+            ->setParameter('pattern', "%$term%")
+            ->getQuery()
+            ->execute();
     }
 }

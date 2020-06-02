@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(
@@ -30,22 +31,25 @@ class Recipe extends AbstractEntity
     /** @ORM\Column(type="string", length=255) */
     protected $name;
 
-    /** @ORM\ManyToMany(targetEntity="App\Entity\Tag") */
+    /** @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"}) */
     protected $tags;
 
     /** @ORM\ManyToOne(targetEntity="App\Entity\Location") */
     protected $location;
 
-    /** @ORM\Column(type="string", length=255, name="location_details") */
+    /** @ORM\Column(type="string", length=255, name="location_details", nullable=true) */
     protected $locationDetails;
 
     /** @ORM\ManyToMany(targetEntity="App\Entity\Ingredient") */
     protected $ingredients;
 
-    /** @ORM\Column(type="text") */
+    /** @ORM\Column(type="text", nullable=true) */
     protected $instructions;
 
-    /** @ORM\Column(type="datetime", name="created_at", nullable=false) */
+    /**
+     * @ORM\Column(type="datetime", name="created_at", nullable=false)
+     * @Gedmo\Timestampable(on="create")
+     */
     protected $createdAt;
 
     public function __construct() {
@@ -133,17 +137,17 @@ class Recipe extends AbstractEntity
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getIngredients(): ArrayCollection {
+    public function getIngredients(): ?Collection {
         return $this->ingredients;
     }
 
     /**
-     * @param ArrayCollection $ingredients
+     * @param Collection $ingredients
      * @return Recipe
      */
-    public function setIngredients(ArrayCollection $ingredients): Recipe {
+    public function setIngredients(Collection $ingredients = null): Recipe {
         $this->ingredients = $ingredients;
         return $this;
     }
