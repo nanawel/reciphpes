@@ -8,12 +8,4 @@ class TagRepository extends AbstractRepository
         // Force default sort order by name
         return parent::findBy($criteria, $sort ?: ['name' => 'ASC'], $limit, $skip);
     }
-
-    public function findLike($term) {
-        return $this->createQueryBuilder('t')
-            ->where('t.name LIKE :pattern')
-            ->setParameter('pattern', "%$term%")
-            ->getQuery()
-            ->execute();
-    }
 }

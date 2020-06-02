@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Ingredient;
 use App\Entity\Location;
 use App\Entity\Tag;
+use App\Form\DataTransformer\IngredientsToJsonTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -51,6 +53,17 @@ class RecipeController extends DocumentController
         $repository = $this->getEntityManager()->getRepository(Tag::class);
 
         $result = $tagsToJsonTransformer->transformToArray($repository->findLike($term));
+
+        return $this->json($result);
+    }
+
+    public function searchIngredients(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer) {
+        $term = $request->get('term');
+
+        /** @var TagRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Ingredient::class);
+
+        $result = $ingredientsToJsonTransformer->transformToArray($repository->findLike($term));
 
         return $this->json($result);
     }

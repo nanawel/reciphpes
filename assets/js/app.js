@@ -12,36 +12,31 @@ const $ = require('jquery');
 window.$ = window.jQuery = $;
 
 require('@allmarkedup/purl/purl');
-require('@fortawesome/fontawesome-free/css/all.min.css');
-//require('@fortawesome/fontawesome-free/js/all.js');
 require('bootstrap');
 require('datatables.net');
 require('datatables.net-responsive-bs4');
 require('jquery-ui');
 require('@yaireo/tagify/dist/jQuery.tagify.min');
+const SimpleMDE = require('simplemde/dist/simplemde.min');
 
-$('.autocomplete-recipe-tags').tagify({
-    whitelist: [
-        {"id": 1, "value": "some string"}
-    ],
-    //originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-    //originalInputValueFormat: valuesArr => valuesArr.map(item => item.value)
-})
+$('.autocomplete').tagify()
     .on('input', function (e, input) {
         const value = input.value;
         const tagify = $(this).data('tagify');
         const fetchUrl = $(this).data('fetch-url');
-        console.log('INPUT: ', input, fetchUrl);
+            //console.log('Tagify input: ', input, fetchUrl);
 
         tagify.settings.whitelist.length = 0;
         tagify.loading(true).dropdown.hide.call(tagify);
 
-        $.get(
-            fetchUrl,
-            {term: value},
-            function (data, textStatus, jqXHR) {
-                tagify.settings.whitelist.splice(0, data.length, ...data);
-                tagify.loading(false).dropdown.show.call(tagify, value);
-            }
-        );
+            $.get(
+                fetchUrl,
+                {term: value},
+                function (data, textStatus, jqXHR) {
+                        tagify.settings.whitelist.splice(0, data.length, ...data);
+                        tagify.loading(false).dropdown.show.call(tagify, value);
+                }
+            );
     });
+
+$('textarea.markdown').each(el => new SimpleMDE({element: el, spellChecker: false}));

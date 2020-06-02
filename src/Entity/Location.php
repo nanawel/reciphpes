@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(
@@ -27,7 +28,10 @@ class Location extends AbstractEntity
     /** @ORM\Column(type="string", length=255) */
     protected $name;
 
-    /** @ORM\Column(type="datetime", name="created_at", nullable=false) */
+    /**
+     * @ORM\Column(type="datetime", name="created_at", nullable=false)
+     * @Gedmo\Timestampable(on="create")
+     */
     protected $createdAt;
 
     /**

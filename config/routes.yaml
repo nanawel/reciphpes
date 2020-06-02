@@ -39,6 +39,10 @@ app_recipe_tags_search:
   path: /recipe_tags/search
   controller: App\Controller\RecipeController::searchTags
 
+app_recipe_ingredients_search:
+  path: /recipe_ingredients/search
+  controller: App\Controller\RecipeController::searchIngredients
+
 ### INGREDIENT
 app_ingredient:
   path: /ingredient

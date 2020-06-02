@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(
@@ -27,7 +28,19 @@ class Ingredient extends AbstractEntity
     /** @ORM\Column(type="string", length=255) */
     protected $name;
 
-    /** @ORM\Column(type="datetime", name="created_at", nullable=false) */
+//    /**
+//     * @ORM\ManyToMany(
+//     *     targetEntity="App\Entity\RecipeIngredient",
+//     *     mappedBy="recipe_id",
+//     *     inversedBy="ingredients"
+//     * )
+//     */
+//    protected $recipes;
+
+    /**
+     * @ORM\Column(type="datetime", name="created_at", nullable=false)
+     * @Gedmo\Timestampable(on="create")
+     */
     protected $createdAt;
 
     /**
@@ -61,6 +74,22 @@ class Ingredient extends AbstractEntity
         $this->name = $name;
         return $this;
     }
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getRecipes() {
+//        return $this->recipes;
+//    }
+//
+//    /**
+//     * @param mixed $recipes
+//     * @return Ingredient
+//     */
+//    public function setRecipes($recipes) {
+//        $this->recipes = $recipes;
+//        return $this;
+//    }
 
     /**
      * @return mixed

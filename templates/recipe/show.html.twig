@@ -9,7 +9,7 @@
                 <a href="{{ path('app_recipe_delete', {id: recipe.id}) }}" class="btn action delete btn-danger"><span>Supprimer</span></a>
             </div>
         </div>
-        <h1 class="display-4">{{ recipe.name }}</h1>
+        <h1 class="display-4"><i class="fas fa-pizza-slice"></i> {{ recipe.name }}</h1>
         {% if recipe.location %}
             <p class="location lead" style="font-size: 2em">
                 <a class="badge badge-info" href="{{ path('app_location_show', {id: recipe.location.id}) }}">
@@ -25,15 +25,16 @@
         {% endif %}
         <div class="tags">
             {% for tag in recipe.tags %}
-                <span class="tag badge badge-secondary">{{ tag }}</span>
+                <span class="tag badge badge-secondary">{{ tag.name }}</span>
             {% endfor %}
         </div>
         <hr class="my-4">
         <h2 class="ingredients">Ingrédients</h2>
-        {% if recipe.ingredients.count() %}
+        {% if recipe.recipeIngredients.count() %}
             <ul>
-                {% for i in recipe.ingredients %}
-                    <li>{{ i.name }}</li>
+                {% for i in recipe.recipeIngredients %}
+                    <li><a href="{{ path('app_ingredient_show', {id: i.ingredient.id}) }}">{{ i.ingredient.name }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}

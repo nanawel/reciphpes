@@ -4,8 +4,8 @@
 namespace App\Form;
 
 
-use App\Form\DataTransformer\IngredientsToIdsTransformer;
 use App\Form\DataTransformer\LocationToIdTransformer;
+use App\Form\DataTransformer\RecipeIngredientsToJsonTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -30,31 +30,27 @@ class Recipe extends AbstractType
     /** @var LocationToIdTransformer */
     protected $locationToIdTransformer;
 
-    /** @var IngredientsToIdsTransformer */
-    protected $ingredientsToIdsTransformer;
+    /** @var RecipeIngredientsToJsonTransformer */
+    protected $recipeIngredientsToJsonTransformer;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
         TagsToJsonTransformer $tagsToJsonTransformer,
         LocationToIdTransformer $locationToIdTransformer,
-        IngredientsToIdsTransformer $ingredientsToIdsTransformer
+        RecipeIngredientsToJsonTransformer $recipeIngredientsToJsonTransformer
     ) {
         $this->entityManager = $entityManager;
         $this->router = $router;
         $this->tagsToJsonTransformer = $tagsToJsonTransformer;
         $this->locationToIdTransformer = $locationToIdTransformer;
-        $this->ingredientsToIdsTransformer = $ingredientsToIdsTransformer;
+        $this->recipeIngredientsToJsonTransformer = $recipeIngredientsToJsonTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $locations = [];
         foreach ($this->entityManager->getRepository(\App\Entity\Location::class)->findAll() as $location) {
             $locations[$location->getName()] = $location->getId();
-        }
-        $ingredients = [];
-        foreach ($this->entityManager->getRepository(\App\Entity\Ingredient::class)->findAll() as $ingredient) {
-            $ingredients[$ingredient->getName()] = $ingredient->getId();
         }
 
         $builder
@@ -73,7 +69,7 @@ class Recipe extends AbstractType
                     'label' => 'Tags',
                     'required' => false,
                     'attr' => [
-                        'class' => 'autocomplete autocomplete-recipe-tags',
+                        'class' => 'autocomplete',
                         'data-fetch-url' => $this->router->generate('app_recipe_tags_search')
                     ],
                 ]
@@ -100,15 +96,14 @@ class Recipe extends AbstractType
             )
             ->add(
                 'ingredients',
-                ChoiceType::class,
+                TextType::class,
                 [
                     'label' => 'Ingrédients',
-                    'choices' => $ingredients,
-                    'expanded' => true,
-                    'multiple' => true,
-                    'placeholder' => 'Choisissez des ingrédients...',
-                    'help' => 'Facultatif. Plusieurs valeurs possibles.',
                     'required' => false,
+                    'attr' => [
+                        'class' => 'autocomplete',
+                        'data-fetch-url' => $this->router->generate('app_recipe_ingredients_search')
+                    ],
                 ]
             )
             ->add(
@@ -117,7 +112,10 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Instructions',
                     'help' => 'Facultatif.',
-                    'required' => false
+                    'required' => false,
+                    'attr' => [
+                        'class' => 'markdown',
+                    ],
                 ]
             )
             ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
@@ -127,6 +125,6 @@ class Recipe extends AbstractType
         $builder->get('location')
             ->addModelTransformer($this->locationToIdTransformer);
         $builder->get('ingredients')
-            ->addModelTransformer($this->ingredientsToIdsTransformer);
+            ->addModelTransformer($this->recipeIngredientsToJsonTransformer);
     }
 }

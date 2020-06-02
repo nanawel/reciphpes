@@ -9,6 +9,7 @@ $primary: darken(#428bca, 20%);
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "~@yaireo/tagify/src/tagify.scss";
+@import "~simplemde/dist/simplemde.min.css";
 
 body {
     background-color: lightgray;
@@ -68,3 +69,11 @@ i.fa-circle-o-notch {
 //        content: fa-content($fa-var-trash);
 //    }
 //}
+
+textarea.markdown ~ div {
+    background-color: white;
+}
+
+.CodeMirror-cursor {
+    border-color: black;
+}

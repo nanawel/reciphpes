@@ -18,6 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *         @ORM\Index(name="RECIPE_INSTRUCTIONS_IDX", columns={"instructions"}, flags={"fulltext"})
  *     }
  * )
+ * @ORM\HasLifecycleCallbacks
  */
 class Recipe extends AbstractEntity
 {
@@ -40,8 +41,14 @@ class Recipe extends AbstractEntity
     /** @ORM\Column(type="string", length=255, name="location_details", nullable=true) */
     protected $locationDetails;
 
-    /** @ORM\ManyToMany(targetEntity="App\Entity\Ingredient") */
-    protected $ingredients;
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\RecipeIngredient",
+     *     mappedBy="recipe",
+     *     cascade={"persist"}
+     * )
+     */
+    protected $recipeIngredients;
 
     /** @ORM\Column(type="text", nullable=true) */
     protected $instructions;
@@ -53,7 +60,7 @@ class Recipe extends AbstractEntity
     protected $createdAt;
 
     public function __construct() {
-        $this->ingredients = new ArrayCollection();
+        $this->recipeIngredients = new ArrayCollection();
     }
 
     /**
@@ -137,18 +144,18 @@ class Recipe extends AbstractEntity
     }
 
     /**
-     * @return Collection
+     * @return mixed
      */
-    public function getIngredients(): ?Collection {
-        return $this->ingredients;
+    public function getRecipeIngredients() {
+        return $this->recipeIngredients;
     }
 
     /**
-     * @param Collection $ingredients
+     * @param mixed $recipeIngredients
      * @return Recipe
      */
-    public function setIngredients(Collection $ingredients = null): Recipe {
-        $this->ingredients = $ingredients;
+    public function setRecipeIngredients($recipeIngredients = null): Recipe {
+        $this->recipeIngredients = $recipeIngredients;
         return $this;
     }
 
@@ -182,5 +189,20 @@ class Recipe extends AbstractEntity
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
         return $this;
+    }
+
+    /**
+     * Ensure all objects in $this->recipeIngredients are correctly
+     * assigned to this object before persist.
+     *
+     * @ORM\PrePersist
+     */
+    public function assignRecipeIngredients() {
+        if ($this->recipeIngredients) {
+            /** @var RecipeIngredient $recipeIingredient */
+            foreach ($this->recipeIngredients as $recipeIingredient) {
+                $recipeIingredient->setRecipe($this);
+            }
+        }
     }
 }

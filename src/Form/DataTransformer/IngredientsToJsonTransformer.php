@@ -4,12 +4,13 @@
 namespace App\Form\DataTransformer;
 
 
-use App\Entity\Tag;
+use App\Entity\Ingredient;
+use App\Entity\RecipeIngredient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class TagsToJsonTransformer implements DataTransformerInterface
+class IngredientsToJsonTransformer implements DataTransformerInterface
 {
     /** @var EntityManagerInterface */
     private $entityManager;
@@ -27,21 +28,24 @@ class TagsToJsonTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param \Doctrine\Common\Collections\Collection|array $tags
-     * @return array
+     * @param \Doctrine\Common\Collections\Collection|array $ingredients
+     * @return array JSON
      */
-    public function transformToArray($tags) {
-        if (! $tags) {
+    public function transformToArray($ingredients) {
+        if (! $ingredients) {
             return [];
         }
-        if (! is_array($tags)) {
-            $tags = $tags->toArray();
+        if (! is_array($ingredients)) {
+            $ingredients = $ingredients->toArray();
         }
 
         return array_reduce(
-            $tags,
-            function ($carry, $item) {
-                return array_merge($carry, [['id' => $item->getId(), 'value' => $item->getName()]]);
+            $ingredients,
+            function ($carry, $ingredient) {
+                return array_merge(
+                    $carry,
+                    [['id' => $ingredient->getId(), 'value' => $ingredient->getName()]]
+                );
             },
             []
         );
@@ -59,12 +63,12 @@ class TagsToJsonTransformer implements DataTransformerInterface
         }
 
         $return = [];
-        foreach ($data as $tagData) {
-            if (! empty($tagData['id'])) {
-                $return[] = $this->entityManager->getRepository(Tag::class)->find($tagData['id']);
+        foreach ($data as $ingredientData) {
+            if (! empty($ingredientData['id'])) {
+                $return[] = $this->entityManager->getRepository(Ingredient::class)->find($ingredientData['id']);
             }
             else {
-                $return[] = (new Tag())->setName($tagData['value']);
+                $return[] = (new Ingredient())->setName($ingredientData['value']);
             }
         }
 
