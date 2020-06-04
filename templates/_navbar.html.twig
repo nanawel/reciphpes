@@ -17,19 +17,20 @@
                 <a class="nav-link" href="{{ path('app_ingredient') }}"><i class="fas fa-carrot"></i>Ingrédients</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_location') }}"><i class="fas fa-map-marked-alt"></i>Emplacements</a>
+                <a class="nav-link" href="{{ path('app_location') }}"><i class="fas fa-book"></i>Emplacements</a>
             </li>
         </ul>
         <div>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-plus-circle"></i>Créer...
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ path('app_recipe_new')}}"><i class="fas fa-pizza-slice"></i>Recette</a>
-                        <a class="dropdown-item" href="{{ path('app_ingredient_new')}}"><i class="fas fa-carrot"></i>Ingrédient</a>
-                        <a class="dropdown-item" href="{{ path('app_location_new')}}"><i class="fas fa-map-marked-alt"></i>Emplacement</a>
+                        <a class="dropdown-item" href="{{ path('app_recipe_new') }}"><i class="fas fa-pizza-slice"></i>Recette</a>
+                        <a class="dropdown-item" href="{{ path('app_ingredient_new') }}"><i class="fas fa-carrot"></i>Ingrédient</a>
+                        <a class="dropdown-item" href="{{ path('app_location_new') }}"><i class="fas fa-book"></i>Emplacement</a>
                         <!--
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
@@ -38,8 +39,10 @@
                 </li>
                 <li>
                     <form class="form-inline my-2 my-lg-0" action="{{ path('search_results') }}" method="get">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher" name="q">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>Rechercher</button>
+                        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher"
+                               aria-label="Rechercher" name="q">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>Rechercher
+                        </button>
                     </form>
                 </li>
             </ul>

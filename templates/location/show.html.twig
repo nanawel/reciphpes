@@ -9,7 +9,7 @@
                 <a href="{{ path('app_location_delete', {id: location.id}) }}" class="btn action btn-danger"><span>Supprimer</span></a>
             </div>
         </div>
-        <h1 class="display-4"><i class="fas fa-map-marked-alt"></i> {{ location.name }}</h1>
+        <h1 class="display-4"><i class="fas fa-book"></i> {{ location.name }}</h1>
         {% if location.createdAt %}
             <p><span class="badge badge-secondary">Créée le {{ location.createdAt | localizeddate() }}</span></p>
         {% endif %}

@@ -18,7 +18,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *         @ORM\Index(name="RECIPE_INSTRUCTIONS_IDX", columns={"instructions"}, flags={"fulltext"})
  *     }
  * )
- * @ORM\HasLifecycleCallbacks
  */
 class Recipe extends AbstractEntity
 {
@@ -189,20 +188,5 @@ class Recipe extends AbstractEntity
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
         return $this;
-    }
-
-    /**
-     * Ensure all objects in $this->recipeIngredients are correctly
-     * assigned to this object before persist.
-     *
-     * @ORM\PrePersist
-     */
-    public function assignRecipeIngredients() {
-        if ($this->recipeIngredients) {
-            /** @var RecipeIngredient $recipeIingredient */
-            foreach ($this->recipeIngredients as $recipeIingredient) {
-                $recipeIingredient->setRecipe($this);
-            }
-        }
     }
 }

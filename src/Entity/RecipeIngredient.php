@@ -78,4 +78,11 @@ class RecipeIngredient extends AbstractEntity
         $this->note = $note;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getName() {
+        return $this->ingredient ? $this->ingredient->getName() : null;
+    }
 }

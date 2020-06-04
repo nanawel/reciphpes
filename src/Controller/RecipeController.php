@@ -56,15 +56,4 @@ class RecipeController extends DocumentController
 
         return $this->json($result);
     }
-
-    public function searchIngredients(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer) {
-        $term = $request->get('term');
-
-        /** @var TagRepository $repository */
-        $repository = $this->getEntityManager()->getRepository(Ingredient::class);
-
-        $result = $ingredientsToJsonTransformer->transformToArray($repository->findLike($term));
-
-        return $this->json($result);
-    }
 }

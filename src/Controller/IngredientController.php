@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Ingredient;
+use App\Form\DataTransformer\IngredientsToJsonTransformer;
+use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -37,5 +40,16 @@ class IngredientController extends DocumentController
      */
     public function delete(Request $request, object $entity = null) {
         return parent::delete($request, $entity);
+    }
+
+    public function search(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer) {
+        $term = $request->get('term');
+
+        /** @var TagRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Ingredient::class);
+
+        $result = $ingredientsToJsonTransformer->transformToArray($repository->findLike($term));
+
+        return $this->json($result);
     }
 }

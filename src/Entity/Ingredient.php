@@ -25,17 +25,8 @@ class Ingredient extends AbstractEntity
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=255) */
+    /** @ORM\Column(type="string", length=255, unique=true) */
     protected $name;
-
-//    /**
-//     * @ORM\ManyToMany(
-//     *     targetEntity="App\Entity\RecipeIngredient",
-//     *     mappedBy="recipe_id",
-//     *     inversedBy="ingredients"
-//     * )
-//     */
-//    protected $recipes;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=false)
@@ -74,22 +65,6 @@ class Ingredient extends AbstractEntity
         $this->name = $name;
         return $this;
     }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getRecipes() {
-//        return $this->recipes;
-//    }
-//
-//    /**
-//     * @param mixed $recipes
-//     * @return Ingredient
-//     */
-//    public function setRecipes($recipes) {
-//        $this->recipes = $recipes;
-//        return $this;
-//    }
 
     /**
      * @return mixed

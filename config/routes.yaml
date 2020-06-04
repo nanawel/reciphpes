@@ -35,13 +35,9 @@ app_recipe_delete:
   path: /recipe/delete/{id}
   controller: App\Controller\RecipeController::delete
 
-app_recipe_tags_search:
+app_recipe_tag_search:
   path: /recipe_tags/search
   controller: App\Controller\RecipeController::searchTags
-
-app_recipe_ingredients_search:
-  path: /recipe_ingredients/search
-  controller: App\Controller\RecipeController::searchIngredients
 
 ### INGREDIENT
 app_ingredient:
@@ -67,6 +63,10 @@ app_ingredient_edit:
 app_ingredient_delete:
   path: /ingredient/delete/{id}
   controller: App\Controller\IngredientController::delete
+
+app_ingredient_search:
+  path: /ingredients/search
+  controller: App\Controller\RecipeController::search
 
 ### LOCATION
 app_location:

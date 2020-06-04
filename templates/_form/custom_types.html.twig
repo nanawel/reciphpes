@@ -1,0 +1,49 @@
+{# RECIPE INGREDIENTS #}
+
+{% block _recipe_recipe_ingredients_row %} {# => Named from the path of the widget in the "recipe" form #}
+    {%- if expanded is defined and expanded -%}
+        {{ block('fieldset_form_row') }}
+    {%- else -%}
+        {%- set widget_attr = {} -%}
+        {%- if help is not empty -%}
+            {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+        {%- endif -%}
+        <div{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group row' ~ ((not compound or force_error|default(false)) and not valid ? ' is-invalid'))|trim})} %}{{ block('attributes') }}{% endwith %}>
+            {{- form_label(form) -}}
+            <div class="{{ block('form_group_class') }}">
+                {{- form_widget(form, widget_attr) -}}
+                <button type="button"
+                        class="btn btn-primary add-collection-widget"
+                        data-list-selector="#TODO"><i class="fas fa-plus-circle"></i> Nouvel ingrédient
+                </button>
+                {{- form_help(form) -}}
+            </div>
+        </div>
+    {%- endif -%}
+{% endblock %}
+
+{% block recipe_ingredient_widget %} {# => Named from the "RecipeIngredientType" class #}
+    <div class="form-group form-row">
+        {#        {{  dump(form) }}#}
+        <div class="col-12 col-lg-6">
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+            {{ form_help(form.name) }}
+        </div>
+
+        <div class="col-10 col-lg-5">
+            {{ form_widget(form.note) }}
+            {{ form_errors(form.note) }}
+            {{ form_help(form.note) }}
+        </div>
+
+        <div class="col-2 col-lg-1">
+            <button type="button"
+                    class="btn btn-danger delete-collection-widget"><i class="fas fa-minus-circle"></i></button>
+        </div>
+    </div>
+{% endblock %}
+
+{#{% block _recipe_recipe_ingredients_name_widget %} #}{# => Named from the path of the widget in the "recipe" form #}
+{#    {{  dump(form) }}#}
+{#{% endblock %}#}

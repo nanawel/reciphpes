@@ -4,12 +4,16 @@
 namespace App\Form;
 
 
+use App\Entity\RecipeIngredient;
 use App\Form\DataTransformer\LocationToIdTransformer;
 use App\Form\DataTransformer\RecipeIngredientsToJsonTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
+use App\Form\Type\RecipeIngredientType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,29 +34,19 @@ class Recipe extends AbstractType
     /** @var LocationToIdTransformer */
     protected $locationToIdTransformer;
 
-    /** @var RecipeIngredientsToJsonTransformer */
-    protected $recipeIngredientsToJsonTransformer;
-
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
         TagsToJsonTransformer $tagsToJsonTransformer,
-        LocationToIdTransformer $locationToIdTransformer,
-        RecipeIngredientsToJsonTransformer $recipeIngredientsToJsonTransformer
+        LocationToIdTransformer $locationToIdTransformer
     ) {
         $this->entityManager = $entityManager;
         $this->router = $router;
         $this->tagsToJsonTransformer = $tagsToJsonTransformer;
         $this->locationToIdTransformer = $locationToIdTransformer;
-        $this->recipeIngredientsToJsonTransformer = $recipeIngredientsToJsonTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $locations = [];
-        foreach ($this->entityManager->getRepository(\App\Entity\Location::class)->findAll() as $location) {
-            $locations[$location->getName()] = $location->getId();
-        }
-
         $builder
             ->add(
                 'name',
@@ -60,6 +54,9 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Nom',
                     'required' => false,
+                    'attr' => [
+                        'autocomplete' => 'recipe_name',
+                    ],
                 ]
             )
             ->add(
@@ -69,17 +66,18 @@ class Recipe extends AbstractType
                     'label' => 'Tags',
                     'required' => false,
                     'attr' => [
-                        'class' => 'autocomplete',
-                        'data-fetch-url' => $this->router->generate('app_recipe_tags_search')
+                        'class' => 'autocomplete-tag',
+                        'data-fetch-url' => $this->router->generate('app_recipe_tag_search')
                     ],
                 ]
             )
             ->add(
                 'location',
-                ChoiceType::class,
+                EntityType::class,
                 [
                     'label' => 'Emplacement',
-                    'choices' => $locations,
+                    'class' => \App\Entity\Location::class,
+                    'choice_label' => 'name',
                     'placeholder' => 'Choisissez un emplacement...',
                     'help' => 'Facultatif',
                     'required' => false,
@@ -91,21 +89,37 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Emplacement (détails)',
                     'help' => 'N° de page, chemin, etc.',
-                    'required' => false
-                ]
-            )
-            ->add(
-                'ingredients',
-                TextType::class,
-                [
-                    'label' => 'Ingrédients',
                     'required' => false,
                     'attr' => [
-                        'class' => 'autocomplete',
-                        'data-fetch-url' => $this->router->generate('app_recipe_ingredients_search')
+                        'autocomplete' => 'recipe_location_details',
                     ],
                 ]
             )
+            ->add(
+                'recipeIngredients',
+                CollectionType::class,
+                [
+                    'block_name' => 'recipe_ingredients',
+                    'entry_type' => RecipeIngredientType::class,
+                    'entry_options' => [
+                        'compound' => true,
+                    ],
+                    'label' => 'Ingrédients',
+                    'required' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'delete_empty' => true,
+                ]
+            )
+//            ->add(
+//                'recipeIngredients',
+//                RecipeIngredientsType::class,
+//                [
+//                    'label' => 'Ingrédients',
+//                    'class' => \App\Entity\RecipeIngredient::class,
+//                    'required' => false,
+//                ]
+//            )
             ->add(
                 'instructions',
                 TextareaType::class,
@@ -115,6 +129,7 @@ class Recipe extends AbstractType
                     'required' => false,
                     'attr' => [
                         'class' => 'markdown',
+                        'autocomplete' => 'recipe_ingredients',
                     ],
                 ]
             )
@@ -124,7 +139,5 @@ class Recipe extends AbstractType
             ->addModelTransformer($this->tagsToJsonTransformer);
         $builder->get('location')
             ->addModelTransformer($this->locationToIdTransformer);
-        $builder->get('ingredients')
-            ->addModelTransformer($this->recipeIngredientsToJsonTransformer);
     }
 }
