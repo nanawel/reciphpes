@@ -68,7 +68,6 @@ const refreshPluginObservers = function () {
 
 
 $('.form-group > div > button.add-collection-widget').click(function (ev) {
-    console.log($(ev.target));
     const $collectionHolder = $(ev.target).siblings('[data-prototype]');
     const prototype = $collectionHolder.data('prototype');
     var index = $collectionHolder.data('index') || $collectionHolder.children().length;
@@ -79,15 +78,17 @@ $('.form-group > div > button.add-collection-widget').click(function (ev) {
 
     $collectionHolder.append(newForm);
 
-    $collectionHolder.find('button.delete-collection-widget').click(function (ev) {
-        $(this).parents('.form-row').remove();
-
-        return false;
-    });
-
     refreshPluginObservers();
 
     return false;
 });
+$('.form-group > div').on('click', 'button.delete-collection-widget', function (ev) {
+    $(this).closest('.form-group.row').fadeOut(200, function () {
+        $(this).remove();
+    });
+
+    return false;
+});
+
 
 refreshPluginObservers();

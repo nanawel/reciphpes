@@ -61,7 +61,8 @@ class TagsToJsonTransformer implements DataTransformerInterface
         $return = [];
         foreach ($data as $tagData) {
             if (! empty($tagData['id'])) {
-                $return[] = $this->entityManager->getRepository(Tag::class)->find($tagData['id']);
+                $return[] = $this->entityManager->getRepository(Tag::class)
+                    ->find($tagData['id']);
             }
             else {
                 $return[] = (new Tag())->setName($tagData['value']);

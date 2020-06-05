@@ -75,6 +75,7 @@ class Recipe extends AbstractEntity
      */
     public function setId($id) {
         $this->id = $id;
+
         return $this;
     }
 
@@ -91,6 +92,7 @@ class Recipe extends AbstractEntity
      */
     public function setName($name) {
         $this->name = $name;
+
         return $this;
     }
 
@@ -107,6 +109,7 @@ class Recipe extends AbstractEntity
      */
     public function setTags($tags) {
         $this->tags = $tags;
+
         return $this;
     }
 
@@ -123,6 +126,7 @@ class Recipe extends AbstractEntity
      */
     public function setLocation($location) {
         $this->location = $location;
+
         return $this;
     }
 
@@ -139,6 +143,7 @@ class Recipe extends AbstractEntity
      */
     public function setLocationDetails($locationDetails) {
         $this->locationDetails = $locationDetails;
+
         return $this;
     }
 
@@ -149,12 +154,42 @@ class Recipe extends AbstractEntity
         return $this->recipeIngredients;
     }
 
+//    /**
+//     * @param mixed $recipeIngredients
+//     * @return Recipe
+//     */
+//    public function setRecipeIngredients($recipeIngredients = null): Recipe {
+//        foreach ($recipeIngredients as $recipeIngredient) {
+//            $recipeIngredient->setRecipe($this);
+//        }
+//        $this->recipeIngredients = $recipeIngredients;
+//
+//        return $this;
+//    }
+
     /**
-     * @param mixed $recipeIngredients
+     * @param RecipeIngredient $recipeIngredient
      * @return Recipe
      */
-    public function setRecipeIngredients($recipeIngredients = null): Recipe {
-        $this->recipeIngredients = $recipeIngredients;
+    public function addRecipeIngredient($recipeIngredient): Recipe {
+        if (! $this->recipeIngredients->contains($recipeIngredient)) {
+            $recipeIngredient->setRecipe($this);
+            $this->recipeIngredients->add($recipeIngredient);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param RecipeIngredient $recipeIngredient
+     * @return Recipe
+     */
+    public function removeRecipeIngredient($recipeIngredient): Recipe {
+        if ($this->recipeIngredients->contains($recipeIngredient)) {
+            $recipeIngredient->setRecipe(null);
+            $this->recipeIngredients->removeElement($recipeIngredient);
+        }
+
         return $this;
     }
 
@@ -171,6 +206,7 @@ class Recipe extends AbstractEntity
      */
     public function setInstructions($instructions) {
         $this->instructions = $instructions;
+
         return $this;
     }
 
@@ -187,6 +223,7 @@ class Recipe extends AbstractEntity
      */
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 }
