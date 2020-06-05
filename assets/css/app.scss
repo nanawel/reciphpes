@@ -78,3 +78,13 @@ textarea.markdown ~ div {
 .CodeMirror-cursor {
     border-color: black;
 }
+
+.save-btn:before {
+    @extend .fas;
+    @extend .fa-save;
+    /*font-family: "Font Awesome 5 Free";
+    content: "\f1b9";*/
+    display: inline-block;
+    padding-right: 5px;
+    vertical-align: middle;
+}

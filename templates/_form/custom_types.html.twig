@@ -13,8 +13,8 @@
             <div class="{{ block('form_group_class') }}">
                 {{- form_widget(form, widget_attr) -}}
                 <button type="button"
-                        class="btn btn-primary add-collection-widget"
-                        data-list-selector="#TODO"><i class="fas fa-plus-circle"></i> Nouvel ingrédient
+                        class="btn btn-primary btn-sm add-collection-widget">
+                    <i class="fas fa-plus-circle"></i> Nouvel ingrédient
                 </button>
                 {{- form_help(form) -}}
             </div>
@@ -23,27 +23,29 @@
 {% endblock %}
 
 {% block recipe_ingredient_widget %} {# => Named from the "RecipeIngredientType" class #}
-    <div class="form-group form-row">
-        {#        {{  dump(form) }}#}
+    <div class="form-group form-row form-control-sm">
         <div class="col-12 col-lg-6">
-            {{ form_widget(form.name) }}
+            {# Means "add class 'form-control-sm' to existing widget's classes"... #}
+            {{ form_widget(form.name, {
+                attr: form.name.vars.attr|merge({'class': form.name.vars.attr['class']|default('') ~ ' form-control-sm' })
+            }) }}
             {{ form_errors(form.name) }}
             {{ form_help(form.name) }}
         </div>
 
         <div class="col-10 col-lg-5">
-            {{ form_widget(form.note) }}
+            {{ form_widget(form.note, {
+                attr: form.note.vars.attr|merge({'class': form.note.vars.attr['class']|default('') ~ ' form-control-sm' })
+            }) }}
             {{ form_errors(form.note) }}
             {{ form_help(form.note) }}
         </div>
 
         <div class="col-2 col-lg-1">
             <button type="button"
-                    class="btn btn-danger delete-collection-widget"><i class="fas fa-minus-circle"></i></button>
+                    class="btn btn-danger btn-sm delete-collection-widget">
+                <i class="fas fa-minus-circle"></i>
+            </button>
         </div>
     </div>
 {% endblock %}
-
-{#{% block _recipe_recipe_ingredients_name_widget %} #}{# => Named from the path of the widget in the "recipe" form #}
-{#    {{  dump(form) }}#}
-{#{% endblock %}#}

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -44,6 +43,7 @@ class Recipe extends AbstractEntity
      * @ORM\OneToMany(
      *     targetEntity="App\Entity\RecipeIngredient",
      *     mappedBy="recipe",
+     *     orphanRemoval=true,
      *     cascade={"persist"}
      * )
      */

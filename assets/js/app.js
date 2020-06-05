@@ -19,37 +19,46 @@ require('jquery-ui/ui/widgets/autocomplete');
 require('@yaireo/tagify/dist/jQuery.tagify.min');
 const SimpleMDE = require('simplemde/dist/simplemde.min');
 
-$('.autocomplete-tag').tagify()
-    .on('input', function (e, input) {
-        const value = input.value;
-        const tagify = $(this).data('tagify');
-        const fetchUrl = $(this).data('fetch-url');
-            //console.log('Tagify input: ', input, fetchUrl);
-
-        tagify.settings.whitelist.length = 0;
-        tagify.loading(true).dropdown.hide.call(tagify);
-
-            $.get(
-                fetchUrl,
-                {term: value},
-                function (data, textStatus, jqXHR) {
-                    tagify.settings.whitelist.splice(0, data.length, ...data);
-                    tagify.loading(false).dropdown.show.call(tagify, value);
-                }
-            );
-    });
-
 $('textarea.markdown').each(el => new SimpleMDE({element: el, spellChecker: false}));
 
-
 const refreshPluginObservers = function () {
+    // Tagify
+    $('input.autocomplete-tag').each(function (i, el) {
+        if (!$(el).data('tagify')) {
+            $(el).tagify()
+                .on('input', function (e, input) {
+                    const value = input.value;
+                    const tagify = $(this).data('tagify');
+                    const fetchUrl = $(this).data('fetch-url');
+
+                    tagify.settings.whitelist.length = 0;
+                    tagify.loading(true).dropdown.hide.call(tagify);
+
+                    $.get(
+                        fetchUrl,
+                        {term: value},
+                        function (data, textStatus, jqXHR) {
+                            tagify.settings.whitelist.splice(0, data.length, ...data);
+                            tagify.loading(false).dropdown.show.call(tagify, value);
+                        }
+                    );
+                });
+        }
+    });
+
     // JQuery-ui Autocomplete
     $('.jq-autocomplete').each(function (i, el) {
         $(el).autocomplete({
             source: function (request, response) {
-                console.log(request);
+                const fetchUrl = $(el).data('fetch-url');
 
-                response(['a', 'b']);
+                $.get(
+                    fetchUrl,
+                    {term: request.term},
+                    function (data, textStatus, jqXHR) {
+                        response(data.map(result => result.value));
+                    }
+                );
             }
         });
         // Restore custom autocomplete after JQuery-ui overwrote it
@@ -59,6 +68,7 @@ const refreshPluginObservers = function () {
 
 
 $('.form-group > div > button.add-collection-widget').click(function (ev) {
+    console.log($(ev.target));
     const $collectionHolder = $(ev.target).siblings('[data-prototype]');
     const prototype = $collectionHolder.data('prototype');
     var index = $collectionHolder.data('index') || $collectionHolder.children().length;

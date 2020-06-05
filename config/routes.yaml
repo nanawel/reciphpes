@@ -66,7 +66,7 @@ app_ingredient_delete:
 
 app_ingredient_search:
   path: /ingredients/search
-  controller: App\Controller\RecipeController::search
+  controller: App\Controller\IngredientController::search
 
 ### LOCATION
 app_location:

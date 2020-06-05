@@ -4,7 +4,6 @@
 namespace App\Form;
 
 
-use App\Entity\RecipeIngredient;
 use App\Form\DataTransformer\LocationToIdTransformer;
 use App\Form\DataTransformer\RecipeIngredientsToJsonTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
@@ -12,7 +11,6 @@ use App\Form\Type\RecipeIngredientType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -101,25 +99,14 @@ class Recipe extends AbstractType
                 [
                     'block_name' => 'recipe_ingredients',
                     'entry_type' => RecipeIngredientType::class,
-                    'entry_options' => [
-                        'compound' => true,
-                    ],
                     'label' => 'Ingrédients',
                     'required' => false,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'delete_empty' => true,
+                    'by_reference' => false,
                 ]
             )
-//            ->add(
-//                'recipeIngredients',
-//                RecipeIngredientsType::class,
-//                [
-//                    'label' => 'Ingrédients',
-//                    'class' => \App\Entity\RecipeIngredient::class,
-//                    'required' => false,
-//                ]
-//            )
             ->add(
                 'instructions',
                 TextareaType::class,
@@ -133,7 +120,16 @@ class Recipe extends AbstractType
                     ],
                 ]
             )
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'label' => 'Enregistrer',
+                    'attr' => [
+                        'class' => 'btn-primary save-btn'
+                    ],
+                ]
+            );
 
         $builder->get('tags')
             ->addModelTransformer($this->tagsToJsonTransformer);

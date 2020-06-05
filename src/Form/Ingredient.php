@@ -25,7 +25,10 @@ class Ingredient extends AbstractType
                 'save',
                 SubmitType::class,
                 [
-                    'label' => 'Enregistrer'
+                    'label' => 'Enregistrer',
+                    'attr' => [
+                        'class' => 'btn-primary save-btn'
+                    ],
                 ]
             );
     }

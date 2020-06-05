@@ -28,3 +28,9 @@ down:
 
 logs:
 	docker-compose logs -f --tail=50
+
+encore-watch:
+	yarn run encore dev --watch
+
+encore-build:
+	yarn encore production
