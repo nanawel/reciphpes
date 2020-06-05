@@ -43,7 +43,7 @@ class Recipe extends AbstractEntity
      * @ORM\ManyToMany(targetEntity="App\Entity\TimeOfYear")
      * @ORM\JoinTable(name="recipe_timeofyear",
      *      joinColumns={@ORM\JoinColumn(name="recipe_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="timeofyear_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="timeofyear_id", referencedColumnName="id")}
      * )
      */
     protected $timesOfYear;

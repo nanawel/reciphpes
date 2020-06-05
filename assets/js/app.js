@@ -21,7 +21,7 @@ const SimpleMDE = require('simplemde/dist/simplemde.min');
 
 $('textarea.markdown').each(el => new SimpleMDE({element: el, spellChecker: false}));
 
-const refreshPluginObservers = function () {
+const refreshElementObservers = function () {
     // Tagify
     $('input.autocomplete-tag').each(function (i, el) {
         if (!$(el).data('tagify')) {
@@ -47,7 +47,8 @@ const refreshPluginObservers = function () {
     });
 
     // JQuery-ui Autocomplete
-    $('.jq-autocomplete').each(function (i, el) {
+    $('input.jq-autocomplete').each(function (i, el) {
+        const autocompleteValue = $(el).attr('autocomplete');
         $(el).autocomplete({
             source: function (request, response) {
                 const fetchUrl = $(el).data('fetch-url');
@@ -62,23 +63,35 @@ const refreshPluginObservers = function () {
             }
         });
         // Restore custom autocomplete after JQuery-ui overwrote it
-        $(el).attr('autocomplete', $(el).data('autocomplete-bak'));
+        $(el).attr('autocomplete', autocompleteValue);
+    });
+
+    // Disable ENTER key default handling (form submission)
+    $(document).on('keydown', function(ev) {
+        return ev.key != 'Enter';
     });
 };
 
 
-$('.form-group > div > button.add-collection-widget').click(function (ev) {
-    const $collectionHolder = $(ev.target).siblings('[data-prototype]');
+const addCollectionItem = function($collectionHolder) {
     const prototype = $collectionHolder.data('prototype');
-    var index = $collectionHolder.data('index') || $collectionHolder.children().length;
-    var newForm = prototype;
+    let index = $collectionHolder.data('index') || $collectionHolder.children().length;
 
-    newForm = newForm.replace(/__name__/g, index);
+    const $newForm = $(prototype.replace(/__name__/g, index));
+
+    $collectionHolder.append($newForm);
+
+    $newForm.find('input')[0].focus();
+
     $collectionHolder.data('index', index + 1);
 
-    $collectionHolder.append(newForm);
+    refreshElementObservers();
+};
 
-    refreshPluginObservers();
+$('.form-group > div > button.add-collection-widget').click(function (ev) {
+    const $collectionHolder = $(ev.target).siblings('[data-prototype]');
+
+    addCollectionItem($collectionHolder);
 
     return false;
 });
@@ -90,5 +103,15 @@ $('.form-group > div').on('click', 'button.delete-collection-widget', function (
     return false;
 });
 
+// Add hotkey for "Add ingredient" action on recipes
+$(document).on('keydown', 'form .form-recipe-ingredients-type', function(ev) {
+    if (ev.key == 'Enter' && ev.ctrlKey) {
+        const $collectionHolder = $(ev.target).closest('[data-prototype]');
 
-refreshPluginObservers();
+        addCollectionItem($collectionHolder);
+
+        return false;
+    };
+});
+
+refreshElementObservers();

@@ -110,6 +110,7 @@ class Recipe extends AbstractType
                 'recipeIngredients',
                 CollectionType::class,
                 [
+                    'help' => 'Astuce : vous pouvez utiliser Ctrl+Entrée pour ajouter une nouvelle ligne.',
                     'block_name' => 'recipe_ingredients',
                     'entry_type' => RecipeIngredientType::class,
                     'label' => 'Ingrédients',

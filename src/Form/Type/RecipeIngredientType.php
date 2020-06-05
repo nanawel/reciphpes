@@ -43,7 +43,6 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
                         'class' => 'jq-autocomplete',
                         'placeholder' => 'Nom...',
                         'autocomplete' => 'ingredient_name',
-                        'data-autocomplete-bak' => 'ingredient_name',
                         'data-fetch-url' => $this->router->generate('app_ingredient_search'),
                     ],
                     'required' => true,
@@ -71,6 +70,9 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(
             [
+                'row_attr' => [
+                    'class' => 'form-recipe-ingredients-type'
+                ],
                 'label_attr' => [
                     'class' => 'd-none'     // Hide label (placeholder displayed only)
                 ],

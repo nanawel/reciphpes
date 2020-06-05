@@ -49,6 +49,7 @@ abstract class DocumentController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $success = false;
             try {
                 $entity = $form->getData();
 
@@ -72,35 +73,21 @@ abstract class DocumentController extends AbstractController
                     'success',
                     $message
                 );
+                $success = true;
             } catch (\Throwable $e) {
                 $this->getLogger()->error($e);
                 $this->addFlash('danger', "Impossible d'enregistrer l'élément : {$e->getMessage()}");
-
-                if (isset($entity) && $entity->getId()) {
-                    return $this->redirectToRoute(
-                        sprintf(
-                            'app_%s_edit',
-                            $this->getEntityConfig('route_prefix')
-                        ),
-                        ['id' => $entity->getId()]
-                    );
-                }
-
-                return $this->redirectToRoute(
-                    sprintf(
-                        'app_%s_new',
-                        $this->getEntityConfig('route_prefix')
-                    )
-                );
             }
 
-            return $this->redirectToRoute(
-                sprintf(
-                    'app_%s_grid',
-                    $this->getEntityConfig('route_prefix')
-                ),
-                ['id' => $entity->getId()]
-            );
+            if ($success) {
+                return $this->redirectToRoute(
+                    sprintf(
+                        'app_%s_grid',
+                        $this->getEntityConfig('route_prefix')
+                    ),
+                    ['id' => $entity->getId()]
+                );
+            }
         }
 
         return $this->render(

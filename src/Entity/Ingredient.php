@@ -29,6 +29,16 @@ class Ingredient extends AbstractEntity
     protected $name;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\RecipeIngredient",
+     *     mappedBy="ingredient",
+     *     orphanRemoval=true,
+     *     cascade={"remove"}
+     * )
+     */
+    protected $recipeIngredients;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at", nullable=false)
      * @Gedmo\Timestampable(on="create")
      */
@@ -47,6 +57,7 @@ class Ingredient extends AbstractEntity
      */
     public function setId($id) {
         $this->id = $id;
+
         return $this;
     }
 
@@ -63,6 +74,24 @@ class Ingredient extends AbstractEntity
      */
     public function setName($name) {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecipeIngredients() {
+        return $this->recipeIngredients;
+    }
+
+    /**
+     * @param mixed $recipeIngredients
+     * @return $this
+     */
+    public function setRecipeIngredients($recipeIngredients) {
+        $this->recipeIngredients = $recipeIngredients;
+
         return $this;
     }
 
@@ -79,6 +108,7 @@ class Ingredient extends AbstractEntity
      */
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 }
