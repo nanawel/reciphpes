@@ -53,6 +53,13 @@ i.fa-circle-o-notch {
     @extend .text-muted;
 }
 
+//.btn.show:before {
+//    @extend .fas;
+//    @extend .fa-eye;
+//    display: inline-block;
+//    padding-right: 5px;
+//    vertical-align: middle;
+//}
 //.btn.show > i {
 //    @extend %fa-icon;
 //    @extend .far;
@@ -86,8 +93,6 @@ textarea.markdown ~ div {
 .save-btn:before {
     @extend .fas;
     @extend .fa-save;
-    /*font-family: "Font Awesome 5 Free";
-    content: "\f1b9";*/
     display: inline-block;
     padding-right: 5px;
     vertical-align: middle;
