@@ -11,8 +11,11 @@ reciphpes!
 bin/console doctrine:database:create
 
 # Optional, if migration scripts do not already exist in src/Migrations/
-bin/console make:migrations
+bin/console make:migration
 
 bin/console doctrine:migrations:migrate
+
+# Insert default data
+bin/console doctrine:fixtures:load --append
 
 ```

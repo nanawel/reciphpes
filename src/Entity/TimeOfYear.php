@@ -5,17 +5,15 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(
- *     repositoryClass=App\Repository\TagRepository::class
- * )
+ * @ORM\Entity
  * @ORM\Table(
- *     name="tag",
+ *     name="timeofyear",
  *     indexes={
- *         @ORM\Index(name="TAG_NAME_IDX", columns={"name"})
+ *         @ORM\Index(name="TIMEOFYEAR_NAME_IDX", columns={"name"})
  *     }
  * )
  */
-class Tag extends AbstractEntity
+class TimeOfYear extends AbstractEntity
 {
     /**
      * @ORM\Id
@@ -24,7 +22,10 @@ class Tag extends AbstractEntity
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=255) */
+    /** @ORM\Column(type="string", length=32, unique=true) */
+    protected $code;
+
+    /** @ORM\Column(type="string", length=255, unique=true) */
     protected $name;
 
     /**
@@ -36,10 +37,28 @@ class Tag extends AbstractEntity
 
     /**
      * @param mixed $id
-     * @return Tag
+     * @return $this
      */
     public function setId($id) {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode() {
+        return $this->code;
+    }
+
+    /**
+     * @param mixed $code
+     * @return $this
+     */
+    public function setCode($code) {
+        $this->code = $code;
+
         return $this;
     }
 
@@ -52,10 +71,11 @@ class Tag extends AbstractEntity
 
     /**
      * @param mixed $name
-     * @return Tag
+     * @return $this
      */
     public function setName($name) {
         $this->name = $name;
+
         return $this;
     }
 }

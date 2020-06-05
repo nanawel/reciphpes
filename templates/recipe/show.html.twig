@@ -23,10 +23,17 @@
         {% else %}
             <div class="alert alert-light" role="alert">Pas d'emplacement associé.</div>
         {% endif %}
-        <div class="tags">
-            {% for tag in recipe.tags %}
-                <span class="tag badge badge-secondary">{{ tag.name }}</span>
-            {% endfor %}
+        <div class="row">
+            <div class="tags col col-6">
+                {% for tag in recipe.tags %}
+                    <span class="tag badge badge-secondary">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+            <div class="timesofyear col col-6">
+                {% for toy in recipe.timesOfYear %}
+                    <span class="timeofyear badge badge-secondary">{{ toy.name }}</span>
+                {% endfor %}
+            </div>
         </div>
         <hr class="my-4">
         <h2 class="ingredients">Ingrédients</h2>
@@ -34,6 +41,7 @@
             <ul>
                 {% for i in recipe.recipeIngredients %}
                     <li><a href="{{ path('app_ingredient_show', {id: i.ingredient.id}) }}">{{ i.ingredient.name }}</a>
+                        {% if i.note %} <span class="ingredient-note">({{ i.note }})</span>{% endif %}
                     </li>
                 {% endfor %}
             </ul>

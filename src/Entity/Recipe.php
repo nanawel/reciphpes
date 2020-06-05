@@ -40,6 +40,15 @@ class Recipe extends AbstractEntity
     protected $locationDetails;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\TimeOfYear")
+     * @ORM\JoinTable(name="recipe_timeofyear",
+     *      joinColumns={@ORM\JoinColumn(name="recipe_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="timeofyear_id", referencedColumnName="id", unique=true)}
+     * )
+     */
+    protected $timesOfYear;
+
+    /**
      * @ORM\OneToMany(
      *     targetEntity="App\Entity\RecipeIngredient",
      *     mappedBy="recipe",
@@ -60,6 +69,7 @@ class Recipe extends AbstractEntity
 
     public function __construct() {
         $this->recipeIngredients = new ArrayCollection();
+        $this->timesOfYear = new ArrayCollection();
     }
 
     /**
@@ -71,7 +81,7 @@ class Recipe extends AbstractEntity
 
     /**
      * @param mixed $id
-     * @return Recipe
+     * @return $this
      */
     public function setId($id) {
         $this->id = $id;
@@ -88,7 +98,7 @@ class Recipe extends AbstractEntity
 
     /**
      * @param mixed $name
-     * @return Recipe
+     * @return $this
      */
     public function setName($name) {
         $this->name = $name;
@@ -105,7 +115,7 @@ class Recipe extends AbstractEntity
 
     /**
      * @param mixed $tags
-     * @return Recipe
+     * @return $this
      */
     public function setTags($tags) {
         $this->tags = $tags;
@@ -122,7 +132,7 @@ class Recipe extends AbstractEntity
 
     /**
      * @param mixed $location
-     * @return Recipe
+     * @return $this
      */
     public function setLocation($location) {
         $this->location = $location;
@@ -139,10 +149,27 @@ class Recipe extends AbstractEntity
 
     /**
      * @param mixed $locationDetails
-     * @return Recipe
+     * @return $this
      */
     public function setLocationDetails($locationDetails) {
         $this->locationDetails = $locationDetails;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimesOfYear() {
+        return $this->timesOfYear;
+    }
+
+    /**
+     * @param mixed $timesOfYear
+     * @return $this
+     */
+    public function setTimesOfYear($timesOfYear) {
+        $this->timesOfYear = $timesOfYear;
 
         return $this;
     }
@@ -154,22 +181,9 @@ class Recipe extends AbstractEntity
         return $this->recipeIngredients;
     }
 
-//    /**
-//     * @param mixed $recipeIngredients
-//     * @return Recipe
-//     */
-//    public function setRecipeIngredients($recipeIngredients = null): Recipe {
-//        foreach ($recipeIngredients as $recipeIngredient) {
-//            $recipeIngredient->setRecipe($this);
-//        }
-//        $this->recipeIngredients = $recipeIngredients;
-//
-//        return $this;
-//    }
-
     /**
      * @param RecipeIngredient $recipeIngredient
-     * @return Recipe
+     * @return $this
      */
     public function addRecipeIngredient($recipeIngredient): Recipe {
         if (! $this->recipeIngredients->contains($recipeIngredient)) {
@@ -182,7 +196,7 @@ class Recipe extends AbstractEntity
 
     /**
      * @param RecipeIngredient $recipeIngredient
-     * @return Recipe
+     * @return $this
      */
     public function removeRecipeIngredient($recipeIngredient): Recipe {
         if ($this->recipeIngredients->contains($recipeIngredient)) {
@@ -202,7 +216,7 @@ class Recipe extends AbstractEntity
 
     /**
      * @param mixed $instructions
-     * @return Recipe
+     * @return $this
      */
     public function setInstructions($instructions) {
         $this->instructions = $instructions;
@@ -219,7 +233,7 @@ class Recipe extends AbstractEntity
 
     /**
      * @param mixed $createdAt
-     * @return Recipe
+     * @return $this
      */
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;

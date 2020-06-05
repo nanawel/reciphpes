@@ -29,6 +29,14 @@ down:
 logs:
 	docker-compose logs -f --tail=50
 
+install:
+	docker-compose exec symfony sh -c \
+		'composer install \
+		&& bin/console doctrine:database:create \
+		&& bin/console make:migration \
+		&& bin/console doctrine:migrations:migrate \
+		&& bin/console doctrine:fixtures:load --append'
+
 encore-watch:
 	yarn run encore dev --watch
 

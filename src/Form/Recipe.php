@@ -1,11 +1,9 @@
 <?php
 
-
 namespace App\Form;
 
-
+use App\Entity\TimeOfYear;
 use App\Form\DataTransformer\LocationToIdTransformer;
-use App\Form\DataTransformer\RecipeIngredientsToJsonTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Form\Type\RecipeIngredientType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -74,10 +72,10 @@ class Recipe extends AbstractType
                 EntityType::class,
                 [
                     'label' => 'Emplacement',
+                    'help' => 'Facultatif',
                     'class' => \App\Entity\Location::class,
                     'choice_label' => 'name',
                     'placeholder' => 'Choisissez un emplacement...',
-                    'help' => 'Facultatif',
                     'required' => false,
                 ]
             )
@@ -91,6 +89,21 @@ class Recipe extends AbstractType
                     'attr' => [
                         'autocomplete' => 'recipe_location_details',
                     ],
+                ]
+            )
+            ->add(
+                'timesOfYear',
+                EntityType::class,
+                [
+                    'label' => "Époque(s) de l'année",
+                    'help' => 'Facultatif',
+                    'class' => TimeOfYear::class,
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'label_attr' => ['class' => 'checkbox-custom'],
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => true,
                 ]
             )
             ->add(

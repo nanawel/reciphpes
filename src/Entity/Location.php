@@ -43,7 +43,7 @@ class Location extends AbstractEntity
 
     /**
      * @param mixed $id
-     * @return Location
+     * @return $this
      */
     public function setId($id) {
         $this->id = $id;
@@ -59,7 +59,7 @@ class Location extends AbstractEntity
 
     /**
      * @param mixed $name
-     * @return Location
+     * @return $this
      */
     public function setName($name) {
         $this->name = $name;
@@ -75,7 +75,7 @@ class Location extends AbstractEntity
 
     /**
      * @param mixed $createdAt
-     * @return Location
+     * @return $this
      */
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;

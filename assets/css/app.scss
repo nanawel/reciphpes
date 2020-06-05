@@ -49,6 +49,10 @@ i.fa-circle-o-notch {
     height: 10em;
 }
 
+.ingredient-note {
+    @extend .text-muted;
+}
+
 //.btn.show > i {
 //    @extend %fa-icon;
 //    @extend .far;
