@@ -67,7 +67,7 @@ const refreshElementObservers = function () {
     });
 
     // Disable ENTER key default handling (form submission)
-    $(document).on('keydown', function(ev) {
+    $(document).on('keydown', 'form.no-submit-on-enter', function (ev) {
         return ev.key != 'Enter';
     });
 };
@@ -76,7 +76,6 @@ const refreshElementObservers = function () {
 const addCollectionItem = function($collectionHolder) {
     const prototype = $collectionHolder.data('prototype');
     let index = $collectionHolder.data('index') || $collectionHolder.children().length;
-
     const $newForm = $(prototype.replace(/__name__/g, index));
 
     $collectionHolder.append($newForm);
@@ -111,7 +110,7 @@ $(document).on('keydown', 'form .form-recipe-ingredients-type', function(ev) {
         addCollectionItem($collectionHolder);
 
         return false;
-    };
+    }
 });
 
 refreshElementObservers();

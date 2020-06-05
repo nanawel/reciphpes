@@ -2,18 +2,7 @@
 
 namespace App\Grid\Builder;
 
-use App\Entity\Ingredient;
-use App\Entity\Recipe;
-use App\Grid\Builder;
-use App\Grid\Column\Action;
-use App\Grid\Column\ColumnInterface;
-use App\Grid\Column\DefaultColumn;
 use App\Grid\Column\TwigColumn;
-use App\Grid\Configuration;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Router;
-use Twig\Environment;
 
 class RecipeBuilder extends DefaultBuilder
 {
@@ -47,34 +36,5 @@ class RecipeBuilder extends DefaultBuilder
         );
 
         return $this;
-    }
-
-    protected function getItems() {
-        if ($this->searchQuery) {
-            $matchingIngredients = $this->entityManager->createQueryBuilder(Ingredient::class)
-                ->text($this->searchQuery)
-                ->getQuery()
-                ->execute()
-                ->toArray();
-
-//            var_dump($matchingIngredients);
-
-            $builder = $this->entityManager->createQueryBuilder($this->getEntityConfig('class'));
-            $builder
-                ->addOr($builder->expr()->text($this->searchQuery))
-//                ->field('ingredients')->in($matchingIngredients)
-                ->addOr(
-//                    $builder->expr()->setQuery()->field('ingredients')->in($matchingIngredients)
-//                    $builder->expr()->field('ingredients.$id')->in($matchingIngredientIds)
-                );
-
-            $query = $builder->getQuery();
-
-            //var_dump(json_encode($query->debug(), JSON_PRETTY_PRINT));exit;
-
-            $query->execute();
-        }
-
-        return parent::getItems();
     }
 }

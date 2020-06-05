@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
 class Recipe extends AbstractType
@@ -149,5 +150,15 @@ class Recipe extends AbstractType
             ->addModelTransformer($this->tagsToJsonTransformer);
         $builder->get('location')
             ->addModelTransformer($this->locationToIdTransformer);
+    }
+
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults(
+            [
+                'attr' => [
+                    'class' => 'no-submit-on-enter'
+                ]
+            ]
+        );
     }
 }

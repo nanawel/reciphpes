@@ -156,15 +156,11 @@ class DefaultBuilder implements Builder
     }
 
     protected function getItems() {
+        $repository = $this->entityManager->getRepository($this->getEntityConfig('class'));
         if ($this->searchQuery) {
-            return $this->entityManager->createQueryBuilder($this->getEntityConfig('class'))
-                ->text($this->searchQuery)
-                ->getQuery()
-                ->execute()
-                ->toArray();
+            return $repository->search($this->searchQuery);
         }
 
-        return $this->entityManager->getRepository($this->getEntityConfig('class'))
-            ->findAll();
+        return $repository->findAll();
     }
 }
