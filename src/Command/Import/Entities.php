@@ -102,7 +102,8 @@ class EntitiesCommand extends Command
         else {
             $output->writeln("Importing file $csvFile...");
             $importService->import($csvFile, $entityType, ['output' => $output]);
-            $output->writeln("Importing complete.");
+            $output->writeln('');
+            $output->writeln("<info>Import complete!</info>");
         }
 
         return 0;

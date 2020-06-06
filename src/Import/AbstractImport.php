@@ -173,6 +173,7 @@ class AbstractImport
         $this->entityManager->clear();
 
         // Ending the progress bar process
+        $progress->advance(($i - 1) % $batchSize);
         $progress->finish();
     }
 
@@ -195,11 +196,20 @@ class AbstractImport
             $entity = new $entityClass();
         }
 
-        foreach ($normData as $property => $data) {
-            $this->propertyAccessor->setValue($entity, $property, $data);
+        foreach ($normData as $property => $value) {
+            $this->setEntityProperty($entity, $property, $value);
         }
 
         return $entity;
+    }
+
+    /**
+     * @param AbstractEntity $entity
+     * @param string $property
+     * @param mixed $value
+     */
+    protected function setEntityProperty(AbstractEntity $entity, string $property, $value) {
+        $this->propertyAccessor->setValue($entity, $property, $value);
     }
 
     /**

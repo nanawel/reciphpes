@@ -2,6 +2,7 @@
 
 namespace App\Import;
 
+use App\Entity\AbstractEntity;
 use App\Entity\Ingredient;
 use App\Entity\RecipeIngredient;
 
@@ -9,6 +10,37 @@ class Recipe extends AbstractImport
 {
     /** @var Ingredient[] */
     protected $ingredientsCache;
+
+    /**
+     * @param AbstractEntity $entity
+     * @param string $property
+     * @param mixed $value
+     */
+    protected function setEntityProperty(AbstractEntity $entity, string $property, $value) {
+        if ($property == 'recipeIngredients' && ($recipeId = $entity->getId())) {
+            // Force reload all RecipeIngredient instance from EM to correctly trigger INSERT or UPDATE
+            foreach ($value as $idx => $incompleteRecipeIngredient) {
+                if ($ingredientId = $incompleteRecipeIngredient->getIngredient()->getId()) {
+                    /** @var RecipeIngredient $recipeIngredient */
+                    $recipeIngredient = $this->entityManager->getRepository(RecipeIngredient::class)
+                        ->findOneBy(
+                            [
+                                'recipe' => $entity,
+                                'ingredient' => $incompleteRecipeIngredient->getIngredient()
+                            ]
+                        );
+                    // Sync additional fields
+                    $recipeIngredient->setNote($incompleteRecipeIngredient->getNote());
+
+                    // Replace RI by the one reloaded from EM
+                    $value[$idx] = $recipeIngredient;
+                }
+            }
+        }
+        else {
+            $this->propertyAccessor->setValue($entity, $property, $value);
+        }
+    }
 
     /**
      * @inheritDoc
