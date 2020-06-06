@@ -1,0 +1,8 @@
+name    ,tags.name  ,location.name,locationDetails,timesOfYear.code,recipeIngredients.name,recipeIngredients.note,instructions
+Recipe 1,yummy      ,Location 1   ,Page 42        ,spring          ,carrot                ,4                     ,Some instructions for recipe 1
+        ,vegan      ,             ,               ,summer          ,flour                 ,300g                  ,
+        ,           ,             ,               ,                ,sugar                 ,100g                  ,
+Recipe 2,           ,             ,               ,winter          ,                      ,                      ,Some instructions for recipe 2
+Recipe 3,gluten-free,Location 2   ,Page 142       ,fall            ,butter                ,150g                  ,
+        ,           ,             ,               ,winter          ,milk                  ,1L                    ,
+        ,           ,             ,               ,                ,salt                  ,a pinch               ,

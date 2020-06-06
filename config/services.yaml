@@ -44,6 +44,7 @@ services:
                     type: recipe
                     route_prefix: recipe
                     template_prefix: recipe
+                    import_class: App\Import\Recipe
                 ingredient:
                     class: App\Entity\Ingredient
                     form_class: App\Form\Ingredient
@@ -79,4 +80,13 @@ services:
     grid.builder.location:
         class: App\Grid\Builder\DefaultBuilder
         tags: [{ name: 'grid.builder', key: 'location' }]
+        public: true
+
+    ### COMMANDS
+    App\Command\Import\EntitiesCommand:
+        class: ~
+        tags: ['console.command']
+
+    ### IMPORT
+    App\Import\Recipe:
         public: true

@@ -33,7 +33,7 @@ class Recipe extends AbstractEntity
     /** @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"}) */
     protected $tags;
 
-    /** @ORM\ManyToOne(targetEntity="App\Entity\Location") */
+    /** @ORM\ManyToOne(targetEntity="App\Entity\Location", cascade={"persist"}) */
     protected $location;
 
     /** @ORM\Column(type="string", length=255, name="location_details", nullable=true) */
@@ -182,6 +182,19 @@ class Recipe extends AbstractEntity
     }
 
     /**
+     * @param RecipeIngredient[] $recipeIngredients
+     * @return $this
+     */
+    public function setRecipeIngredient($recipeIngredients): Recipe {
+        foreach ($recipeIngredients as $recipeIngredient) {
+            $recipeIngredient->setRecipe($this);
+        }
+        $this->recipeIngredients = $recipeIngredients;
+
+        return $this;
+    }
+
+    /**
      * @param RecipeIngredient $recipeIngredient
      * @return $this
      */
@@ -239,5 +252,24 @@ class Recipe extends AbstractEntity
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * Alias for self::getRecipeIngredients()
+     *
+     * @return mixed
+     */
+    public function getIngredients() {
+        return $this->getRecipeIngredients();
+    }
+
+    /**
+     * Alias for self::setRecipeIngredients()
+     *
+     * @param RecipeIngredient[] $recipeIngredients
+     * @return $this
+     */
+    public function setIngredient($recipeIngredients): Recipe {
+        return $this->setRecipeIngredient($recipeIngredients);
     }
 }
