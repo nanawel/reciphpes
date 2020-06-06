@@ -83,7 +83,7 @@ services:
         public: true
 
     ### COMMANDS
-    App\Command\Import\EntitiesCommand:
+    App\Command\Import\Entities:
         class: ~
         tags: ['console.command']
 

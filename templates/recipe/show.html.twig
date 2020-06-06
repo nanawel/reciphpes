@@ -51,12 +51,15 @@
         <hr class="my-4">
         <h2 class="instructions">Instructions</h2>
         {% if recipe.instructions %}
-            <p>{{ recipe.instructions }}</p>
+            <div class="container instructions-wrapper mb-4">
+                {{ recipe.instructions | markdown_to_html }}
+            </div>
         {% else %}
             <div class="alert alert-light" role="alert">Pas d'instructions associées.</div>
         {% endif %}
         {% if recipe.createdAt %}
-            <p><span class="badge badge-secondary">Créée le {{ recipe.createdAt | localizeddate() }}</span></p>
+            <p><span class="badge badge-secondary float-right">Créée le {{ recipe.createdAt | localizeddate() }}</span>
+            </p>
         {% endif %}
     </div>
 {%  endblock %}

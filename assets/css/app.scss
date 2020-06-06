@@ -53,6 +53,23 @@ i.fa-circle-o-notch {
     @extend .text-muted;
 }
 
+.instructions-wrapper {
+    padding: 1em;
+    background-color: lightyellow;
+}
+
+blockquote {
+    @extend .blockquote;
+    font-size: medium;
+    color: #8da7be;
+    border-left: #8da7be solid 2px;
+    padding: .5em 1em .5em 1em;
+
+    > * {
+        margin-bottom: .5em !important;
+    }
+}
+
 //.btn.show:before {
 //    @extend .fas;
 //    @extend .fa-eye;

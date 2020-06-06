@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class EntitiesCommand extends Command
+class Entities extends Command
 {
     const OPT_ENTITY_TYPE = 'entity-type';
     const OPT_VALIDATION_ONLY = 'validate-only';
