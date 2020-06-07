@@ -24,7 +24,7 @@ class RecipeIngredient extends AbstractEntity
      * @ORM\Id
      * @ORM\OneToOne(
      *     targetEntity="App\Entity\Ingredient",
-     *     cascade={"persist", "remove"}
+     *     cascade={"persist"}
      * )
      */
     protected $ingredient;
