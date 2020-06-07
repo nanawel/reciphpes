@@ -21,6 +21,13 @@ const SimpleMDE = require('simplemde/dist/simplemde.min');
 
 $('textarea.markdown').each(el => new SimpleMDE({element: el, spellChecker: false}));
 
+// Prevent multiple form submit
+$('form').submit(function (ev) {
+    $('button[type="submit"]', this).prop('disabled', true);
+
+    return true;
+});
+
 const refreshElementObservers = function () {
     // Tagify
     $('input.autocomplete-tag').each(function (i, el) {
@@ -71,7 +78,6 @@ const refreshElementObservers = function () {
         return ev.key != 'Enter';
     });
 };
-
 
 const addCollectionItem = function($collectionHolder) {
     const prototype = $collectionHolder.data('prototype');
