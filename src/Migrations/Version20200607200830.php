@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200605141230 extends AbstractMigration
+final class Version20200607200830 extends AbstractMigration
 {
     public function getDescription(): string {
         return '';
@@ -56,7 +56,7 @@ final class Version20200605141230 extends AbstractMigration
             'CREATE TABLE recipe_timeofyear (recipe_id INTEGER NOT NULL, timeofyear_id INTEGER NOT NULL, PRIMARY KEY(recipe_id, timeofyear_id))'
         );
         $this->addSql('CREATE INDEX IDX_42E0B96959D8A214 ON recipe_timeofyear (recipe_id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_42E0B96924BFD492 ON recipe_timeofyear (timeofyear_id)');
+        $this->addSql('CREATE INDEX IDX_42E0B96924BFD492 ON recipe_timeofyear (timeofyear_id)');
         $this->addSql(
             'CREATE TABLE location (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL)'
         );
