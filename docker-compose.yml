@@ -1,18 +1,21 @@
+# Reciphpes - Prod Image
 
 version: '3.2'
 
 services:
-  symfony:
-    image: 'reciphpes'
+  app:
+    image: 'reciphpes:${WEBAPP_VERSION:-latest}'
     build:
-      context: './docker/symfony'
-      args:
-        webapp_uid: '${WEBAPP_UID}'
+      dockerfile: './docker/prod/Dockerfile'
+      context: './'
     ports:
-      - '8000:80'
+      - '${HTTP_PORT:-80}:80'
     volumes:
-      - './docker/symfony/etc/php.ini:/usr/local/etc/php/php.ini:ro'
-      - './docker/symfony/etc/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
-      - './:/var/www/webapp:rw'
-    environment:
-      PHP_IDE_CONFIG: 'serverName=reciphpes-docker'
+      - db:/var/www/webapp/var/db:rw
+      - logs:/var/www/webapp/var/log:rw
+      # Uncomment this to mount your own .env.local file
+      #- './data/env:/var/www/webapp/.env.local:ro'
+
+volumes:
+  db:
+  logs:

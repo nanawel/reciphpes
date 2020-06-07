@@ -1,0 +1,6 @@
+.git/
+docker-*.yml
+Makefile
+node_modules/
+var/
+vendor/

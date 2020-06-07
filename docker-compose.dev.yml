@@ -1,0 +1,20 @@
+# Reciphpes - Dev Image
+
+version: '3.2'
+
+services:
+  app:
+    image: 'reciphpes:dev'
+    build:
+      context: './docker/dev'
+      args:
+        webapp_uid: '${WEBAPP_UID}'
+    ports:
+      - '${HTTP_PORT:-8000}:80'
+    volumes:
+      - './docker/dev/etc/php.ini:/usr/local/etc/php/php.ini:ro'
+      - './docker/dev/etc/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
+      - './:/var/www/webapp:rw'
+    environment:
+      # For XDebug
+      PHP_IDE_CONFIG: 'serverName=reciphpes-docker'

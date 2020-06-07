@@ -1,12 +1,17 @@
+export HTTP_PORT ?= 80
+
+dev-%: export COMPOSE_FILE = docker-compose.dev.yml
+dev-%:
+	$(MAKE) $*
 
 bash:
 	$(MAKE) shell
 
 shell:
-	docker-compose exec -u www-data symfony bash
+	docker-compose exec -u www-data app bash
 
 shell-root:
-	docker-compose exec symfony bash
+	docker-compose exec app bash
 
 pull:
 	docker-compose pull
@@ -30,15 +35,18 @@ logs:
 	docker-compose logs -f --tail=50
 
 install:
-	docker-compose exec symfony sh -c \
+	bin/console doctrine:migrations:migrate --no-interaction
+	bin/console doctrine:fixtures:load --append
+
+dev-install:
+	docker-compose exec app sh -c \
 		'composer install \
 		&& bin/console doctrine:database:create \
 		&& bin/console make:migration \
 		&& bin/console doctrine:migrations:migrate \
-		&& bin/console doctrine:fixtures:load --append'
+		&& bin/console doctrine:fixtures:load --append
+		&& yarn install \
+		&& yarn encore production'
 
-encore-watch:
+dev-encore-watch:
 	yarn run encore dev --watch
-
-encore-build:
-	yarn encore production
