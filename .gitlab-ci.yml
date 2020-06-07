@@ -1,6 +1,11 @@
 variables:
   CONTAINER_RELEASE_IMAGE: "nanawel/reciphpes"
 
+stages:
+  - check
+  - build
+  - release
+
 before_script:
   - docker info
 
