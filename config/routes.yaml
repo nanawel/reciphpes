@@ -1,12 +1,4 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
 index:
-  path: /
-  controller: App\Controller\HomeController::index
-
-app_index_index:
   path: /
   controller: App\Controller\HomeController::index
 
