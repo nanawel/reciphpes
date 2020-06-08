@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:7.4-apache-buster
 
 # Composer
 RUN curl --location --output /usr/local/bin/composer https://github.com/composer/getcomposer.org/raw/master/web/download/1.10.6/composer.phar \
@@ -25,7 +25,9 @@ RUN apt-get update \
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
  && apt-get update \
- && apt-get install --no-install-recommends -y yarn \
+ && apt-get install --no-install-recommends -y \
+    nodejs \
+    yarn \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -66,8 +68,9 @@ ARG webapp_uid
 ENV WEBAPP_UID=${webapp_uid}
 RUN usermod --non-unique --uid ${webapp_uid} www-data
 
-ENV COMPOSER_HOME=/tmp/webapp/.composer \
-    COMPOSER_CACHE_DIR=/tmp/webapp/.composer/cache
+ENV COMPOSER_HOME=/tmp/webapp/composer \
+    COMPOSER_CACHE_DIR=/tmp/webapp/composer/cache \
+    YARN_CACHE_FOLDER=/tmp/webapp/yarn/cache
 
 WORKDIR /var/www/webapp
 

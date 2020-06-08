@@ -45,8 +45,7 @@ dev-install:
 		&& bin/console make:migration \
 		&& bin/console doctrine:migrations:migrate \
 		&& bin/console doctrine:fixtures:load --append
-		&& yarn install \
-		&& yarn encore production'
+		&& yarn install'
 
 dev-encore-watch:
 	yarn run encore dev --watch
