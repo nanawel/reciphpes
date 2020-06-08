@@ -33,7 +33,7 @@ chgrp -R www-data /opt/reciphpes/data/*
 chmod -R g+w /opt/reciphpes/data/*
 ```
 
-Example of `docker-compose.yml`:
+Example of `docker-compose.yml` (here listening on port `8000`):
 ```yml
 version: '3.2'
 
@@ -55,8 +55,13 @@ docker-compose up -d
 ```
 
 Then init the database (first time only):
-```
+```shell
 docker-compose exec -u www-data app make install
+```
+
+*(Optional)* You might want to generate a new secret value:
+```shell
+docker-compose exec -u www-data app make new-secret
 ```
 
 ## Developer Notes
@@ -74,7 +79,7 @@ make dev-startd HTTP_PORT=8080    # Choose any free port
 ```
 
 You may now enter the container with `make shell` and issue the
-commands provided in the following section.
+commands provided in the section below.
 
 ### Local setup
 
@@ -85,12 +90,8 @@ commands provided in the following section.
 > - yarn
 
 ```shell
-composer install
-bin/console doctrine:database:create
-bin/console doctrine:migrations:migrate
-bin/console doctrine:fixtures:load --append
+make install
 
-yarn install
 # Start assets builder watch task
 yarn run encore dev --watch
 ```
