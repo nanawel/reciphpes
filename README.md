@@ -61,7 +61,7 @@ docker-compose exec -u www-data app make install
 
 *(Optional)* You might want to generate a new secret value:
 ```shell
-docker-compose exec -u www-data app make new-secret
+docker-compose exec app make new-secret
 ```
 
 ## Developer Notes
