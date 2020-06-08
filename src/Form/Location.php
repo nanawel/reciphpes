@@ -19,6 +19,7 @@ class Location extends AbstractType
                 [
                     'label' => 'Nom',
                     'required' => true,
+                    'autofocus' => true,
                 ]
             )
             ->add(

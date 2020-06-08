@@ -53,6 +53,7 @@ class Recipe extends AbstractType
                     'required' => false,
                     'attr' => [
                         'autocomplete' => 'recipe_name',
+                        'autofocus' => true
                     ],
                 ]
             )
