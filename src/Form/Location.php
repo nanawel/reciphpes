@@ -19,7 +19,10 @@ class Location extends AbstractType
                 [
                     'label' => 'Nom',
                     'required' => true,
-                    'autofocus' => true,
+                    'attr' => [
+                        'autocomplete' => 'location_name',
+                        'autofocus' => true
+                    ],
                 ]
             )
             ->add(

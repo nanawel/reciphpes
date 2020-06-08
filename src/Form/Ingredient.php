@@ -19,7 +19,10 @@ class Ingredient extends AbstractType
                 [
                     'label' => 'Nom',
                     'required' => true,
-                    'autofocus' => true,
+                    'attr' => [
+                        'autocomplete' => 'ingredient_name',
+                        'autofocus' => true
+                    ],
                 ]
             )
             ->add(
