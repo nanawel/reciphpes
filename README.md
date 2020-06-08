@@ -13,10 +13,42 @@ reciphpes!
 make build
 ```
 
-### Run
+### Run (Docker)
+
+Create a dedicated folder to hold `docker-compose.yml` and the data directory.
+
+> Instructions for Debian-like distros where `www-data` user exists (UID = 33).
 
 ```shell
-make startd
+mkdir -p /opt/reciphpes/data/db /opt/reciphpes/data/log
+chgrp -R www-data /opt/reciphpes/data/*
+chmod -R g+w /opt/reciphpes/data/*
+```
+
+Example of `docker-compose.yml`:
+```yml
+version: '3.2'
+
+services:
+  app:
+    image: nanawel/reciphpes
+    container_name: reciphpes
+    restart: always
+    ports:
+      - '8000:80'
+    volumes:
+      - './data/db:/var/www/webapp/var/db:rw'
+      - './data/log:/var/www/webapp/var/log:rw'
+```
+
+Start the container with
+```shell
+docker-compose up -d
+```
+
+Then init the database (first time only):
+```
+docker-compose exec app make install
 ```
 
 ## Developer Notes
