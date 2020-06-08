@@ -56,7 +56,7 @@ RUN cd /build \
 ###############################################################################
 # FINAL IMAGE
 ###############################################################################
-FROM php:7.4-apache-buster
+FROM php-base
 
 # Apache+PHP configuration
 COPY ./docker/prod/etc/php.ini    /usr/local/etc/php/php.ini
