@@ -16,8 +16,6 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql \
  && docker-php-ext-install -j$(nproc) zip \
  && rm -rf /tmp/*
 
-ENV APP_ENV=prod
-
 ###############################################################################
 # PHP BUILDER
 ###############################################################################
@@ -78,6 +76,10 @@ RUN sed -i 's/^ServerTokens OS/ServerTokens Prod/' /etc/apache2/conf-available/s
 # Copy webapp files
 COPY --from=php-builder    /build              /var/www/webapp
 COPY --from=assets-builder /build/public/build /var/www/webapp/public/build
+
+# Force APP_ENV using .env.local (environment variable set in Dockerfile
+# would be ignored because of the .env also used by docker-compose AFAIK)
+RUN echo 'APP_ENV=prod' > /var/www/webapp/.env.local
 
 # Clear up content in var/
 RUN rm -rf /var/www/webapp/var/*
