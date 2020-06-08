@@ -31,7 +31,7 @@ class LocationController extends DocumentController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Recipe", isOptional="true")
+     * @ParamConverter("entity", class="App:Location", isOptional="true")
      *
      * @inheritDoc
      */

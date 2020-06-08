@@ -28,6 +28,14 @@ $('form').submit(function (ev) {
     return true;
 });
 
+$('.btn-delete').click(function (ev) {
+    if (!confirm('Confirmer la suppression ?')) {
+        ev.preventDefault();
+        return false;
+    }
+    return true;
+});
+
 const refreshElementObservers = function () {
     // Tagify
     $('input.autocomplete-tag').each(function (i, el) {
