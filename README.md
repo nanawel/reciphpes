@@ -5,7 +5,15 @@ reciphpes!
 ==
 </center>
 
+> Author: nanawel@gmail.com
+
 ## Installation
+
+> **Notice:** Currently the application **cannot be accessed** from a URL using
+> a custom path:
+>
+> - http://reciphpes.host.org/           => OK
+> - http://something.host.org/reciphpes  => KO
 
 ### Build
 
@@ -48,7 +56,7 @@ docker-compose up -d
 
 Then init the database (first time only):
 ```
-docker-compose exec app make install
+docker-compose exec -u www-data app make install
 ```
 
 ## Developer Notes
