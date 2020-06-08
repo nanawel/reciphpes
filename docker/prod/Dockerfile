@@ -79,6 +79,9 @@ RUN sed -i 's/^ServerTokens OS/ServerTokens Prod/' /etc/apache2/conf-available/s
 COPY --from=php-builder    /build              /var/www/webapp
 COPY --from=assets-builder /build/public/build /var/www/webapp/public/build
 
+# Clear up content in var/
+RUN rm -rf /var/www/webapp/var/*
+
 # Create var/ directories
 RUN mkdir -m 0777 -p \
     /var/www/webapp/var/cache \
