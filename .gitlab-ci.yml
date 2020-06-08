@@ -17,6 +17,7 @@ build_image:
 push_image_latest:
   stage: release
   script:
+    - docker tag reciphpes:${WEBAPP_VERSION:-latest} ${CONTAINER_RELEASE_IMAGE}:latest
     - docker push ${CONTAINER_RELEASE_IMAGE}:latest
 
 push_image_tagged:
