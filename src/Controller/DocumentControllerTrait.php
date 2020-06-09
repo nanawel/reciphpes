@@ -3,17 +3,16 @@
 namespace App\Controller;
 
 use App\Grid\Builder;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Markup;
 
-abstract class DocumentController extends AbstractController
+trait DocumentControllerTrait
 {
-    public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
+    public function gridAction(\App\Grid\Builder\Registry $registry, Request $request) {
         /** @var Builder $gridBuilder */
         $gridBuilder = $registry->getGridBuilder($this->getEntityConfig('type'))
             ->withEntityConfig($this->getEntityConfig())
-            ->withRequest($request);
+            ->withSearchQuery($request->get('q'));
 
         return $this->render(
             sprintf('%s/grid.html.twig', $this->getEntityConfig('template_prefix')),
@@ -23,15 +22,16 @@ abstract class DocumentController extends AbstractController
 
     /**
      * @param object $entity
+     * @param array $parameters
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show($entity) {
+    public function showAction($entity, $parameters = []) {
         return $this->render(
             sprintf('%s/show.html.twig', $this->getEntityConfig('template_prefix')),
             [
                 'entity' => $entity,
                 $this->getEntityConfig('type') => $entity,
-            ]
+            ] + $parameters
         );
     }
 
@@ -40,7 +40,7 @@ abstract class DocumentController extends AbstractController
      * @param object|null $entity
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Request $request, object $entity = null) {
+    public function editAction(Request $request, object $entity = null) {
         if (! $entity) {
             $entityClass = $this->getEntityConfig('class');
             $entity = new $entityClass();
@@ -104,7 +104,7 @@ abstract class DocumentController extends AbstractController
      * @param object $entity
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete(Request $request, object $entity) {
+    public function deleteAction(Request $request, object $entity) {
         try {
             $this->getEntityManager()->remove($entity);
             $this->getEntityManager()->flush();
@@ -140,6 +140,4 @@ abstract class DocumentController extends AbstractController
             ? $this->_getEntityConfig()
             : $this->_getEntityConfig()[$config] ?? null;
     }
-
-    abstract protected function _getEntityConfig();
 }

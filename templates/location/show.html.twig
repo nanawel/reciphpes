@@ -12,5 +12,9 @@
         {% if location.createdAt %}
             <p><span class="badge badge-secondary">Créée le {{ location.createdAt | localizeddate() }}</span></p>
         {% endif %}
+
+        <h2 class="recipes"><i class="fas fa-pizza-slice"></i> Recettes</h2>
+
+        {% include '_grid.html.twig' with {gridConfig: recipeGridConfig} %}
     </div>
 {% endblock %}

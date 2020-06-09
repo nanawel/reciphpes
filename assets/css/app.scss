@@ -118,3 +118,41 @@ textarea.markdown ~ div {
     padding-right: 5px;
     vertical-align: middle;
 }
+
+.badge {
+    &.location {
+        color: white;
+        background-color: #17a2b8;
+
+        &:before {
+            @extend %fa-icon;
+            @extend .fas;
+            margin-right: .5em;
+            content: fa-content($fa-var-book);
+        }
+    }
+
+    &.tag {
+        color: white;
+        background-color: #218838;
+
+        &:before {
+            @extend %fa-icon;
+            @extend .fas;
+            margin-right: .5em;
+            content: fa-content($fa-var-tag);
+        }
+    }
+
+    &.timeofyear {
+        color: #533f03;
+        background-color: #c69500;
+
+        &:before {
+            @extend %fa-icon;
+            @extend .far;
+            margin-right: .5em;
+            content: fa-content($fa-var-calendar-alt);
+        }
+    }
+}

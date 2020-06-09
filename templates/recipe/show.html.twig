@@ -2,63 +2,65 @@
 
 
 {% block content %}
-    <div class="jumbotron">
-        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
-            <div class="btn-group mr-2" role="group" aria-label="Actions">
-                <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action edit btn-secondary"><span>Modifier</span></a>
-            </div>
+    <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
+        <div class="btn-group mr-2" role="group" aria-label="Actions">
+            <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action edit btn-secondary"><span>Modifier</span></a>
         </div>
-        <h1 class="display-4"><i class="fas fa-pizza-slice"></i> {{ recipe.name }}</h1>
-        {% if recipe.location %}
-            <p class="location lead" style="font-size: 2em">
-                <a class="badge badge-info" href="{{ path('app_location_show', {id: recipe.location.id}) }}">
-                    <i class="fas fa-book"></i>
-                    {{ recipe.location.name }}
-                </a>
-                <span class="badge badge-info">
-                    {{ recipe.locationDetails }}
-                </span>
-            </p>
-        {% else %}
-            <div class="alert alert-light" role="alert">Pas d'emplacement associé.</div>
-        {% endif %}
+    </div>
+    <h1 class="display-4"><i class="fas fa-pizza-slice"></i> {{ recipe.name }}</h1>
+    {% if recipe.location %}
+        <p class="location lead" style="font-size: 2em">
         <div class="row">
             <div class="tags col col-6">
-                {% for tag in recipe.tags %}
-                    <span class="tag badge badge-secondary">{{ tag.name }}</span>
-                {% endfor %}
+                <a class="badge location" href="{{ path('app_location_show', {id: recipe.location.id}) }}">
+                    {{ recipe.location.name }}
+                </a>
             </div>
-            <div class="timesofyear col col-6">
-                {% for toy in recipe.timesOfYear %}
-                    <span class="timeofyear badge badge-secondary">{{ toy.name }}</span>
-                {% endfor %}
+            <div class="tags col col-6">
+                    <span class="small">
+                        {{ recipe.locationDetails }}
+                    </span>
             </div>
         </div>
-        <hr class="my-4">
-        <h2 class="ingredients">Ingrédients</h2>
-        {% if recipe.recipeIngredients.count() %}
-            <ul>
-                {% for i in recipe.recipeIngredients %}
-                    <li><a href="{{ path('app_ingredient_show', {id: i.ingredient.id}) }}">{{ i.ingredient.name }}</a>
-                        {% if i.note %} <span class="ingredient-note">({{ i.note }})</span>{% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <div class="alert alert-danger" role="alert">Pas d'ingrédients associés !</div>
-        {% endif %}
-        <hr class="my-4">
-        <h2 class="instructions">Instructions</h2>
-        {% if recipe.instructions %}
-            <div class="container instructions-wrapper mb-4">
-                {{ recipe.instructions | markdown_to_html }}
-            </div>
-        {% else %}
-            <div class="alert alert-light" role="alert">Pas d'instructions associées.</div>
-        {% endif %}
-        {% if recipe.createdAt %}
-            <p><span class="badge badge-secondary float-right">Créée le {{ recipe.createdAt | localizeddate() }}</span>
-            </p>
-        {% endif %}
+        </p>
+    {% else %}
+        <div class="alert alert-light" role="alert">Pas d'emplacement associé.</div>
+    {% endif %}
+    <div class="row">
+        <div class="tags col col-6">
+            {% for tag in recipe.tags %}
+                <span class="tag badge badge-secondary">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
+        <div class="timesofyear col col-6">
+            {% for toy in recipe.timesOfYear %}
+                <span class="timeofyear badge badge-secondary">{{ toy.name }}</span>
+            {% endfor %}
+        </div>
     </div>
-{%  endblock %}
+    <hr class="my-4">
+    <h2 class="ingredients">Ingrédients</h2>
+    {% if recipe.recipeIngredients.count() %}
+        <ul>
+            {% for i in recipe.recipeIngredients %}
+                <li><a href="{{ path('app_ingredient_show', {id: i.ingredient.id}) }}">{{ i.ingredient.name }}</a>
+                    {% if i.note %} <span class="ingredient-note">({{ i.note }})</span>{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-danger" role="alert">Pas d'ingrédients associés !</div>
+    {% endif %}
+    <hr class="my-4">
+    <h2 class="instructions">Instructions</h2>
+    {% if recipe.instructions %}
+        <div class="container instructions-wrapper mb-4">
+            {{ recipe.instructions | markdown_to_html }}
+        </div>
+    {% else %}
+        <div class="alert alert-light" role="alert">Pas d'instructions associées.</div>
+    {% endif %}
+    {% if recipe.createdAt %}
+        <p><span class="badge badge-secondary float-right">Créée le {{ recipe.createdAt | localizeddate() }}</span></p>
+    {% endif %}
+{% endblock %}

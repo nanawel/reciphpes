@@ -23,8 +23,7 @@ class RecipeBuilder extends DefaultBuilder
         );
         $this->columns['tags'] = new TwigColumn(
             $this->twig,
-            '_grid/tags.html.twig',
-            ['tag_class' => 'badge-secondary']
+            '_grid/tags.html.twig'
         );
         $this->columns['location'] = new TwigColumn(
             $this->twig,

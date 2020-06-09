@@ -1,6 +1,5 @@
 {% if attribute(entity, field) %}
-    <a class="badge badge-info" href="{{ path('app_location_show', {id: attribute(entity, field).id}) }}">
-        <i class="fas fa-book"></i>
+    <a class="badge badge-info location" href="{{ path('app_location_show', {id: attribute(entity, field).id}) }}">
         {{ attribute(entity, field).name }}
     </a>
 {% endif %}

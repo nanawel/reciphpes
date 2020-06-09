@@ -3,20 +3,25 @@
 namespace App\Controller;
 
 
-use App\Entity\Ingredient;
-use App\Entity\Location;
 use App\Entity\Tag;
-use App\Form\DataTransformer\IngredientsToJsonTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class RecipeController extends DocumentController
+class RecipeController extends AbstractController
 {
+    use DocumentControllerTrait;
+
     protected function _getEntityConfig($config = null) {
         return $this->getEntityRegistry()->getEntityConfig('recipe', $config);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
+        return $this->gridAction($registry, $request);
     }
 
     /**
@@ -25,7 +30,7 @@ class RecipeController extends DocumentController
      * @inheritDoc
      */
     public function show($entity) {
-        return parent::show($entity);
+        return $this->showAction($entity);
     }
 
     /**
@@ -34,7 +39,7 @@ class RecipeController extends DocumentController
      * @inheritDoc
      */
     public function edit(Request $request, object $entity = null) {
-        return parent::edit($request, $entity);
+        return $this->editAction($request, $entity);
     }
 
     /**
@@ -43,7 +48,7 @@ class RecipeController extends DocumentController
      * @inheritDoc
      */
     public function delete(Request $request, object $entity = null) {
-        return parent::delete($request, $entity);
+        return $this->deleteAction($request, $entity);
     }
 
     public function searchTags(Request $request, TagsToJsonTransformer $tagsToJsonTransformer) {

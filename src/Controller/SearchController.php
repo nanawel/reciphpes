@@ -16,17 +16,17 @@ class SearchController extends AbstractController
 
         $recipesGridConfig = $gridRegistry->getGridBuilder($entityRegistry->getEntityConfig('recipe', 'type'))
             ->withEntityConfig($entityRegistry->getEntityConfig('recipe'))
-            ->withRequest($request)
+            ->withSearchQuery($request)
             ->build();
         $ingredientsGridConfig = $gridRegistry->getGridBuilder(
             $entityRegistry->getEntityConfig('ingredient', 'type')
         )
             ->withEntityConfig($entityRegistry->getEntityConfig('ingredient'))
-            ->withRequest($request)
+            ->withSearchQuery($request)
             ->build();
         $locationsGridConfig = $gridRegistry->getGridBuilder($entityRegistry->getEntityConfig('location', 'type'))
             ->withEntityConfig($entityRegistry->getEntityConfig('location'))
-            ->withRequest($request)
+            ->withSearchQuery($request)
             ->build();
 
         return $this->render(

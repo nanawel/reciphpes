@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\EventListener;
-
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,13 +8,18 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Query\ResultSetMapping;
 
+/**
+ * Class EnableForeignKeysOnDelete
+ *
+ * @see https://github.com/doctrine/dbal/pull/2836
+ */
 class EnableForeignKeysOnDelete implements EventSubscriber
 {
     /** @var bool|null */
     protected $fkEnabledByDefault;
 
     /** @var int */
-    protected $callStack = 0;
+    protected $callLevel = 0;
 
     public function preRemove(LifecycleEventArgs $args) {
         if ($args->getEntityManager()->getConnection()->getDatabasePlatform()->getName() != 'sqlite') {
@@ -24,8 +27,8 @@ class EnableForeignKeysOnDelete implements EventSubscriber
         }
 
         $this->isFkEnabledByDefault($args->getEntityManager());
-        if (! $this->callStack && ! $this->isFkEnabledByDefault($args->getEntityManager())) {
-            $this->callStack++;
+        if (! $this->callLevel && ! $this->isFkEnabledByDefault($args->getEntityManager())) {
+            $this->callLevel++;
             $args->getEntityManager()
                 ->createNativeQuery(
                     'PRAGMA foreign_keys = ON;',
@@ -40,8 +43,8 @@ class EnableForeignKeysOnDelete implements EventSubscriber
             return;
         }
 
-        $this->callStack--;
-        if (! $this->callStack && ! $this->isFkEnabledByDefault($args->getEntityManager())) {
+        $this->callLevel--;
+        if (! $this->callLevel && ! $this->isFkEnabledByDefault($args->getEntityManager())) {
             $args->getEntityManager()
                 ->createNativeQuery(
                     'PRAGMA foreign_keys = OFF;',
@@ -67,6 +70,9 @@ class EnableForeignKeysOnDelete implements EventSubscriber
             $rsm->addScalarResult('foreign_keys', 'fk');
             $result = $entityManager->createNativeQuery('PRAGMA foreign_keys', $rsm)
                 ->execute();
+            if (! count($result)) {
+                throw new \OutOfBoundsException('No row returned, cannot check for FK status.');
+            }
             $this->fkEnabledByDefault = ! ! $result[0]['fk'];
         }
 

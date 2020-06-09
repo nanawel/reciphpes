@@ -8,7 +8,6 @@ use App\Grid\Column\ColumnInterface;
 use App\Grid\Column\DefaultColumn;
 use App\Grid\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 class DefaultBuilder implements Builder
@@ -37,6 +36,9 @@ class DefaultBuilder implements Builder
     /** @var string|null */
     protected $searchQuery = null;
 
+    /** @var array */
+    protected $searchCriteria = [];
+
     public function __construct(
         EntityManagerInterface $entityManager,
         Environment $twig
@@ -52,10 +54,16 @@ class DefaultBuilder implements Builder
         return $this;
     }
 
-    public function withRequest(Request $request) {
-        if ($query = trim($request->get('q'))) {
+    public function withSearchQuery(?string $query) {
+        if ($query = trim($query)) {
             $this->searchQuery = $query;
         }
+
+        return $this;
+    }
+
+    public function withSearchCriteria(?array $criteria) {
+        $this->searchCriteria = array_filter($criteria ?? []);
 
         return $this;
     }
@@ -157,8 +165,13 @@ class DefaultBuilder implements Builder
 
     protected function getItems() {
         $repository = $this->entityManager->getRepository($this->getEntityConfig('class'));
+
+        // TODO Use search + filters at the same time
         if ($this->searchQuery) {
             return $repository->search($this->searchQuery);
+        }
+        if ($this->searchCriteria) {
+            return $repository->findBy($this->searchCriteria, ['name' => 'asc']);
         }
 
         return $repository->findAll();

@@ -9,10 +9,19 @@ use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
-class IngredientController extends DocumentController
+class IngredientController extends AbstractController
 {
+    use DocumentControllerTrait;
+
     protected function _getEntityConfig($config = null) {
         return $this->getEntityRegistry()->getEntityConfig('ingredient', $config);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
+        return $this->gridAction($registry, $request);
     }
 
     /**
@@ -21,7 +30,7 @@ class IngredientController extends DocumentController
      * @inheritDoc
      */
     public function show($entity) {
-        return parent::show($entity);
+        return $this->showAction($entity);
     }
 
     /**
@@ -30,7 +39,7 @@ class IngredientController extends DocumentController
      * @inheritDoc
      */
     public function edit(Request $request, object $entity = null) {
-        return parent::edit($request, $entity);
+        return $this->editAction($request, $entity);
     }
 
     /**
@@ -39,7 +48,7 @@ class IngredientController extends DocumentController
      * @inheritDoc
      */
     public function delete(Request $request, object $entity = null) {
-        return parent::delete($request, $entity);
+        return $this->deleteAction($request, $entity);
     }
 
     public function search(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer) {

@@ -6,7 +6,6 @@ namespace App\Grid;
 
 use App\Grid\Column\Action;
 use App\Grid\Column\ColumnInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 interface Builder
 {
@@ -17,10 +16,16 @@ interface Builder
     public function withEntityConfig(array $entityConfig);
 
     /**
-     * @param Request $request
+     * @param string $query
      * @return $this
      */
-    public function withRequest(Request $request);
+    public function withSearchQuery(string $query);
+
+    /**
+     * @param array $criteria
+     * @return $this
+     */
+    public function withSearchCriteria(array $criteria);
 
     /**
      * @param string[] $headers
