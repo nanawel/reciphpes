@@ -7,22 +7,22 @@ stages:
   - release
 
 before_script:
-  - docker info
+  - time docker info
 
 build_image:
   stage: build
   script:
-    - make build
+    - time make build
 
 push_image_latest:
   stage: release
   script:
-    - docker tag reciphpes:${WEBAPP_VERSION:-latest} ${CONTAINER_RELEASE_IMAGE}:latest
-    - docker push ${CONTAINER_RELEASE_IMAGE}:latest
+    - time docker tag reciphpes:${WEBAPP_VERSION:-latest} ${CONTAINER_RELEASE_IMAGE}:latest
+    - time docker push ${CONTAINER_RELEASE_IMAGE}:latest
 
 push_image_tagged:
   stage: release
   script:
-    - docker push ${CONTAINER_RELEASE_IMAGE}:${CI_COMMIT_REF_SLUG}
+    - time docker push ${CONTAINER_RELEASE_IMAGE}:${CI_COMMIT_REF_SLUG}
   only:
     - /^\d+\.\d+\.\d+.*
