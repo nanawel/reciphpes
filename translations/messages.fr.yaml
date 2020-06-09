@@ -1,0 +1,12 @@
+breadcrumb:
+  home: Accueil
+  recipe:
+    grid: Recettes
+    new: Nouvelle recette
+  ingredient:
+    grid: Ingrédients
+    new: Nouvel ingrédient
+  location:
+    grid: Emplacements
+    new: Nouvel emplacement
+  search_results: Résultats de recherche

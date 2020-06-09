@@ -2,8 +2,10 @@
 
 {% block body %}
 
-
     <div id="content-wrapper" class="container">
+
+        {{ wo_render_breadcrumbs() }}
+
         <div id="session-messages" class="flash-messages">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}

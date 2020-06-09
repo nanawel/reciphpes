@@ -380,6 +380,9 @@
     "symfony/stopwatch": {
         "version": "v4.4.9"
     },
+    "symfony/templating": {
+        "version": "v4.4.9"
+    },
     "symfony/translation": {
         "version": "3.3",
         "recipe": {
@@ -478,5 +481,8 @@
     },
     "webimpress/safe-writer": {
         "version": "2.0.1"
+    },
+    "whiteoctober/breadcrumbs-bundle": {
+        "version": "1.4.5"
     }
 }

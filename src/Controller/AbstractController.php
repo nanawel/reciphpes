@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Registry;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
@@ -16,6 +17,8 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
                 'logger' => 'Psr\Log\LoggerInterface',
                 'router' => 'Symfony\Component\Routing\Generator\UrlGeneratorInterface',
                 'session' => 'Symfony\Component\HttpFoundation\Session\Session',
+                'translator' => 'Symfony\Contracts\Translation\TranslatorInterface',
+                'white_october_breadcrumbs' => 'WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs',
             ];
     }
 
@@ -38,5 +41,19 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
      */
     protected function getLogger() {
         return $this->get('logger');
+    }
+
+    /**
+     * @return \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
+     */
+    protected function getBreadcrumbs() {
+        return $this->get('white_october_breadcrumbs');
+    }
+
+    /**
+     * @return TranslatorInterface
+     */
+    protected function getTranslator() {
+        return $this->get('translator');
     }
 }

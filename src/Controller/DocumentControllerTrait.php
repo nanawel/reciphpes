@@ -9,6 +9,16 @@ use Twig\Markup;
 trait DocumentControllerTrait
 {
     public function gridAction(\App\Grid\Builder\Registry $registry, Request $request) {
+        $this->getBreadcrumbs()
+            ->addItem(
+                $this->getTranslator()->trans('breadcrumb.home'),
+                $this->get('router')->generate('index')
+            )
+            ->addItem(
+                $this->getTranslator()->trans(sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type'))),
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+            );
+
         /** @var Builder $gridBuilder */
         $gridBuilder = $registry->getGridBuilder($this->getEntityConfig('type'))
             ->withEntityConfig($this->getEntityConfig())
@@ -26,6 +36,17 @@ trait DocumentControllerTrait
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction($entity, $parameters = []) {
+        $this->getBreadcrumbs()
+            ->addItem(
+                $this->getTranslator()->trans('breadcrumb.home'),
+                $this->get('router')->generate('index')
+            )
+            ->addItem(
+                $this->getTranslator()->trans(sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type'))),
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+            )
+            ->addItem($entity->getName());
+
         return $this->render(
             sprintf('%s/show.html.twig', $this->getEntityConfig('template_prefix')),
             [
@@ -41,11 +62,27 @@ trait DocumentControllerTrait
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, object $entity = null) {
+
         if (! $entity) {
             $entityClass = $this->getEntityConfig('class');
             $entity = new $entityClass();
         }
         $form = $this->createForm($this->getEntityConfig('form_class'), $entity);
+
+        $this->getBreadcrumbs()
+            ->addItem(
+                $this->getTranslator()->trans('breadcrumb.home'),
+                $this->get('router')->generate('index')
+            )
+            ->addItem(
+                $this->getTranslator()->trans(sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type'))),
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+            )
+            ->addItem(
+                $entity->getId()
+                    ? $entity->getName()
+                    : $this->getTranslator()->trans(sprintf('breadcrumb.%s.new', $this->getEntityConfig('type')))
+            );
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

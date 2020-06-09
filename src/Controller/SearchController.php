@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends AbstractController
@@ -12,6 +11,16 @@ class SearchController extends AbstractController
         \App\Grid\Builder\Registry $gridRegistry,
         Request $request
     ) {
+        $this->getBreadcrumbs()
+            ->addItem(
+                $this->getTranslator()->trans('breadcrumb.home'),
+                $this->get('router')->generate('index')
+            )
+            ->addItem(
+                $this->getTranslator()->trans('breadcrumb.search_results'),
+                $this->get('router')->generate('search_results')
+            );
+
         $query = $request->query->get('q');
 
         $recipesGridConfig = $gridRegistry->getGridBuilder($entityRegistry->getEntityConfig('recipe', 'type'))
