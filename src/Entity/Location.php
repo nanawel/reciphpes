@@ -29,6 +29,14 @@ class Location extends AbstractEntity
     protected $name;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Recipe",
+     *     mappedBy="location"
+     * )
+     */
+    protected $recipes;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at", nullable=false)
      * @Gedmo\Timestampable(on="create")
      */
@@ -63,6 +71,26 @@ class Location extends AbstractEntity
      */
     public function setName($name) {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecipes() {
+        return $this->recipes;
+    }
+
+    /**
+     * @param mixed $recipes
+     * @return $this
+     */
+    public function setRecipes($recipes) {
+        foreach ($recipes as $recipe) {
+            $recipe->setLocation($this);
+        }
+        $this->recipes = $recipes;
+
         return $this;
     }
 

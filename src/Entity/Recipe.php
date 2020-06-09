@@ -30,10 +30,25 @@ class Recipe extends AbstractEntity
     /** @ORM\Column(type="string", length=255) */
     protected $name;
 
-    /** @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"}) */
+    /** @ORM\ManyToMany(
+     *     targetEntity="App\Entity\Tag",
+     *     cascade={"persist"}
+     *  )
+     */
     protected $tags;
 
-    /** @ORM\ManyToOne(targetEntity="App\Entity\Location", cascade={"persist"}) */
+    /** @ORM\ManyToOne(
+     *     targetEntity="App\Entity\Location",
+     *     inversedBy="recipes",
+     *     cascade={"persist"}
+     * )
+     * @ORM\JoinColumn(
+     *     name="location_id",
+     *     referencedColumnName="id",
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     */
     protected $location;
 
     /** @ORM\Column(type="string", length=255, name="location_details", nullable=true) */
