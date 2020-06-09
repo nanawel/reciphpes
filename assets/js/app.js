@@ -40,7 +40,9 @@ const refreshElementObservers = function () {
     // Tagify
     $('input.autocomplete-tag').each(function (i, el) {
         if (!$(el).data('tagify')) {
-            $(el).tagify()
+            $(el).tagify({
+                'autoComplete.rightKey': true
+            })
                 .on('input', function (e, input) {
                     const value = input.value;
                     const tagify = $(this).data('tagify');
@@ -83,7 +85,9 @@ const refreshElementObservers = function () {
 
     // Disable ENTER key default handling (form submission)
     $(document).on('keydown', 'form.no-submit-on-enter', function (ev) {
-        return ev.key != 'Enter';
+        if (!$(document.activeElement).hasClass('tagify__input')) {
+            return ev.key != 'Enter';
+        }
     });
 };
 
