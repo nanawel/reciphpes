@@ -22,8 +22,9 @@ class RecipeIngredient extends AbstractEntity
 
     /**
      * @ORM\Id
-     * @ORM\OneToOne(
+     * @ORM\ManyToOne(
      *     targetEntity="App\Entity\Ingredient",
+     *     inversedBy="recipeIngredients",
      *     cascade={"persist"}
      * )
      */
