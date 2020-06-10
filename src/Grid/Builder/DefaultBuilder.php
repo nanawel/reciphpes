@@ -8,6 +8,7 @@ use App\Grid\Column\ColumnInterface;
 use App\Grid\Column\DefaultColumn;
 use App\Grid\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class DefaultBuilder implements Builder
@@ -17,6 +18,9 @@ class DefaultBuilder implements Builder
 
     /** @var Environment */
     protected $twig;
+
+    /** @var TranslatorInterface */
+    protected $translator;
 
     /** @var Configuration */
     protected $gridConfiguration;
@@ -41,10 +45,12 @@ class DefaultBuilder implements Builder
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        Environment $twig
+        Environment $twig,
+        TranslatorInterface $translator
     ) {
         $this->entityManager = $entityManager;
         $this->twig = $twig;
+        $this->translator = $translator;
         $this->reset();
     }
 
@@ -87,12 +93,11 @@ class DefaultBuilder implements Builder
     }
 
     public function build() {
-        $headers = $this->headers ?: $this->getDefaultHeaders();
+        $headers = $this->getHeaders() ?: $this->getDefaultHeaders();
         $this->gridConfiguration
             ->setHeaders($headers)
             ->setColumns($this->getColumns(array_keys($headers)))
-            ->setItems($this->getItems())
-        ;
+            ->setItems($this->getItems());
 
         $actions = $this->actions ?: $this->getDefaultActions();
         usort($this->actions, function(Action $a, Action $b) {
@@ -124,10 +129,24 @@ class DefaultBuilder implements Builder
             : $this->entityConfig[$config] ?? null;
     }
 
+    protected function getHeaders() {
+        return array_reduce(
+            $this->headers,
+            function ($carry, $item) {
+                return array_merge(
+                    $carry,
+                    [
+                        $item => sprintf('grid.%s.header.%s', $this->getEntityConfig('type'), $item)
+                    ]
+                );
+            },
+            []
+        );
+    }
+
     protected function getDefaultHeaders() {
         return [
-            //'id' => 'ID',
-            'name' => 'Nom',
+            'name' => sprintf('grid.%s.header.name', $this->getEntityConfig('type')),
         ];
     }
 
@@ -144,20 +163,20 @@ class DefaultBuilder implements Builder
 
     protected function getDefaultActions() {
         $actions = [];
-        $actions[] = (new Action($this->twig))
-            ->setLabel('Voir')
+        $actions[] = (new Action($this->twig, $this->translator))
+            ->setLabel('View')
             ->setRoute(sprintf('app_%s_show', $this->getEntityConfig('type')))
             ->setClass('show btn-primary')
             ->setSortOrder(10);
-        $actions[] = (new Action($this->twig))
-            ->setLabel('Modifier')
+        $actions[] = (new Action($this->twig, $this->translator))
+            ->setLabel('Edit')
             ->setRoute(sprintf('app_%s_edit', $this->getEntityConfig('type')))
             ->setClass('edit btn-primary')
             ->setSortOrder(20);
-//        $actions[] = (new Action($this->twig))
-//            ->setLabel('Supprimer')
+//        $actions[] = (new Action($this->twig, $this->translator))
+//            ->setLabel('Delete')
 //            ->setRoute(sprintf('app_%s_delete', $this->getEntityConfig('type')))
-//            ->setClass('delete btn-danger')
+//            ->setClass('delete btn-danger btn-delete')
 //            ->setSortOrder(30);
 
         return $actions;

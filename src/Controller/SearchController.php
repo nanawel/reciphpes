@@ -13,11 +13,11 @@ class SearchController extends AbstractController
     ) {
         $this->getBreadcrumbs()
             ->addItem(
-                $this->getTranslator()->trans('breadcrumb.home'),
+                'breadcrumb.home',
                 $this->get('router')->generate('index')
             )
             ->addItem(
-                $this->getTranslator()->trans('breadcrumb.search_results'),
+                'breadcrumb.search_results',
                 $this->get('router')->generate('search_results')
             );
 

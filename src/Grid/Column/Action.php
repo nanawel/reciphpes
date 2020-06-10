@@ -4,12 +4,16 @@ namespace App\Grid\Column;
 
 
 use App\Entity\AbstractEntity;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class Action implements ColumnInterface
 {
     /** @var Environment */
     protected $twig;
+
+    /** @var TranslatorInterface */
+    protected $translator;
 
     /** @var string */
     protected $label;
@@ -23,8 +27,9 @@ class Action implements ColumnInterface
     /** @var int */
     protected $sortOrder = 0;
 
-    public function __construct(Environment $twig) {
+    public function __construct(Environment $twig, TranslatorInterface $translator) {
         $this->twig = $twig;
+        $this->translator = $translator;
     }
 
     /**
@@ -44,15 +49,16 @@ class Action implements ColumnInterface
      * @return string
      */
     public function getLabel(): string {
-        return $this->label;
+        return $this->translator->trans($this->label);
     }
 
     /**
      * @param string $label
-     * @return Action
+     * @return $this
      */
     public function setLabel(string $label): Action {
         $this->label = $label;
+
         return $this;
     }
 
@@ -65,10 +71,11 @@ class Action implements ColumnInterface
 
     /**
      * @param string $route
-     * @return Action
+     * @return $this
      */
     public function setRoute(string $route): Action {
         $this->route = $route;
+
         return $this;
     }
 
@@ -81,10 +88,11 @@ class Action implements ColumnInterface
 
     /**
      * @param string $class
-     * @return Action
+     * @return $this
      */
     public function setClass(string $class): Action {
         $this->class = $class;
+
         return $this;
     }
 
@@ -97,10 +105,11 @@ class Action implements ColumnInterface
 
     /**
      * @param int $sortOrder
-     * @return Action
+     * @return $this
      */
     public function setSortOrder(int $sortOrder): Action {
         $this->sortOrder = $sortOrder;
+
         return $this;
     }
 }

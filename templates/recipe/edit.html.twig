@@ -5,14 +5,15 @@
     {% if recipe.id %}
         <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
             <div class="btn-group mr-2" role="group" aria-label="Actions">
-                <a href="{{ path('app_recipe_show', {id: recipe.id}) }}" class="btn action edit btn-secondary btn-show"><span>Voir</span></a>
+                <a href="{{ path('app_recipe_show', {id: recipe.id}) }}"
+                   class="btn action edit btn-secondary btn-show"><span>{% trans %} View {% endtrans %}</span></a>
                 <a href="{{ path('app_recipe_delete', {id: recipe.id}) }}"
-                   class="btn action delete btn-danger btn-delete"><span>Supprimer</span></a>
+                   class="btn action delete btn-danger btn-delete"><span>{% trans %} Delete {% endtrans %}</span></a>
             </div>
         </div>
         <h1>{{ recipe.name }}</h1>
     {% else %}
-        <h1>Nouvelle recette</h1>
+        <h1>{% trans %} New recipe {% endtrans %}</h1>
     {% endif %}
 
     {{ form(form) }}

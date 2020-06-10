@@ -1,4 +1,4 @@
-<div class="actions btn-group" role="group" aria-label="Actions">
+<div class="actions btn-group" role="group" aria-label="{% trans %} Actions {% endtrans %}">
     {% for action in gridConfig.actions %}
         {{ action.render(row, '_action') | raw }}
     {% endfor %}

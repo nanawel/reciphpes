@@ -5,15 +5,21 @@
     <div class="jumbotron">
         <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
             <div class="btn-group mr-2" role="group" aria-label="Actions">
-                <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn action btn-secondary"><span>Modifier</span></a>
+                <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn action btn-secondary">
+                    <span>{% trans %} Edit {% endtrans %}</span>
+                </a>
             </div>
         </div>
         <h1 class="display-4"><i class="fas fa-book"></i> {{ location.name }}</h1>
         {% if location.createdAt %}
-            <p><span class="badge badge-secondary">Créée le {{ location.createdAt | localizeddate() }}</span></p>
+            <p>
+                <span class="badge badge-secondary">
+                    {% trans with {'%createdAt%': location.createdAt | localizeddate()} %} Créé le %createdAt% {% endtrans %}
+                </span>
+            </p>
         {% endif %}
 
-        <h2 class="recipes"><i class="fas fa-pizza-slice"></i> Recettes</h2>
+        <h2 class="recipes"><i class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes {% endtrans %}</h2>
 
         {% include '_grid.html.twig' with {gridConfig: recipeGridConfig} %}
     </div>

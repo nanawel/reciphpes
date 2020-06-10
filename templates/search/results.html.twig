@@ -1,26 +1,30 @@
 {% extends 'content.html.twig' %}
 
 {% block content %}
-    <h1>Résultats pour "{{ query }}"</h1>
+    <h1>{% trans %} Results for "%query%" {% endtrans %}</h1>
 
     <div class="search-container container mb-3">
         <form class="row form-inline my-2 my-lg-0" action="{{ path('search_results') }}" method="get">
-            <input class="col-lg form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher" name="q" value="{{ query }}">
-            <button class="col col-lg-2 btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>Rechercher</button>
+            <input class="col-lg form-control mr-sm-2" type="search"
+                   placeholder="{% trans %} Search {% endtrans %}"
+                   aria-label="{% trans %} Search {% endtrans %}" name="q" value="{{ query }}">
+            <button class="col col-lg-2 btn btn-outline-success my-2 my-sm-0" type="submit"><i
+                        class="fas fa-search"></i>Rechercher
+            </button>
         </form>
     </div>
 
     <div class="results-container">
         <div class="mb-2">
-            <h2>Recettes</h2>
+            <h2>{% trans %} Recipes {% endtrans %}</h2>
             {% include grids.recipes.template with {gridConfig: grids.recipes.gridConfig} %}
         </div>
         <div class="mb-2">
-            <h2>Ingrédients</h2>
+            <h2>{% trans %} Ingredients {% endtrans %}</h2>
             {% include grids.ingredients.template with {gridConfig: grids.ingredients.gridConfig} %}
         </div>
         <div class="mb-2">
-            <h2>Emplacements</h2>
+            <h2>{% trans %} Locations {% endtrans %}</h2>
             {% include grids.locations.template with {gridConfig: grids.locations.gridConfig} %}
         </div>
     </div>

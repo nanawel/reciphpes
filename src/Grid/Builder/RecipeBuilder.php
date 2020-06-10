@@ -10,10 +10,10 @@ class RecipeBuilder extends DefaultBuilder
         parent::reset();
 
         $this->headers = [
-            'name' => 'Nom',
-            'tags' => 'Tags',
-            'location' => 'Emplacement',
-            'locationDetails' => 'Détails',
+            'name',
+            'tags',
+            'location',
+            'locationDetails',
         ];
 
         $this->columns['name'] = new TwigColumn(

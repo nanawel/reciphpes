@@ -3,17 +3,17 @@
         <thead class="thead-light">
         <tr>
             {% for headerLabel in gridConfig.headers %}
-                <th scope="col">{{ headerLabel }}</th>
+                <th scope="col">{{ headerLabel | trans }}</th>
             {% endfor %}
             {% if gridConfig.shouldShowActions() %}
-                <th scope="col" style="width:10%">Actions</th>
+                <th scope="col" style="width:10%">{% trans %} Actions {% endtrans %}</th>
             {% endif %}
         </tr>
         </thead>
         <tbody>
         {% if not gridConfig.items %}
             <tr class="no-item-notice">
-                <td colspan="{{ gridConfig.headers | length + 1 }}">Aucun élément.</td>
+                <td colspan="{{ gridConfig.headers | length + 1 }}">{% trans %} No item found. {% endtrans %}</td>
             </tr>
         {% endif %}
 

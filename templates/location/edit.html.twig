@@ -6,13 +6,15 @@
         <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
             <div class="btn-group mr-2" role="group" aria-label="Actions">
                 <a href="{{ path('app_location_show', {id: location.id}) }}"
-                   class="btn action btn-secondary btn-show"><span>Voir</span></a>
-                <a href="{{ path('app_location_delete', {id: location.id}) }}" class="btn action btn-danger btn-delete"><span>Supprimer</span></a>
+                   class="btn action btn-secondary btn-show"><span>{% trans %} View {% endtrans %}</span></a>
+                <a href="{{ path('app_location_delete', {id: location.id}) }}"
+                   class="btn action btn-danger btn-delete"><span>{% trans %} Delete {% endtrans %}</span>
+                </a>
             </div>
         </div>
         <h1>{{ location.name }}</h1>
     {% else %}
-        <h1>Nouvel emplacement</h1>
+        <h1>{% trans %} New location {% endtrans %}</h1>
     {% endif %}
 
     {{ form(form) }}

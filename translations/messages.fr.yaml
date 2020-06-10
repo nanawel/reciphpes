@@ -10,3 +10,41 @@ breadcrumb:
     grid: Emplacements
     new: Nouvel emplacement
   search_results: Résultats de recherche
+
+grid:
+  ingredient:
+    header:
+      name: Nom
+  location:
+    header:
+      name: Nom
+  recipe:
+    header:
+      name: Nom
+      tags: Tags
+      location: Emplacement
+      locationDetails: Détails
+
+Actions: Actions
+Delete: Supprimer
+Edit: Modifier
+Ingredient: Ingrédient
+Ingredients: Ingrédients
+Instructions: Instructions
+Location: Emplacement
+Locations: Emplacements
+New...: Créer...
+New ingredient: Nouvel ingrédient
+New location: Nouvel emplacement
+New recipe: Nouvelle recette
+No location defined.: Pas d'emplacement associé.
+No ingredients defined.: Pas d'ingrédients associés.
+No instructions defined.: Pas d'instructions associées.
+No item found.: Aucun résultat.
+Recipe: Recette
+Recipes: Recettes
+Results for "%query%": Résultats pour "%query%"
+Search: Rechercher
+View: Voir
+View recipes: Voir les recettes
+Welcome: Bienvenue

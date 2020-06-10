@@ -4,7 +4,9 @@
 {% block content %}
     <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
         <div class="btn-group mr-2" role="group" aria-label="Actions">
-            <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action edit btn-secondary"><span>Modifier</span></a>
+            <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action edit btn-secondary">
+                <span>{% trans %} Edit {% endtrans %}</span>
+            </a>
         </div>
     </div>
     <h1 class="display-4"><i class="fas fa-pizza-slice"></i> {{ recipe.name }}</h1>
@@ -24,7 +26,7 @@
         </div>
         </p>
     {% else %}
-        <div class="alert alert-light" role="alert">Pas d'emplacement associé.</div>
+        <div class="alert alert-light" role="alert">{% trans %} No location defined. {% endtrans %}</div>
     {% endif %}
     <div class="row">
         <div class="tags col col-6">
@@ -39,7 +41,7 @@
         </div>
     </div>
     <hr class="my-4">
-    <h2 class="ingredients">Ingrédients</h2>
+    <h2 class="ingredients">{% trans %} Ingredients {% endtrans %}</h2>
     {% if recipe.recipeIngredients.count() %}
         <ul>
             {% for i in recipe.recipeIngredients %}
@@ -49,18 +51,22 @@
             {% endfor %}
         </ul>
     {% else %}
-        <div class="alert alert-danger" role="alert">Pas d'ingrédients associés !</div>
+        <div class="alert alert-danger" role="alert">{% trans %} No ingredients defined. {% endtrans %}</div>
     {% endif %}
     <hr class="my-4">
-    <h2 class="instructions">Instructions</h2>
+    <h2 class="instructions">{% trans %} Instructions {% endtrans %}</h2>
     {% if recipe.instructions %}
         <div class="container instructions-wrapper mb-4">
             {{ recipe.instructions | markdown_to_html }}
         </div>
     {% else %}
-        <div class="alert alert-light" role="alert">Pas d'instructions associées.</div>
+        <div class="alert alert-light" role="alert">{% trans %} No instructions defined. {% endtrans %}</div>
     {% endif %}
     {% if recipe.createdAt %}
-        <p><span class="badge badge-secondary float-right">Créée le {{ recipe.createdAt | localizeddate() }}</span></p>
+        <p>
+            <span class="badge badge-secondary float-right">
+                {% trans with {'%createdAt%': recipe.createdAt | localizeddate()} %} Créée le %createdAt% {% endtrans %}
+            </span>
+        </p>
     {% endif %}
 {% endblock %}

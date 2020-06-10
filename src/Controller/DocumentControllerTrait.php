@@ -11,11 +11,11 @@ trait DocumentControllerTrait
     public function gridAction(\App\Grid\Builder\Registry $registry, Request $request) {
         $this->getBreadcrumbs()
             ->addItem(
-                $this->getTranslator()->trans('breadcrumb.home'),
+                'breadcrumb.home',
                 $this->get('router')->generate('index')
             )
             ->addItem(
-                $this->getTranslator()->trans(sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type'))),
+                sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
                 $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
             );
 
@@ -38,11 +38,11 @@ trait DocumentControllerTrait
     public function showAction($entity, $parameters = []) {
         $this->getBreadcrumbs()
             ->addItem(
-                $this->getTranslator()->trans('breadcrumb.home'),
+                'breadcrumb.home',
                 $this->get('router')->generate('index')
             )
             ->addItem(
-                $this->getTranslator()->trans(sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type'))),
+                sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
                 $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
             )
             ->addItem($entity->getName());
@@ -71,17 +71,17 @@ trait DocumentControllerTrait
 
         $this->getBreadcrumbs()
             ->addItem(
-                $this->getTranslator()->trans('breadcrumb.home'),
+                'breadcrumb.home',
                 $this->get('router')->generate('index')
             )
             ->addItem(
-                $this->getTranslator()->trans(sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type'))),
+                sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
                 $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
             )
             ->addItem(
                 $entity->getId()
                     ? $entity->getName()
-                    : $this->getTranslator()->trans(sprintf('breadcrumb.%s.new', $this->getEntityConfig('type')))
+                    : sprintf('breadcrumb.%s.new', $this->getEntityConfig('type'))
             );
 
         $form->handleRequest($request);

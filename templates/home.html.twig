@@ -4,11 +4,11 @@
     <div class="jumbotron">
         <img src="{{ asset('build/images/logo.svg') }}" id="home-logo" alt="Logo" class="float-left">
         <h1 class="display-4">Reciphpes!</h1>
-        <p class="lead">Bienvenue <i class="far fa-smile-beam"></i></p>
+        <p class="lead">{% trans %} Welcome {% endtrans %}&nbsp;<i class="far fa-smile-beam"></i></p>
         <hr class="my-4">
         <div style="text-align: center">
             <a class="btn btn-primary btn-lg" href="{{ path('app_recipe') }}" role="button"><i
-                        class="fa fa-pizza-slice"></i> Voir les recettes</a>
+                        class="fa fa-pizza-slice"></i>&nbsp;{% trans %} View recipes {% endtrans %}</a>
         </div>
     </div>
 {% endblock %}
