@@ -12,6 +12,10 @@ $primary: darken(#428bca, 20%);
 @import "~simplemde/dist/simplemde.min.css";
 @import "~jquery-ui/themes/base/all.css";
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: lightgray;
 }

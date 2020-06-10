@@ -100,6 +100,9 @@ const addCollectionItem = function($collectionHolder) {
 
     $newForm.find('input')[0].focus();
 
+    // Adjust page scroll to make sure the added element is visible
+    $newForm[0].scrollIntoView({block: 'center'});
+
     $collectionHolder.data('index', index + 1);
 
     refreshElementObservers();
