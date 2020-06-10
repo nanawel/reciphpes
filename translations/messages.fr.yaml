@@ -26,13 +26,19 @@ grid:
       locationDetails: Détails
 
 Actions: Actions
+Additional note about the ingredient (quantity, etc.): Précision complémentaire sur l'ingrédient (quantité, etc.)
+Choose a location...: Choisissez un emplacement...
 Delete: Supprimer
 Edit: Modifier
+'Hint: you can use Ctrl+Enter to add a new row.': 'Astuce : vous pouvez utiliser Ctrl+Entrée pour ajouter une nouvelle ligne.'
 Ingredient: Ingrédient
 Ingredients: Ingrédients
 Instructions: Instructions
 Location: Emplacement
 Locations: Emplacements
+Location (details): Emplacement (détails)
+Name: Nom
+Name...: Nom...
 New...: Créer...
 New ingredient: Nouvel ingrédient
 New location: Nouvel emplacement
@@ -41,10 +47,16 @@ No location defined.: Pas d'emplacement associé.
 No ingredients defined.: Pas d'ingrédients associés.
 No instructions defined.: Pas d'instructions associées.
 No item found.: Aucun résultat.
+Note: Note
+Optional: Facultatif
+'Page #, path, etc.': N° de page, chemin, etc.
 Recipe: Recette
 Recipes: Recettes
 Results for "%query%": Résultats pour "%query%"
+Save: Sauvegarder
 Search: Rechercher
+Tags: Tags
+Time(s) of year: Époque(s) de l'année
 View: Voir
 View recipes: Voir les recettes
 Welcome: Bienvenue

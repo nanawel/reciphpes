@@ -49,7 +49,7 @@ class Recipe extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'label' => 'Nom',
+                    'label' => 'Name',
                     'required' => false,
                     'attr' => [
                         'autocomplete' => 'recipe_name',
@@ -73,11 +73,11 @@ class Recipe extends AbstractType
                 'location',
                 EntityType::class,
                 [
-                    'label' => 'Emplacement',
-                    'help' => 'Facultatif',
+                    'label' => 'Location',
+                    'help' => 'Optional',
                     'class' => \App\Entity\Location::class,
                     'choice_label' => 'name',
-                    'placeholder' => 'Choisissez un emplacement...',
+                    'placeholder' => 'Choose a location...',
                     'required' => false,
                 ]
             )
@@ -85,8 +85,8 @@ class Recipe extends AbstractType
                 'locationDetails',
                 TextType::class,
                 [
-                    'label' => 'Emplacement (détails)',
-                    'help' => 'N° de page, chemin, etc.',
+                    'label' => 'Location (details)',
+                    'help' => 'Page #, path, etc.',
                     'required' => false,
                     'attr' => [
                         'autocomplete' => 'recipe_location_details',
@@ -97,8 +97,8 @@ class Recipe extends AbstractType
                 'timesOfYear',
                 EntityType::class,
                 [
-                    'label' => "Époque(s) de l'année",
-                    'help' => 'Facultatif',
+                    'label' => 'Time(s) of year',
+                    'help' => 'Optional',
                     'class' => TimeOfYear::class,
                     'choice_label' => 'name',
                     'choice_value' => 'id',
@@ -112,10 +112,10 @@ class Recipe extends AbstractType
                 'recipeIngredients',
                 CollectionType::class,
                 [
-                    'help' => 'Astuce : vous pouvez utiliser Ctrl+Entrée pour ajouter une nouvelle ligne.',
+                    'help' => 'Hint: you can use Ctrl+Enter to add a new row.',
                     'block_name' => 'recipe_ingredients',
                     'entry_type' => RecipeIngredientType::class,
-                    'label' => 'Ingrédients',
+                    'label' => 'Ingredients',
                     'required' => false,
                     'allow_add' => true,
                     'allow_delete' => true,
@@ -128,7 +128,7 @@ class Recipe extends AbstractType
                 TextareaType::class,
                 [
                     'label' => 'Instructions',
-                    'help' => 'Facultatif.',
+                    'help' => 'Optional',
                     'required' => false,
                     'attr' => [
                         'class' => 'markdown',
@@ -140,7 +140,7 @@ class Recipe extends AbstractType
                 'save',
                 SubmitType::class,
                 [
-                    'label' => 'Enregistrer',
+                    'label' => 'Save',
                     'attr' => [
                         'class' => 'btn-primary save-btn'
                     ],

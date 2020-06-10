@@ -38,10 +38,10 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
                 'name',
                 TextType::class,
                 [
-                    'label' => 'Nom',
+                    'label' => 'Name',
                     'attr' => [
                         'class' => 'jq-autocomplete',
-                        'placeholder' => 'Nom...',
+                        'placeholder' => 'Name...',
                         'autocomplete' => 'ingredient_name',
                         'data-fetch-url' => $this->router->generate('app_ingredient_search'),
                     ],
@@ -58,7 +58,7 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
                         'autocomplete' => 'ingredient_note',
                     ],
                     'required' => false,
-                    'help' => "Précision complémentaire sur l'ingrédient (quantité, etc.)"
+                    'help' => 'Additional note about the ingredient (quantity, etc.)'
                 ]
             )
             ->setDataMapper($this);
@@ -131,8 +131,4 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
         $viewData->setIngredient($ingredient)
             ->setNote($note);
     }
-
-//    public function getParent() {
-//        return EntityType::class;
-//    }
 }

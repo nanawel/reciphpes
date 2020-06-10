@@ -17,7 +17,7 @@ class Ingredient extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'label' => 'Nom',
+                    'label' => 'Name',
                     'required' => true,
                     'attr' => [
                         'autocomplete' => 'ingredient_name',
@@ -29,7 +29,7 @@ class Ingredient extends AbstractType
                 'save',
                 SubmitType::class,
                 [
-                    'label' => 'Enregistrer',
+                    'label' => 'Save',
                     'attr' => [
                         'class' => 'btn-primary save-btn'
                     ],

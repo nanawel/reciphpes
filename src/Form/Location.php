@@ -17,7 +17,7 @@ class Location extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'label' => 'Nom',
+                    'label' => 'Name',
                     'required' => true,
                     'attr' => [
                         'autocomplete' => 'location_name',
@@ -29,7 +29,7 @@ class Location extends AbstractType
                 'save',
                 SubmitType::class,
                 [
-                    'label' => 'Enregistrer',
+                    'label' => 'Save',
                     'attr' => [
                         'class' => 'btn-primary save-btn'
                     ],
