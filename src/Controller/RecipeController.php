@@ -11,7 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RecipeController extends AbstractController
 {
-    use DocumentControllerTrait;
+    use DocumentControllerTrait {
+        DocumentControllerTrait::newEntity as defaultNewEntity;
+    }
 
     protected function _getEntityConfig($config = null) {
         return $this->getEntityRegistry()->getEntityConfig('recipe', $config);
@@ -40,6 +42,19 @@ class RecipeController extends AbstractController
      */
     public function edit(Request $request, object $entity = null) {
         return $this->editAction($request, $entity);
+    }
+
+    protected function newEntity(Request $request) {
+        $entity = $this->defaultNewEntity($request);
+        if ($locationId = trim($request->get('location_id'))) {
+            $location = $this->getEntityManager()->getRepository(\App\Entity\Location::class)
+                ->find($locationId);
+            if ($location) {
+                $entity->setLocation($location);
+            }
+        }
+
+        return $entity;
     }
 
     /**

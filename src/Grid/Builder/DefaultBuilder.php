@@ -166,17 +166,17 @@ class DefaultBuilder implements Builder
         $actions[] = (new Action($this->twig, $this->translator))
             ->setLabel('View')
             ->setRoute(sprintf('app_%s_show', $this->getEntityConfig('type')))
-            ->setClass('show btn-primary')
+            ->setClass('btn-show btn-primary')
             ->setSortOrder(10);
         $actions[] = (new Action($this->twig, $this->translator))
             ->setLabel('Edit')
             ->setRoute(sprintf('app_%s_edit', $this->getEntityConfig('type')))
-            ->setClass('edit btn-primary')
+            ->setClass('btn-edit btn-primary')
             ->setSortOrder(20);
 //        $actions[] = (new Action($this->twig, $this->translator))
 //            ->setLabel('Delete')
 //            ->setRoute(sprintf('app_%s_delete', $this->getEntityConfig('type')))
-//            ->setClass('delete btn-danger btn-delete')
+//            ->setClass('btn-delete btn-danger btn-delete')
 //            ->setSortOrder(30);
 
         return $actions;

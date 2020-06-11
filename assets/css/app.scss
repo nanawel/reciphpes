@@ -40,16 +40,60 @@ nav i.fas {
     margin-right: 1rem;
 }
 
-#content-wrapper {
-    padding: 2em;
+@include media-breakpoint-up(xs) {
+    #content-wrapper {
+        padding-top: .5em;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    #content-wrapper {
+        padding: 1em;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    #content-wrapper {
+        max-width: none !important;
+    }
 }
 
 table {
     background-color: #fff;
 }
 
+.grid .col-header-actions,
+.grid .col-body-actions {
+    white-space: nowrap;
+}
+
 .breadcrumb {
     padding: .25rem 1rem;
+}
+
+.flash-messages {
+    > .alert-success:before {
+        @extend %fa-icon;
+        @extend .fas;
+        margin-right: .5em;
+        content: fa-content($fa-var-check-circle);
+    }
+
+    > .alert-danger:before {
+        @extend %fa-icon;
+        @extend .fas;
+        margin-right: .5em;
+        content: fa-content($fa-var-exclamation-circle);
+    }
+
+    a {
+        &:before {
+            @extend %fa-icon;
+            @extend .fas;
+            margin-right: .5em;
+            content: fa-content($fa-var-link);
+        }
+    }
 }
 
 /* Fix incompatibility between DTC Grid and FA5 */
@@ -59,6 +103,10 @@ i.fa-circle-o-notch {
 
 #recipe_instructions {
     height: 10em;
+}
+
+form .btn-save {
+    float: right;
 }
 
 .ingredient-note {
@@ -82,34 +130,40 @@ blockquote {
     }
 }
 
-//.btn.show:before {
-//    @extend .fas;
-//    @extend .fa-eye;
-//    display: inline-block;
-//    padding-right: 5px;
-//    vertical-align: middle;
-//}
-//.btn.show > i {
-//    @extend %fa-icon;
-//    @extend .far;
-//    &:before {
-//        content: fa-content($fa-var-eye);
-//    }
-//}
-//.btn.edit > i {
-//    @extend %fa-icon;
-//    @extend .far;
-//    &:before {
-//        content: fa-content($fa-var-edit);
-//    }
-//}
-//.btn.delete > i {
-//    @extend %fa-icon;
-//    @extend .fas;
-//    &:before {
-//        content: fa-content($fa-var-trash);
-//    }
-//}
+.btn-show {
+    &:before {
+        @extend %fa-icon;
+        @extend .far;
+        margin-right: .5em;
+        content: fa-content($fa-var-eye);
+    }
+}
+
+.btn-edit {
+    &:before {
+        @extend %fa-icon;
+        @extend .far;
+        margin-right: .5em;
+        content: fa-content($fa-var-edit);
+    }
+}
+
+.btn-delete {
+    &:before {
+        @extend %fa-icon;
+        @extend .fas;
+        margin-right: .5em;
+        content: fa-content($fa-var-trash);
+    }
+}
+
+.btn-save:before {
+    @extend .fas;
+    @extend .fa-save;
+    display: inline-block;
+    padding-right: 5px;
+    vertical-align: middle;
+}
 
 textarea.markdown ~ div {
     background-color: white;
@@ -117,14 +171,6 @@ textarea.markdown ~ div {
 
 .CodeMirror-cursor {
     border-color: black;
-}
-
-.save-btn:before {
-    @extend .fas;
-    @extend .fa-save;
-    display: inline-block;
-    padding-right: 5px;
-    vertical-align: middle;
 }
 
 .badge {

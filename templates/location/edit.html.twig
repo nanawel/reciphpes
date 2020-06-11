@@ -12,10 +12,14 @@
                 </a>
             </div>
         </div>
+    {% endif %}
+    {% if location.id %}
         <h1>{{ location.name }}</h1>
     {% else %}
         <h1>{% trans %} New location {% endtrans %}</h1>
     {% endif %}
+
+    <div class="clearfix"></div>
 
     {{ form(form) }}
 {% endblock %}

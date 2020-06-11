@@ -31,7 +31,7 @@ class Ingredient extends AbstractType
                 [
                     'label' => 'Save',
                     'attr' => [
-                        'class' => 'btn-primary save-btn'
+                        'class' => 'btn-primary btn-save'
                     ],
                 ]
             );

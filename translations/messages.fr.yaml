@@ -30,6 +30,7 @@ Additional note about the ingredient (quantity, etc.): Précision complémentair
 Choose a location...: Choisissez un emplacement...
 Delete: Supprimer
 Edit: Modifier
+Element saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>: Élément enregistré avec succès !&nbsp;<a href="%url%">Cliquez ici pour le voir.</a>
 'Hint: you can use Ctrl+Enter to add a new row.': 'Astuce : vous pouvez utiliser Ctrl+Entrée pour ajouter une nouvelle ligne.'
 Ingredient: Ingrédient
 Ingredients: Ingrédients
@@ -39,6 +40,7 @@ Locations: Emplacements
 Location (details): Emplacement (détails)
 Name: Nom
 Name...: Nom...
+New: Créer
 New...: Créer...
 New ingredient: Nouvel ingrédient
 New location: Nouvel emplacement
@@ -57,6 +59,8 @@ Save: Sauvegarder
 Search: Rechercher
 Tags: Tags
 Time(s) of year: Époque(s) de l'année
+Toolbar: Barre d'outils
+'Unable to save element: %cause%': "Impossible d'enregistrer l'élément : %cause%"
 View: Voir
 View recipes: Voir les recettes
 Welcome: Bienvenue

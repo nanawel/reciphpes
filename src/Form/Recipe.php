@@ -76,9 +76,14 @@ class Recipe extends AbstractType
                     'label' => 'Location',
                     'help' => 'Optional',
                     'class' => \App\Entity\Location::class,
+                    'choice_value' => function ($location) {
+                        // Why is this code necessary?
+                        return is_object($location)
+                            ? $location->getId()    // Object passed (when building choices)
+                            : $location;            // int value passed (when checking for selection)
+                    },
                     'choice_label' => 'name',
                     'placeholder' => 'Choose a location...',
-                    'required' => false,
                 ]
             )
             ->add(
@@ -142,7 +147,7 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Save',
                     'attr' => [
-                        'class' => 'btn-primary save-btn'
+                        'class' => 'btn-primary btn-save'
                     ],
                 ]
             );

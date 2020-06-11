@@ -1,12 +1,12 @@
-<div class="table-responsive">
-    <table class="table table-hover">
+<div class="table-responsive grid-wrapper">
+    <table class="table table-hover grid">
         <thead class="thead-light">
         <tr>
-            {% for headerLabel in gridConfig.headers %}
-                <th scope="col">{{ headerLabel | trans }}</th>
+            {% for header, headerLabel in gridConfig.headers %}
+                <th scope="col" class="col-header-{{ header }}">{{ headerLabel | trans }}</th>
             {% endfor %}
             {% if gridConfig.shouldShowActions() %}
-                <th scope="col" style="width:10%">{% trans %} Actions {% endtrans %}</th>
+                <th scope="col" class="col-header-actions text-right">{% trans %} Actions {% endtrans %}</th>
             {% endif %}
         </tr>
         </thead>
@@ -20,11 +20,11 @@
         {% for row in gridConfig.items %}
             <tr>
                 {% for header, headerLabel in gridConfig.headers %}
-                    <td>{{ gridConfig.getColumn(header).render(row, header) }}</td>
+                    <td class="col-body-{{ header }}">{{ gridConfig.getColumn(header).render(row, header) }}</td>
                 {% endfor %}
 
                 {% if gridConfig.shouldShowActions() %}
-                    <td>
+                    <td class="col-body-actions text-right">
                         {% include '_grid/actions.html.twig' %}
                         </td>
                     {%  endif %}

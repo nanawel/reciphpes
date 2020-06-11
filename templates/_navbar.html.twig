@@ -12,15 +12,15 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_recipe') }}"><i
-                            class="fas fa-pizza-slice"></i>{% trans %} Recipes {% endtrans %}</a>
+                            class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes {% endtrans %}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_ingredient') }}"><i
-                            class="fas fa-carrot"></i>{% trans %} Ingredients {% endtrans %}</a>
+                            class="fas fa-carrot"></i>&nbsp;{% trans %} Ingredients {% endtrans %}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_location') }}"><i
-                            class="fas fa-book"></i>{% trans %} Locations {% endtrans %}</a>
+                            class="fas fa-book"></i>&nbsp;{% trans %} Locations {% endtrans %}</a>
             </li>
         </ul>
         <div>
@@ -28,15 +28,15 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-plus-circle"></i>{% trans %} New... {% endtrans %}
+                        <i class="fas fa-plus-circle"></i>&nbsp;{% trans %} New... {% endtrans %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ path('app_recipe_new') }}"><i
-                                    class="fas fa-pizza-slice"></i>{% trans %} Recipe {% endtrans %}</a>
+                                    class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipe {% endtrans %}</a>
                         <a class="dropdown-item" href="{{ path('app_ingredient_new') }}"><i
-                                    class="fas fa-carrot"></i>{% trans %} Ingredient {% endtrans %}</a>
+                                    class="fas fa-carrot"></i>&nbsp;{% trans %} Ingredient {% endtrans %}</a>
                         <a class="dropdown-item" href="{{ path('app_location_new') }}"><i
-                                    class="fas fa-book"></i>{% trans %} Location {% endtrans %}</a>
+                                    class="fas fa-book"></i>&nbsp;{% trans %} Location {% endtrans %}</a>
                         <!--
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
@@ -49,7 +49,7 @@
                                placeholder="{% trans %} Search {% endtrans %}"
                                aria-label="Rechercher" name="q">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i
-                                    class="fas fa-search"></i>{% trans %} Search {% endtrans %}
+                                    class="fas fa-search"></i>&nbsp;{% trans %} Search {% endtrans %}
                         </button>
                     </form>
                 </li>

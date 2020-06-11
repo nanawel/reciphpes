@@ -4,8 +4,14 @@ namespace App\Controller;
 
 use App\Grid\Builder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Markup;
 
+/**
+ * Trait DocumentControllerTrait
+ *
+ * @method TranslatorInterface getTranslator()
+ */
 trait DocumentControllerTrait
 {
     public function gridAction(\App\Grid\Builder\Registry $registry, Request $request) {
@@ -64,8 +70,7 @@ trait DocumentControllerTrait
     public function editAction(Request $request, object $entity = null) {
 
         if (! $entity) {
-            $entityClass = $this->getEntityConfig('class');
-            $entity = new $entityClass();
+            $entity = $this->newEntity($request);
         }
         $form = $this->createForm($this->getEntityConfig('form_class'), $entity);
 
@@ -94,17 +99,19 @@ trait DocumentControllerTrait
                 $this->getEntityManager()->flush();
 
                 $message = new Markup(
-                    sprintf(
-                        'Élément enregistré avec succès ! '
-                        . '<a href="%s"><i class="fas fa-link"></i> Cliquez ici pour le voir.</a>',
-                        $this->get('router')->generate(
-                            sprintf(
-                                'app_%s_show',
-                                $this->getEntityConfig('route_prefix')
-                            ),
-                            ['id' => $entity->getId()]
-                        )
-                    ), 'utf-8'
+                    $this->getTranslator()->trans(
+                        'Element saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>',
+                        [
+                            '%url%' => $this->get('router')->generate(
+                                sprintf(
+                                    'app_%s_show',
+                                    $this->getEntityConfig('route_prefix')
+                                ),
+                                ['id' => $entity->getId()]
+                            )
+                        ]
+                    ),
+                    'utf-8'
                 );
                 $this->get('session')->getFlashBag()->add(
                     'success',
@@ -113,7 +120,10 @@ trait DocumentControllerTrait
                 $success = true;
             } catch (\Throwable $e) {
                 $this->getLogger()->error($e);
-                $this->addFlash('danger', "Impossible d'enregistrer l'élément : {$e->getMessage()}");
+                $this->addFlash(
+                    'danger',
+                    $this->getTranslator()->trans('Unable to save element: %cause%', ['%cause%' => $e->getMessage()])
+                );
             }
 
             if ($success) {
@@ -134,6 +144,12 @@ trait DocumentControllerTrait
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    protected function newEntity(Request $request) {
+        $entityClass = $this->getEntityConfig('class');
+
+        return new $entityClass();
     }
 
     /**
