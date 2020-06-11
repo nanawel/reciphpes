@@ -50,7 +50,7 @@ class Recipe extends AbstractType
                 TextType::class,
                 [
                     'label' => 'Name',
-                    'required' => false,
+                    'required' => true,
                     'attr' => [
                         'autocomplete' => 'recipe_name',
                         'autofocus' => true
