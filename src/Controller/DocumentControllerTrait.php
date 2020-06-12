@@ -130,8 +130,7 @@ trait DocumentControllerTrait
                     sprintf(
                         'app_%s_grid',
                         $this->getEntityConfig('route_prefix')
-                    ),
-                    ['id' => $entity->getId()]
+                    )
                 );
             }
         }

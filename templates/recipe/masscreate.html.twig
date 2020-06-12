@@ -2,6 +2,7 @@
 
 
 {% block content %}
+    {{ form_start(form) }}
     <div class="float-right">
         <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
             <div class="btn-group mr-2" role="group" aria-label="Actions">
@@ -15,7 +16,6 @@
 
     <div class="clearfix"></div>
 
-    {{ form_start(form) }}
     {{ form_errors(form) }}
 
     <div class="row">

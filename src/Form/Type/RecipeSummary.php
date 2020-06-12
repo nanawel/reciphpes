@@ -3,9 +3,11 @@
 namespace App\Form\Type;
 
 use App\Entity\Recipe;
+use App\Entity\RecipeIngredient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -67,14 +69,26 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
             )
             ->setDataMapper($this);
 
+        // Add INGREDIENT_ROWS ingredient rows to each recipe row
+        $initRecipeIngredients = [];
         for ($i = 0; $i < self::INGREDIENT_ROWS; $i++) {
-            $builder->add(
-                "ingredient_$i",
-                RecipeIngredientType::class,
-                [
+            $initRecipeIngredients[] = new RecipeIngredient();
+        }
+
+        $builder->add(
+            'recipeIngredients',
+            CollectionType::class,
+            [
+                'block_name' => 'recipe_ingredients',
+                'entry_type' => RecipeIngredientType::class,
+                'label' => 'Ingredients',
+                'label_attr' => [
+                    'class' => 'd-none'
+                ],
+                'entry_options' => [
                     'name_opts' => [
                         'attr' => [
-                            'placeholder' => $this->translator->trans('Ingredient %i%', ['%i%' => $i + 1]),
+                            'placeholder' => 'Ingredient',
                         ],
                     ],
                     'note_opts' => [
@@ -83,10 +97,16 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                     'deletebtn_show' => false,
                     'deletebtn_attr' => [
                         'class' => 'd-none'
-                    ]
-                ]
-            );
-        }
+                    ],
+                ],
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'delete_empty' => true,
+                'by_reference' => false,
+                'data' => $initRecipeIngredients
+            ]
+        );
     }
 
     /**
@@ -103,7 +123,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                 ],
                 'class' => Recipe::class,
                 'block_name' => 'recipe_summary',
-                'compound' => true
+                'compound' => true,
             ]
         );
     }
@@ -112,15 +132,22 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
      * @inheritDoc
      */
     public function mapDataToForms($viewData, $forms) {
-        // Nothing to do
-        dump($viewData);
-        dump($forms);
+        // not used
     }
 
     /**
      * @inheritDoc
      */
     public function mapFormsToData($forms, &$viewData) {
-        // TODO
+        $forms = \iterator_to_array($forms);
+
+        $viewData = (new Recipe())
+            ->setName($forms['name']->getData())
+            ->setLocationDetails($forms['locationDetails']->getData());
+        foreach ($forms['recipeIngredients']->getData() as $recipeIngredient) {
+            if (trim($recipeIngredient->getName())) {
+                $viewData->addRecipeIngredient($recipeIngredient);
+            }
+        }
     }
 }

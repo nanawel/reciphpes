@@ -117,7 +117,7 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
         /** @var FormInterface[] $forms */
         $forms = iterator_to_array($forms);
 
-        $forms['name']->setData($viewData->getIngredient()->getName());
+        $forms['name']->setData($viewData->getName());
         $forms['note']->setData($viewData->getNote());
     }
 

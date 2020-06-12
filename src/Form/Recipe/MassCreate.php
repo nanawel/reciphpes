@@ -2,6 +2,7 @@
 
 namespace App\Form\Recipe;
 
+use App\Entity\Recipe;
 use App\Form\DataTransformer\LocationToIdTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Form\Type\RecipeSummary;
@@ -58,6 +59,7 @@ class MassCreate extends AbstractType
                 [
                     'label' => 'Location',
                     'help' => 'Optional. Will be applied to all created recipes below.',
+                    'required' => false,
                     'class' => \App\Entity\Location::class,
                     'choice_label' => 'name',
                     'placeholder' => 'Choose a location...',
@@ -74,6 +76,7 @@ class MassCreate extends AbstractType
                     'required' => true,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'data' => [new Recipe()]  // Init with 1 empty recipe
                 ]
             )
             ->add(

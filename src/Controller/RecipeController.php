@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Location;
+use App\Entity\Recipe;
 use App\Entity\Tag;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Repository\TagRepository;
@@ -88,15 +89,20 @@ class RecipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $success = false;
             try {
-                $entity = $form->getData();
+                $formData = $form->getData();
 
-                $this->getEntityManager()->persist($entity);
-                $this->getEntityManager()->flush();
+                /** @var Recipe $recipe */
+                foreach ($formData['recipes'] as $recipe) {
+                    $recipe->setTags($formData['tags'])
+                        ->setLocation($formData['location']);
+                    $this->getEntityManager()->persist($recipe);
+                    $this->getEntityManager()->flush();
+                }
 
                 $message = $this->getTranslator()->trans(
-                    '%count% element(s) saved successfully!',
+                    '%count% recipe(s) saved successfully!',
                     [
-                        '%count%' => count($entities)
+                        '%count%' => count($formData['recipes'])
                     ]
                 );
                 $this->get('session')->getFlashBag()->add(
@@ -117,8 +123,7 @@ class RecipeController extends AbstractController
                     sprintf(
                         'app_%s_grid',
                         $this->getEntityConfig('route_prefix')
-                    ),
-                    ['id' => $entity->getId()]
+                    )
                 );
             }
         }
