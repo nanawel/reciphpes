@@ -42,7 +42,7 @@
             {{ form_help(form.name) }}
         </div>
 
-        <div class="col-10 col-lg-5">
+        <div class="{%- if form.vars.deletebtn_show -%}col-10 col-lg-5{% else %}col-12 col-lg-6{% endif %}">
             {{ form_widget(form.note, {
                 attr: form.note.vars.attr|merge({'class': form.note.vars.attr['class']|default('') ~ ' form-control-sm' })
             }) }}
@@ -50,12 +50,14 @@
             {{ form_help(form.note) }}
         </div>
 
-        <div class="col-2 col-lg-1">
-            <button type="button"
-                    class="btn btn-danger btn-sm delete-collection-widget">
-                <i class="fas fa-minus-circle"></i>
-            </button>
-        </div>
+        {%- if form.vars.deletebtn_show -%}
+            <div class="col-2 col-lg-1">
+                <button type="button"
+                        class="btn btn-danger btn-sm delete-collection-widget {{ form.vars.deletebtn_attr.class|default('') }}">
+                    <i class="fas fa-minus-circle"></i>
+                </button>
+            </div>
+        {%- endif -%}
     </div>
 {% endblock %}
 

@@ -13,6 +13,7 @@ use Symfony\Component\Form\Exception;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -37,31 +38,44 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
             ->add(
                 'name',
                 TextType::class,
-                [
-                    'label' => 'Name',
-                    'attr' => [
-                        'class' => 'jq-autocomplete',
-                        'placeholder' => 'Name...',
-                        'autocomplete' => 'ingredient_name',
-                        'data-fetch-url' => $this->router->generate('app_ingredient_search'),
+                array_replace_recursive(
+                    [
+                        'label' => 'Name',
+                        'attr' => [
+                            'class' => 'jq-autocomplete',
+                            'placeholder' => 'Name...',
+                            'autocomplete' => 'ingredient_name',
+                            'data-fetch-url' => $this->router->generate('app_ingredient_search'),
+                        ],
+                        'required' => true,
                     ],
-                    'required' => true,
-                ]
+                    $options['name_opts']
+                )
             )
             ->add(
                 'note',
                 TextType::class,
-                [
-                    'label' => 'Note',
-                    'attr' => [
-                        'placeholder' => 'Note',
-                        'autocomplete' => 'ingredient_note',
+                array_replace_recursive(
+                    [
+                        'label' => 'Note',
+                        'attr' => [
+                            'placeholder' => 'Note',
+                            'autocomplete' => 'ingredient_note',
+                        ],
+                        'required' => false,
+                        'help' => 'Additional note about the ingredient (quantity, etc.)'
                     ],
-                    'required' => false,
-                    'help' => 'Additional note about the ingredient (quantity, etc.)'
-                ]
+                    $options['note_opts']
+                )
             )
             ->setDataMapper($this);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options) {
+        $view->vars['deletebtn_show'] = $options['deletebtn_show'];
+        $view->vars['deletebtn_attr'] = $options['deletebtn_attr'];
+
+        return parent::buildView($view, $form, $options);
     }
 
     /**
@@ -76,6 +90,10 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
                 'label_attr' => [
                     'class' => 'd-none'     // Hide label (placeholder displayed only)
                 ],
+                'name_opts' => [],
+                'note_opts' => [],
+                'deletebtn_show' => true,
+                'deletebtn_attr' => [],
                 'class' => RecipeIngredient::class,
                 'block_name' => 'recipe_ingredients',
                 'compound' => true

@@ -105,6 +105,27 @@ i.fa-circle-o-notch {
     height: 10em;
 }
 
+.form-recipe-summary-type {
+    @extend .jumbotron;
+    padding: 1rem .5rem;
+}
+
+.form-recipe-ingredients-type {
+    margin-bottom: 0;
+
+    small.text-muted {
+        display: none;
+    }
+
+    .form-group {
+        margin-bottom: .3rem;
+    }
+
+    .form-control-sm {
+        height: auto;
+    }
+}
+
 form .btn-save {
     float: right;
 }

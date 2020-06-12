@@ -10,21 +10,29 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RecipeSummary extends AbstractType implements DataMapperInterface
 {
+    const INGREDIENT_ROWS = 3;
+
     /** @var EntityManagerInterface */
     private $entityManager;
 
     /** @var RouterInterface */
     protected $router;
 
+    /** @var TranslatorInterface */
+    protected $translator;
+
     public function __construct(
         EntityManagerInterface $entityManager,
-        RouterInterface $router
+        RouterInterface $router,
+        TranslatorInterface $translator
     ) {
         $this->entityManager = $entityManager;
         $this->router = $router;
+        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -47,10 +55,9 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                 'locationDetails',
                 TextType::class,
                 [
-                    'help' => 'Page #, path, etc.',
                     'required' => false,
                     'attr' => [
-                        'placeholder' => 'Location (details)',
+                        'placeholder' => 'Page #, path, etc.',
                         'autocomplete' => 'recipe_location_details',
                     ],
                     'label_attr' => [
@@ -59,6 +66,27 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                 ]
             )
             ->setDataMapper($this);
+
+        for ($i = 0; $i < self::INGREDIENT_ROWS; $i++) {
+            $builder->add(
+                "ingredient_$i",
+                RecipeIngredientType::class,
+                [
+                    'name_opts' => [
+                        'attr' => [
+                            'placeholder' => $this->translator->trans('Ingredient %i%', ['%i%' => $i + 1]),
+                        ],
+                    ],
+                    'note_opts' => [
+                        'help' => null,
+                    ],
+                    'deletebtn_show' => false,
+                    'deletebtn_attr' => [
+                        'class' => 'd-none'
+                    ]
+                ]
+            );
+        }
     }
 
     /**
