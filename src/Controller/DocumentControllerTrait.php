@@ -68,7 +68,6 @@ trait DocumentControllerTrait
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, object $entity = null) {
-
         if (! $entity) {
             $entity = $this->newEntity($request);
         }

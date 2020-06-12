@@ -28,19 +28,14 @@ class Recipe extends AbstractType
     /** @var TagsToJsonTransformer */
     protected $tagsToJsonTransformer;
 
-    /** @var LocationToIdTransformer */
-    protected $locationToIdTransformer;
-
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        TagsToJsonTransformer $tagsToJsonTransformer,
-        LocationToIdTransformer $locationToIdTransformer
+        TagsToJsonTransformer $tagsToJsonTransformer
     ) {
         $this->entityManager = $entityManager;
         $this->router = $router;
         $this->tagsToJsonTransformer = $tagsToJsonTransformer;
-        $this->locationToIdTransformer = $locationToIdTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -76,12 +71,6 @@ class Recipe extends AbstractType
                     'label' => 'Location',
                     'help' => 'Optional',
                     'class' => \App\Entity\Location::class,
-                    'choice_value' => function ($location) {
-                        // Why is this code necessary?
-                        return is_object($location)
-                            ? $location->getId()    // Object passed (when building choices)
-                            : $location;            // int value passed (when checking for selection)
-                    },
                     'choice_label' => 'name',
                     'placeholder' => 'Choose a location...',
                 ]
@@ -154,8 +143,6 @@ class Recipe extends AbstractType
 
         $builder->get('tags')
             ->addModelTransformer($this->tagsToJsonTransformer);
-        $builder->get('location')
-            ->addModelTransformer($this->locationToIdTransformer);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
