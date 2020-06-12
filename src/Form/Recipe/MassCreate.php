@@ -3,7 +3,6 @@
 namespace App\Form\Recipe;
 
 use App\Entity\Recipe;
-use App\Form\DataTransformer\LocationToIdTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Form\Type\RecipeSummary;
 use Doctrine\ORM\EntityManagerInterface;
