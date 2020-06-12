@@ -17,9 +17,9 @@ require('datatables.net');
 require('datatables.net-responsive-bs4');
 require('jquery-ui/ui/widgets/autocomplete');
 require('@yaireo/tagify/dist/jQuery.tagify.min');
-const SimpleMDE = require('simplemde/dist/simplemde.min');
+const EasyMDE = require('easymde/dist/easymde.min');
 
-$('textarea.markdown').each(el => new SimpleMDE({element: el, spellChecker: false}));
+$('textarea.markdown').each(el => new EasyMDE({element: el, spellChecker: false}));
 
 // Prevent multiple form submit
 $('form').submit(function (ev) {
