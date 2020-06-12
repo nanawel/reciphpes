@@ -70,6 +70,7 @@ class Recipe extends AbstractType
                 [
                     'label' => 'Location',
                     'help' => 'Optional',
+                    'required' => false,
                     'class' => \App\Entity\Location::class,
                     'choice_label' => 'name',
                     'placeholder' => 'Choose a location...',
