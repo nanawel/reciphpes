@@ -35,10 +35,12 @@ Edit: Modifier
 Element saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>: Élément enregistré avec succès !&nbsp;<a href="%url%">Cliquez ici pour le voir.</a>
 'Hint: you can use Ctrl+Enter to add a new row.': 'Astuce : vous pouvez utiliser Ctrl+Entrée pour ajouter une nouvelle ligne.'
 Ingredient: Ingrédient
+Ingredient %i%: Ingrédient %i%
 Ingredients: Ingrédients
 Instructions: Instructions
 Location: Emplacement
 Locations: Emplacements
+Location details: Détails de l'emplacement
 Location (details): Emplacement (détails)
 Mass create: Créer en masse
 Name: Nom

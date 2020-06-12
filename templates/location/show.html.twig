@@ -21,11 +21,12 @@
 
         <div class="btn-toolbar float-right" role="toolbar" aria-label="{% trans %} Toolbar {% endtrans %}">
             <div class="btn-group mr-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
-                <a href="{{ path('app_recipe_new', {location_id: location.id}) }}" class="btn action btn-primary btn-">
+                <a href="{{ path('app_recipe_new', {location_id: location.id}) }}"
+                   class="btn action btn-secondary btn-">
                     <i class="fas fa-plus-circle"></i>&nbsp;<span>{% trans %} New {% endtrans %}</span>
                 </a>
                 <a href="{{ path('app_recipe_masscreate', {location: location.id}) }}"
-                   class="btn action btn-primary btn-">
+                   class="btn action btn-mass-create btn-secondary">
                     <i class="fas fa-truck-loading"></i>&nbsp;<span>{% trans %} Mass create {% endtrans %}</span>
                 </a>
             </div>

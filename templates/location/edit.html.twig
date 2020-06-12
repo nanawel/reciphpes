@@ -14,9 +14,9 @@
         </div>
     {% endif %}
     {% if location.id %}
-        <h1>{{ location.name }}</h1>
+        <h1><i class="fas fa-edit"></i>&nbsp;{{ location.name }}</h1>
     {% else %}
-        <h1>{% trans %} New location {% endtrans %}</h1>
+        <h1><i class="fas fa-plus-circle"></i>&nbsp;{% trans %} New location {% endtrans %}</h1>
     {% endif %}
 
     <div class="clearfix"></div>
