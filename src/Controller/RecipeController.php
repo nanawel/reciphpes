@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Location;
 use App\Entity\Tag;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Repository\TagRepository;
@@ -64,6 +65,83 @@ class RecipeController extends AbstractController
      */
     public function delete(Request $request, object $entity = null) {
         return $this->deleteAction($request, $entity);
+    }
+
+    public function massCreate(Request $request) {
+        $form = $this->createForm(
+            \App\Form\Recipe\MassCreate::class,
+            $this->massCreate_prepareFormData($request)
+        );
+
+        $this->getBreadcrumbs()
+            ->addItem(
+                'breadcrumb.home',
+                $this->get('router')->generate('index')
+            )
+            ->addItem(
+                sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+            )
+            ->addItem(sprintf('breadcrumb.%s.masscreate', $this->getEntityConfig('type')));
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $success = false;
+            try {
+                $entity = $form->getData();
+
+                $this->getEntityManager()->persist($entity);
+                $this->getEntityManager()->flush();
+
+                $message = $this->getTranslator()->trans(
+                    '%count% element(s) saved successfully!',
+                    [
+                        '%count%' => count($entities)
+                    ]
+                );
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $message
+                );
+                $success = true;
+            } catch (\Throwable $e) {
+                $this->getLogger()->error($e);
+                $this->addFlash(
+                    'danger',
+                    $this->getTranslator()->trans('Unable to save elements: %cause%', ['%cause%' => $e->getMessage()])
+                );
+            }
+
+            if ($success) {
+                return $this->redirectToRoute(
+                    sprintf(
+                        'app_%s_grid',
+                        $this->getEntityConfig('route_prefix')
+                    ),
+                    ['id' => $entity->getId()]
+                );
+            }
+        }
+
+        return $this->render(
+            sprintf('%s/masscreate.html.twig', $this->getEntityConfig('template_prefix')),
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    protected function massCreate_prepareFormData(Request $request): array {
+        $data = [];
+        if ($location = (int)$request->get('location')) {
+            $data['location'] = $this->getEntityManager()->getRepository(Location::class)->find($location);
+        }
+
+        return $data;
     }
 
     public function searchTags(Request $request, TagsToJsonTransformer $tagsToJsonTransformer) {

@@ -27,6 +27,10 @@ app_recipe_delete:
   path: /recipe/delete/{id}
   controller: App\Controller\RecipeController::delete
 
+app_recipe_masscreate:
+  path: /recipe/massCreate
+  controller: App\Controller\RecipeController::massCreate
+
 app_recipe_tag_search:
   path: /recipe_tags/search
   controller: App\Controller\RecipeController::searchTags

@@ -1,6 +1,6 @@
-{# RECIPE INGREDIENTS #}
+{# COLLECTION CONTAINER (GENERIC) #}
 
-{% block _recipe_recipe_ingredients_row %} {# => Named from the path of the widget in the "recipe" form #}
+{% block _app_collection_row %} {# => Custom parameterized block #}
     {%- if expanded is defined and expanded -%}
         {{ block('fieldset_form_row') }}
     {%- else -%}
@@ -14,13 +14,22 @@
                 {{- form_widget(form, widget_attr) -}}
                 <button type="button"
                         class="btn btn-primary btn-sm add-collection-widget">
-                    <i class="fas fa-plus-circle"></i>&nbsp;{% trans %} New ingredient {% endtrans %}
+                    <i class="fas fa-plus-circle"></i>&nbsp;{{ addButtonLabel | default('Add') | trans }}
                 </button>
                 {{- form_help(form) -}}
             </div>
         </div>
     {%- endif -%}
 {% endblock %}
+
+{# RECIPE INGREDIENTS #}
+
+{% block _recipe_recipe_ingredients_row %} {# => Named from the path of the widget in the "recipe" form #}
+    {% with { addButtonLabel: 'New ingredient' } %}
+        {{ block ('_app_collection_row') }}
+    {% endwith %}
+{% endblock %}
+
 
 {% block recipe_ingredient_widget %} {# => Named from the "RecipeIngredientType" class #}
     <div class="form-group form-row form-control-sm">
@@ -48,4 +57,12 @@
             </button>
         </div>
     </div>
+{% endblock %}
+
+{# RECIPE MASS CREATE (SUMMARY) #}
+
+{% block _mass_create_recipes_row %} {# => Named from the path of the widget in the "recipe" form #}
+    {% with { addButtonLabel: 'New recipe' } %}
+        {{ block ('_app_collection_row') }}
+    {% endwith %}
 {% endblock %}

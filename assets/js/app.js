@@ -124,7 +124,7 @@ $('.form-group > div').on('click', 'button.delete-collection-widget', function (
 });
 
 // Add hotkey for "Add ingredient" action on recipes
-$(document).on('keydown', 'form .form-recipe-ingredients-type', function(ev) {
+$(document).on('keydown', 'form .form-recipe-ingredients-type, form .form-recipe-summary-type', function (ev) {
     if (ev.key == 'Enter' && ev.ctrlKey) {
         const $collectionHolder = $(ev.target).closest('[data-prototype]');
 

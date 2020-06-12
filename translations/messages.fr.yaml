@@ -3,6 +3,7 @@ breadcrumb:
   recipe:
     grid: Recettes
     new: Nouvelle recette
+    masscreate: Création en masse
   ingredient:
     grid: Ingrédients
     new: Nouvel ingrédient
@@ -25,6 +26,7 @@ grid:
       location: Emplacement
       locationDetails: Détails
 
+'%count% element(s) saved successfully!': '%count% élément(s) enregistré(s) avec succès !'
 Actions: Actions
 Additional note about the ingredient (quantity, etc.): Précision complémentaire sur l'ingrédient (quantité, etc.)
 Choose a location...: Choisissez un emplacement...
@@ -38,6 +40,7 @@ Instructions: Instructions
 Location: Emplacement
 Locations: Emplacements
 Location (details): Emplacement (détails)
+Mass create: Créer en masse
 Name: Nom
 Name...: Nom...
 New: Créer
@@ -45,22 +48,26 @@ New...: Créer...
 New ingredient: Nouvel ingrédient
 New location: Nouvel emplacement
 New recipe: Nouvelle recette
+New recipes...: Nouvelles recettes...
 No location defined.: Pas d'emplacement associé.
 No ingredients defined.: Pas d'ingrédients associés.
 No instructions defined.: Pas d'instructions associées.
 No item found.: Aucun résultat.
 Note: Note
 Optional: Facultatif
+Optional. Will be applied to all created recipes below.: Facultatif. Sera affecté à toutes les recettes créées ci-dessous.
 'Page #, path, etc.': N° de page, chemin, etc.
 Recipe: Recette
 Recipes: Recettes
 Results for "%query%": Résultats pour "%query%"
 Save: Sauvegarder
+Save all: Sauvegarder tout
 Search: Rechercher
 Tags: Tags
 Time(s) of year: Époque(s) de l'année
 Toolbar: Barre d'outils
 'Unable to save element: %cause%': "Impossible d'enregistrer l'élément : %cause%"
+'Unable to save elements: %cause%': "Impossible d'enregistrer les éléments : %cause%"
 View: Voir
 View recipes: Voir les recettes
 Welcome: Bienvenue

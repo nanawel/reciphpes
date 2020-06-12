@@ -1,0 +1,40 @@
+{% extends 'content.html.twig' %}
+
+
+{% block content %}
+    <div class="float-right">
+        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group mr-2" role="group" aria-label="Actions">
+                <button type="submit" class="btn btn-primary btn-save">
+                    <span>{% trans %} Save all {% endtrans %}</span></a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <h1>{% trans %} New recipes... {% endtrans %}</h1>
+
+    <div class="clearfix"></div>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-6">
+            {{ form_label(form.location) }}
+            {{ form_errors(form.location) }}
+            {{ form_widget(form.location) }}
+            {{ form_help(form.location) }}
+        </div>
+        <div class="col-6">
+            {{ form_label(form.tags) }}
+            {{ form_errors(form.tags) }}
+            {{ form_widget(form.tags) }}
+            {{ form_help(form.tags) }}
+        </div>
+    </div>
+    <hr>
+    {{ form_row(form.recipes) }}
+    <hr>
+    {{ form_row(form.save) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -24,6 +24,10 @@
                 <a href="{{ path('app_recipe_new', {location_id: location.id}) }}" class="btn action btn-primary btn-">
                     <i class="fas fa-plus-circle"></i>&nbsp;<span>{% trans %} New {% endtrans %}</span>
                 </a>
+                <a href="{{ path('app_recipe_masscreate', {location: location.id}) }}"
+                   class="btn action btn-primary btn-">
+                    <i class="fas fa-truck-loading"></i>&nbsp;<span>{% trans %} Mass create {% endtrans %}</span>
+                </a>
             </div>
         </div>
         <h2 class="recipes"><i class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes {% endtrans %}</h2>
