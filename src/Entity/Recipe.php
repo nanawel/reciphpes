@@ -83,6 +83,7 @@ class Recipe extends AbstractEntity
     protected $createdAt;
 
     public function __construct() {
+        $this->tags = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
         $this->timesOfYear = new ArrayCollection();
     }
@@ -134,6 +135,16 @@ class Recipe extends AbstractEntity
      */
     public function setTags($tags) {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * @param Tag $tags
+     * @return $this
+     */
+    public function addTag($tag) {
+        $this->tags->add($tag);
 
         return $this;
     }

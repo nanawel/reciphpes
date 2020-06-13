@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\Recipe;
 use App\Entity\RecipeIngredient;
+use App\Form\DataTransformer\TagsToJsonTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
@@ -27,14 +28,19 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
     /** @var TranslatorInterface */
     protected $translator;
 
+    /** @var TagsToJsonTransformer */
+    protected $tagsToJsonTransformer;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        TagsToJsonTransformer $tagsToJsonTransformer
     ) {
         $this->entityManager = $entityManager;
         $this->router = $router;
         $this->translator = $translator;
+        $this->tagsToJsonTransformer = $tagsToJsonTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -61,6 +67,21 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                     'attr' => [
                         'placeholder' => 'Page #, path, etc.',
                         'autocomplete' => 'recipe_location_details',
+                    ],
+                    'label_attr' => [
+                        'class' => 'd-none'
+                    ],
+                ]
+            )
+            ->add(
+                'tags',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Tags',
+                        'class' => 'autocomplete-tag',
+                        'data-fetch-url' => $this->router->generate('app_recipe_tag_search')
                     ],
                     'label_attr' => [
                         'class' => 'd-none'
@@ -107,6 +128,9 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                 'data' => $initRecipeIngredients
             ]
         );
+
+        $builder->get('tags')
+            ->addModelTransformer($this->tagsToJsonTransformer);
     }
 
     /**
@@ -143,7 +167,8 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
 
         $viewData = (new Recipe())
             ->setName($forms['name']->getData())
-            ->setLocationDetails($forms['locationDetails']->getData());
+            ->setLocationDetails($forms['locationDetails']->getData())
+            ->setTags($forms['tags']->getData());
         foreach ($forms['recipeIngredients']->getData() as $recipeIngredient) {
             if (trim($recipeIngredient->getName())) {
                 $viewData->addRecipeIngredient($recipeIngredient);

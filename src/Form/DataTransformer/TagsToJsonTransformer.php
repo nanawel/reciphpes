@@ -5,6 +5,8 @@ namespace App\Form\DataTransformer;
 
 
 use App\Entity\Tag;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -49,23 +51,24 @@ class TagsToJsonTransformer implements DataTransformerInterface
 
     /**
      * @param string $json
-     * @return array
+     * @return Collection
      * @throws TransformationFailedException
      */
     public function reverseTransform($json) {
+        $return = new ArrayCollection();
         $data = json_decode($json, JSON_OBJECT_AS_ARRAY);
         if (! $data) {
-            return [];
+            return $return;
         }
 
-        $return = [];
         foreach ($data as $tagData) {
             if (! empty($tagData['id'])) {
-                $return[] = $this->entityManager->getRepository(Tag::class)
-                    ->find($tagData['id']);
+                $return->add(
+                    $this->entityManager->getRepository(Tag::class)->find($tagData['id'])
+                );
             }
             else {
-                $return[] = (new Tag())->setName($tagData['value']);
+                $return->add((new Tag())->setName($tagData['value']));
             }
         }
 

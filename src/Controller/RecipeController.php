@@ -93,8 +93,10 @@ class RecipeController extends AbstractController
 
                 /** @var Recipe $recipe */
                 foreach ($formData['recipes'] as $recipe) {
-                    $recipe->setTags($formData['tags'])
-                        ->setLocation($formData['location']);
+                    $recipe->setLocation($formData['location']);
+                    foreach ($formData['tags'] as $tag) {
+                        $recipe->addTag($tag);
+                    }
                     $this->getEntityManager()->persist($recipe);
                     $this->getEntityManager()->flush();
                 }
