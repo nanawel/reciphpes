@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Ingredient;
 use App\Entity\Location;
 use App\Entity\Recipe;
+use App\Entity\RecipeIngredient;
 use App\Entity\Tag;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Repository\TagRepository;
@@ -91,15 +93,34 @@ class RecipeController extends AbstractController
             try {
                 $formData = $form->getData();
 
+                /** @var Ingredient[] $newIngredients */
+                $newIngredients = [];
+
                 /** @var Recipe $recipe */
                 foreach ($formData['recipes'] as $recipe) {
                     $recipe->setLocation($formData['location']);
                     foreach ($formData['tags'] as $tag) {
                         $recipe->addTag($tag);
                     }
+
+                    // Handle new ingredients present several times in the submitted form:
+                    // once the first occurence is saved, update subsequent recipes with this instance
+                    /** @var RecipeIngredient $recipeIngredient */
+                    foreach ($recipe->getRecipeIngredients() as $recipeIngredient) {
+                        if (! $recipeIngredient->getIngredient()->getId()) {
+                            if (isset($newIngredients[$recipeIngredient->getName()])) {
+                                // Replace with the first instance that should have an ID by now
+                                $recipeIngredient->setIngredient($newIngredients[$recipeIngredient->getName()]);
+                            }
+                            else {
+                                $newIngredients[$recipeIngredient->getName()] = $recipeIngredient->getIngredient();
+                            }
+                        }
+                    }
+
                     $this->getEntityManager()->persist($recipe);
-                    $this->getEntityManager()->flush();
                 }
+                $this->getEntityManager()->flush();
 
                 $message = $this->getTranslator()->trans(
                     '%count% recipe(s) saved successfully!',
