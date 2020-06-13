@@ -7,6 +7,12 @@ reciphpes!
 
 > Author: nanawel@gmail.com
 
+## Screenshots
+
+| Recipes list | Recipe page | Search results |
+|-|-|-|
+| ![Recipes list](/docs/screenshots/recipe-grid.png?raw=true "Recipes list" | width=100) | ![Recipe page](/docs/screenshots/recipe-show.png?raw=true "Recipes page" | width=100) ![Search results](/docs/screenshots/search-results.png?raw=true "Search results" | width=100)
+
 ## Installation
 
 > **Notice:** Currently the application **cannot be accessed** from a URL using
