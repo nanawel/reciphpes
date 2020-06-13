@@ -60,6 +60,7 @@ Optional: Facultatif
 Optional. Will be applied to all created recipes below.: Facultatif. Sera affecté à toutes les recettes créées ci-dessous.
 'Page #, path, etc.': N° de page, chemin, etc.
 Recipe: Recette
+Recipe (batch): Recettes (en masse)
 Recipes: Recettes
 Recipes using this ingredient: Recettes utilisant cet ingrédient
 Results for "%query%": Résultats pour "%query%"
