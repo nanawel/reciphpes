@@ -5,27 +5,19 @@ reciphpes!
 ==
 </center>
 
-> Author: nanawel@gmail.com
+> Author: Anaël Ollier <nanawel+reciphpes@gmail.com>
 
 ## Screenshots
 
-| Recipes list | Recipe page | Search results |
-|-|-|-|
-| ![Recipes list](/docs/screenshots/recipe-grid.png?raw=true "Recipes list" | width=100) | ![Recipe page](/docs/screenshots/recipe-show.png?raw=true "Recipes page" | width=100) ![Search results](/docs/screenshots/search-results.png?raw=true "Search results" | width=100)
+:arrow_right: See [here](docs/screenshots/).
 
 ## Installation
 
 > **Notice:** Currently the application **cannot be accessed** from a URL using
 > a custom path:
 >
-> - http://reciphpes.host.org/           => OK
-> - http://something.host.org/reciphpes  => KO
-
-### Build
-
-```shell
-make build
-```
+> - :ballot_box_with_check: http://reciphpes.myhost.org/
+> - :x: http://something.myhost.org/reciphpes
 
 ### Run (Docker)
 
@@ -85,6 +77,14 @@ docker-compose exec -u www-data app bin/console doctrine:migrations:migrate -n
 docker-compose exec app make new-secret
 ```
 
+### Build from source
+
+```shell
+git clone https://github.com/nanawel/reciphpes.git /opt/reciphpes-src
+cd /opt/reciphpes-src
+make build
+```
+
 ## Developer Notes
 
 ### Docker setup (recommended)
@@ -116,3 +116,7 @@ make install
 # Start assets builder watch task
 yarn run encore dev --watch
 ```
+
+# Licence
+
+See [LICENSE](LICENSE).
