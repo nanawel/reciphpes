@@ -9,7 +9,9 @@ reciphpes!
 
 ## Screenshots
 
-:arrow_right: See [here](docs/screenshots/).
+- [Recipe list](docs/screenshots/recipe-grid.png)
+- [Recipe page](docs/screenshots/recipe-show.png)
+- [Search results](docs/screenshots/search-results.png)
 
 ## Installation
 
