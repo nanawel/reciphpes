@@ -9,8 +9,10 @@ reciphpes!
 
 ## Screenshots
 
-- [Recipe list](docs/screenshots/recipe-grid.png)
+- [Recipes list](docs/screenshots/recipe-grid.png)
 - [Recipe page](docs/screenshots/recipe-show.png)
+- [Recipe form](docs/screenshots/recipe-form.png)
+- [Recipe mass create form](docs/screenshots/recipe-masscreate.png)
 - [Search results](docs/screenshots/search-results.png)
 
 ## Installation
