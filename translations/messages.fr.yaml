@@ -61,6 +61,7 @@ Optional. Will be applied to all created recipes below.: Facultatif. Sera affect
 'Page #, path, etc.': N° de page, chemin, etc.
 Recipe: Recette
 Recipes: Recettes
+Recipes using this ingredient: Recettes utilisant cet ingrédient
 Results for "%query%": Résultats pour "%query%"
 Save: Sauvegarder
 Save all: Sauvegarder tout

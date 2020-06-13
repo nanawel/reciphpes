@@ -18,5 +18,10 @@
                 </span>
             </p>
         {% endif %}
+
+        <h2 class="recipes"><i
+                    class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes using this ingredient {% endtrans %}</h2>
+
+        {% include '_grid.html.twig' with {gridConfig: recipeGridConfig} %}
     </div>
 {% endblock %}

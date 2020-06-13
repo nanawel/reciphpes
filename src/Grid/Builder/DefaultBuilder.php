@@ -8,6 +8,7 @@ use App\Grid\Column\ColumnInterface;
 use App\Grid\Column\DefaultColumn;
 use App\Grid\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -37,6 +38,9 @@ class DefaultBuilder implements Builder
     /** @var Action[]|null */
     protected $actions = [];
 
+    /** @var QueryBuilder|null */
+    protected $queryBuilder = null;
+
     /** @var string|null */
     protected $searchQuery = null;
 
@@ -56,6 +60,12 @@ class DefaultBuilder implements Builder
 
     public function withEntityConfig(array $entityConfig) {
         $this->entityConfig = $entityConfig;
+
+        return $this;
+    }
+
+    public function withQueryBuilder(?QueryBuilder $queryBuilder) {
+        $this->queryBuilder = $queryBuilder;
 
         return $this;
     }
@@ -183,14 +193,19 @@ class DefaultBuilder implements Builder
     }
 
     protected function getItems() {
-        $repository = $this->entityManager->getRepository($this->getEntityConfig('class'));
-
-        // TODO Use search + filters at the same time
-        if ($this->searchQuery) {
-            return $repository->search($this->searchQuery);
+        if ($this->queryBuilder) {
+            return $this->queryBuilder->getQuery()->execute();
         }
-        if ($this->searchCriteria) {
-            return $repository->findBy($this->searchCriteria, ['name' => 'asc']);
+        else {
+            $repository = $this->entityManager->getRepository($this->getEntityConfig('class'));
+
+            // TODO Use search + filters at the same time
+            if ($this->searchQuery) {
+                return $repository->search($this->searchQuery);
+            }
+            if ($this->searchCriteria) {
+                return $repository->findBy($this->searchCriteria, ['name' => 'asc']);
+            }
         }
 
         return $repository->findAll();

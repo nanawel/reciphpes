@@ -6,6 +6,7 @@ namespace App\Grid;
 
 use App\Grid\Column\Action;
 use App\Grid\Column\ColumnInterface;
+use Doctrine\ORM\QueryBuilder;
 
 interface Builder
 {
@@ -16,16 +17,22 @@ interface Builder
     public function withEntityConfig(array $entityConfig);
 
     /**
+     * @param QueryBuilder|null $queryBuilder
+     * @return $this
+     */
+    public function withQueryBuilder(?QueryBuilder $queryBuilder);
+
+    /**
      * @param string $query
      * @return $this
      */
-    public function withSearchQuery(string $query);
+    public function withSearchQuery(?string $query);
 
     /**
      * @param array $criteria
      * @return $this
      */
-    public function withSearchCriteria(array $criteria);
+    public function withSearchCriteria(?array $criteria);
 
     /**
      * @param string[] $headers
