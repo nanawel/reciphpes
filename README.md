@@ -23,13 +23,13 @@ make build
 
 ### Run (Docker)
 
-Create a dedicated folder to hold `docker-compose.yml` and the data directory.
-
-> Instructions for Debian-like distros where `www-data` user exists (UID = 33).
+Create a dedicated folder (here `/opt/reciphpes`) to hold `docker-compose.yml`
+and the data directory and give the latter required permissions for `www-data`
+in the container.
 
 ```shell
 mkdir -p /opt/reciphpes/data/db /opt/reciphpes/data/log
-chgrp -R www-data /opt/reciphpes/data/*
+chgrp -R 33 /opt/reciphpes/data/*
 chmod -R g+w /opt/reciphpes/data/*
 ```
 
@@ -51,6 +51,7 @@ services:
 
 Start the container with
 ```shell
+cd /opt/reciphpes
 docker-compose up -d
 ```
 
@@ -61,6 +62,20 @@ docker-compose exec -u www-data app make install
 
 *(Optional)* You might want to generate a new secret value:
 ```shell
+docker-compose exec app make new-secret
+```
+
+You may now access the application at http://localhost:8000/.
+
+See next section when upgrading.
+
+### Upgrade (Docker)
+
+```
+docker-compose pull
+gzip -c data/db/app.db > data/db/app.$(date +%F_%H-%M-%S).sqlite.gz
+docker-compose up -d
+docker-compose exec -u www-data app bin/console doctrine:migrations:migrate -n
 docker-compose exec app make new-secret
 ```
 
