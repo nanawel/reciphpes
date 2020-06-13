@@ -150,6 +150,16 @@ class Recipe extends AbstractEntity
     }
 
     /**
+     * @param Tag $tags
+     * @return $this
+     */
+    public function removeTag($tag) {
+        $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getLocation() {

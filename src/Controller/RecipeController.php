@@ -95,6 +95,8 @@ class RecipeController extends AbstractController
 
                 /** @var Ingredient[] $newIngredients */
                 $newIngredients = [];
+                /** @var Tag[] $newTags */
+                $newTags = [];
 
                 /** @var Recipe $recipe */
                 foreach ($formData['recipes'] as $recipe) {
@@ -103,17 +105,33 @@ class RecipeController extends AbstractController
                         $recipe->addTag($tag);
                     }
 
+                    // Handle new tags present several times in the submitted form:
+                    // once the first occurence is saved, update subsequent recipes with this instance
+                    /** @var Tag $tag */
+                    foreach ($recipe->getTags() as $tag) {
+                        if (! $tag->getId()) {
+                            if (isset($newTags[strtolower($tag->getName())])) {
+                                // Replace with the first instance that should have an ID by now
+                                $recipe->removeTag($tag)
+                                    ->addTag($newTags[strtolower($tag->getName())]);
+                            }
+                            else {
+                                $newTags[strtolower($tag->getName())] = $tag;
+                            }
+                        }
+                    }
                     // Handle new ingredients present several times in the submitted form:
                     // once the first occurence is saved, update subsequent recipes with this instance
                     /** @var RecipeIngredient $recipeIngredient */
                     foreach ($recipe->getRecipeIngredients() as $recipeIngredient) {
                         if (! $recipeIngredient->getIngredient()->getId()) {
-                            if (isset($newIngredients[$recipeIngredient->getName()])) {
+                            if (isset($newIngredients[strtolower($recipeIngredient->getName())])) {
                                 // Replace with the first instance that should have an ID by now
                                 $recipeIngredient->setIngredient($newIngredients[$recipeIngredient->getName()]);
                             }
                             else {
-                                $newIngredients[$recipeIngredient->getName()] = $recipeIngredient->getIngredient();
+                                $newIngredients[strtolower($recipeIngredient->getName())]
+                                    = $recipeIngredient->getIngredient();
                             }
                         }
                     }
