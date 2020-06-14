@@ -64,6 +64,13 @@ services:
                     type: location
                     route_prefix: location
                     template_prefix: location
+                tag:
+                    class: App\Entity\Tag
+                    form_class: App\Form\Tag
+                    type_id: App:Tag
+                    type: tag
+                    route_prefix: tag
+                    template_prefix: tag
 
     ### GRIDS
     App\Grid\Builder\Registry:
@@ -85,6 +92,11 @@ services:
     grid.builder.location:
         class: App\Grid\Builder\DefaultBuilder
         tags: [{ name: 'grid.builder', key: 'location' }]
+        public: true
+
+    grid.builder.tag:
+        class: App\Grid\Builder\DefaultBuilder
+        tags: [{ name: 'grid.builder', key: 'tag' }]
         public: true
 
     ### COMMANDS

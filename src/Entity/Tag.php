@@ -56,6 +56,9 @@ class Tag extends AbstractEntity
      * @return Tag
      */
     public function setName($name) {
+        if (! strlen(trim($name))) {
+            throw new \InvalidArgumentException('A tag cannot have an empty name.');
+        }
         // FIXME Need to force case here as I could not find how to do it in SQLite with Doctrine
         $this->name = strtolower($name);
 

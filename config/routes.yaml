@@ -98,6 +98,34 @@ app_location_delete:
   path: /location/delete/{id}
   controller: App\Controller\LocationController::delete
 
+### TAG
+app_tag:
+  path: /tag
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+  defaults:
+    path: /tag/grid
+    permanent: true
+
+app_tag_grid:
+  path: /tag/grid
+  controller: App\Controller\TagController::grid
+
+app_tag_show:
+  path: /tag/show/{id}
+  controller: App\Controller\TagController::show
+
+app_tag_new:
+  path: /tag/edit
+  controller: App\Controller\TagController::edit
+
+app_tag_edit:
+  path: /tag/edit/{id}
+  controller: App\Controller\TagController::edit
+
+app_tag_delete:
+  path: /tag/delete/{id}
+  controller: App\Controller\TagController::delete
+
 ### SEARCH
 app_search_results:
   path: /search/results

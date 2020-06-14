@@ -6,6 +6,7 @@ use App\Grid\Builder;
 use App\Grid\Column\Action;
 use App\Grid\Column\ColumnInterface;
 use App\Grid\Column\DefaultColumn;
+use App\Grid\Column\FieldWithLinkColumn;
 use App\Grid\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -122,7 +123,15 @@ class DefaultBuilder implements Builder
         $this->gridConfiguration = new Configuration();
         $this->entityConfig = [];
         $this->headers = [];
-        $this->columns = [];
+        $this->columns = [
+            'name' => new FieldWithLinkColumn(
+                $this->twig, null, [
+                'link_route_callback' => function () {
+                    return sprintf('app_%s_show', $this->getEntityConfig('route_prefix'));
+                }
+            ]
+            )
+        ];
         $this->actions = [];
         $this->searchQuery = null;
 
@@ -133,7 +142,7 @@ class DefaultBuilder implements Builder
      * @param null|string $config
      * @return mixed|array
      */
-    protected function getEntityConfig($config = null) {
+    public function getEntityConfig($config = null) {
         return $config === null
             ? $this->entityConfig
             : $this->entityConfig[$config] ?? null;
@@ -175,19 +184,19 @@ class DefaultBuilder implements Builder
         $actions = [];
         $actions[] = (new Action($this->twig, $this->translator))
             ->setLabel('View')
-            ->setRoute(sprintf('app_%s_show', $this->getEntityConfig('type')))
+            ->setRoute(sprintf('app_%s_show', $this->getEntityConfig('route_prefix')))
             ->setClass('btn-show btn-primary')
             ->setSortOrder(10);
         $actions[] = (new Action($this->twig, $this->translator))
             ->setLabel('Edit')
-            ->setRoute(sprintf('app_%s_edit', $this->getEntityConfig('type')))
+            ->setRoute(sprintf('app_%s_edit', $this->getEntityConfig('route_prefix')))
             ->setClass('btn-edit btn-primary')
             ->setSortOrder(20);
-//        $actions[] = (new Action($this->twig, $this->translator))
-//            ->setLabel('Delete')
-//            ->setRoute(sprintf('app_%s_delete', $this->getEntityConfig('type')))
-//            ->setClass('btn-delete btn-danger btn-delete')
-//            ->setSortOrder(30);
+        $actions[] = (new Action($this->twig, $this->translator))
+            ->setLabel('Delete')
+            ->setRoute(sprintf('app_%s_delete', $this->getEntityConfig('route_prefix')))
+            ->setClass('btn-delete btn-danger')
+            ->setSortOrder(30);
 
         return $actions;
     }

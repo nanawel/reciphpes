@@ -180,6 +180,17 @@ blockquote {
     }
 }
 
+// Special display for delete button in grids
+.grid-wrapper .btn-delete {
+    &:before {
+        margin-right: auto;
+    }
+
+    > span {
+        display: none;
+    }
+}
+
 .btn-save:before {
     @extend .fas;
     @extend .fa-save;

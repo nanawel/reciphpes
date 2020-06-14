@@ -22,7 +22,7 @@ trait DocumentControllerTrait
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             );
 
         /** @var Builder $gridBuilder */
@@ -49,7 +49,7 @@ trait DocumentControllerTrait
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             )
             ->addItem($entity->getName());
 
@@ -80,7 +80,7 @@ trait DocumentControllerTrait
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             )
             ->addItem(
                 $entity->getId()

@@ -16,11 +16,6 @@ class RecipeBuilder extends DefaultBuilder
             'locationDetails',
         ];
 
-        $this->columns['name'] = new TwigColumn(
-            $this->twig,
-            '_grid/field_with_link.html.twig',
-            ['link_route' => 'app_recipe_show']
-        );
         $this->columns['tags'] = new TwigColumn(
             $this->twig,
             '_grid/tags.html.twig'

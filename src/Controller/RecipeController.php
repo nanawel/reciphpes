@@ -51,11 +51,13 @@ class RecipeController extends AbstractController
 
     protected function newEntity(Request $request) {
         $entity = $this->defaultNewEntity($request);
-        if ($locationId = trim($request->get('location_id'))) {
-            $location = $this->getEntityManager()->getRepository(\App\Entity\Location::class)
-                ->find($locationId);
-            if ($location) {
-                $entity->setLocation($location);
+
+        if (! $entity->getId()) {
+            $formData = $this->prepareFormData($request);
+            foreach ($formData as $field => $value) {
+                // TODO Replace with Doctrine's method
+                $setter = 'set' . ucfirst($field);
+                $entity->{$setter}($value);
             }
         }
 
@@ -74,7 +76,7 @@ class RecipeController extends AbstractController
     public function massCreate(Request $request) {
         $form = $this->createForm(
             \App\Form\Recipe\MassCreate::class,
-            $this->massCreate_prepareFormData($request)
+            $this->prepareFormData($request)
         );
 
         $this->getBreadcrumbs()
@@ -84,7 +86,7 @@ class RecipeController extends AbstractController
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('type')))
+                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             )
             ->addItem(sprintf('breadcrumb.%s.masscreate', $this->getEntityConfig('type')));
 
@@ -186,10 +188,13 @@ class RecipeController extends AbstractController
      * @param Request $request
      * @return array
      */
-    protected function massCreate_prepareFormData(Request $request): array {
+    protected function prepareFormData(Request $request): array {
         $data = [];
         if ($location = (int)$request->get('location')) {
             $data['location'] = $this->getEntityManager()->getRepository(Location::class)->find($location);
+        }
+        if ($tags = $request->get('tags')) {
+            $data['tags'] = $this->getEntityManager()->getRepository(Tag::class)->findBy(['id' => $tags]);
         }
 
         return $data;

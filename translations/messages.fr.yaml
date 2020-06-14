@@ -10,6 +10,9 @@ breadcrumb:
   location:
     grid: Emplacements
     new: Nouvel emplacement
+  tag:
+    grid: Tags
+    new: Nouveau tag
   search_results: Résultats de recherche
 
 grid:
@@ -17,6 +20,9 @@ grid:
     header:
       name: Nom
   location:
+    header:
+      name: Nom
+  tag:
     header:
       name: Nom
   recipe:
@@ -49,6 +55,7 @@ New: Créer
 New...: Créer...
 New ingredient: Nouvel ingrédient
 New location: Nouvel emplacement
+New tag: Nouveau tag
 New recipe: Nouvelle recette
 New recipes...: Nouvelles recettes...
 No location defined.: Pas d'emplacement associé.

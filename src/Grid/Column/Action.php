@@ -40,7 +40,7 @@ class Action implements ColumnInterface
             '_grid/action.html.twig',
             [
                 'action' => $this,
-                'entity' => $entity
+                'entity' => $entity,
             ]
         );
     }
