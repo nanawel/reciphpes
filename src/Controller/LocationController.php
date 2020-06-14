@@ -29,6 +29,8 @@ class LocationController extends AbstractController
      * @inheritDoc
      */
     public function show(Registry $registry, Request $request, $entity) {
+        $this->showBefore($entity);
+
         /** @var Builder $gridBuilder */
         $recipeGridBuilder = $registry->getGridBuilder('recipe')
             ->withEntityConfig($this->getEntityRegistry()->getEntityConfig('recipe'))

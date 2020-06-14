@@ -31,6 +31,8 @@ class TagController extends AbstractController
      * @inheritDoc
      */
     public function show(Registry $registry, Request $request, $entity) {
+        $this->showBefore($entity);
+
         /** @var QueryBuilder $qb */
         $qb = $this->getEntityManager()->getRepository(Recipe::class)->createQueryBuilder('r');
         $qb->innerJoin('r.tags', 't')

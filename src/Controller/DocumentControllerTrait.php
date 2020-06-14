@@ -38,10 +38,8 @@ trait DocumentControllerTrait
 
     /**
      * @param object $entity
-     * @param array $parameters
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($entity, $parameters = []) {
+    public function showBefore($entity) {
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',
@@ -52,6 +50,15 @@ trait DocumentControllerTrait
                 $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             )
             ->addItem($entity->getName());
+    }
+
+    /**
+     * @param object $entity
+     * @param array $parameters
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction($entity, $parameters = []) {
+        $this->showBefore($entity);
 
         return $this->render(
             sprintf('%s/show.html.twig', $this->getEntityConfig('template_prefix')),
