@@ -40,6 +40,7 @@ class Tag extends AbstractEntity
      */
     public function setId($id) {
         $this->id = $id;
+
         return $this;
     }
 
@@ -55,7 +56,9 @@ class Tag extends AbstractEntity
      * @return Tag
      */
     public function setName($name) {
-        $this->name = $name;
+        // FIXME Need to force case here as I could not find how to do it in SQLite with Doctrine
+        $this->name = strtolower($name);
+
         return $this;
     }
 }
