@@ -5,7 +5,10 @@ index:
 ### RECIPE
 app_recipe:
   path: /recipe
-  controller: App\Controller\RecipeController::grid
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+  defaults:
+    path: /recipe/grid
+    permanent: true
 
 app_recipe_grid:
   path: /recipe/grid
@@ -38,7 +41,10 @@ app_recipe_tag_search:
 ### INGREDIENT
 app_ingredient:
   path: /ingredient
-  controller: App\Controller\IngredientController::grid
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+  defaults:
+    path: /ingredient/grid
+    permanent: true
 
 app_ingredient_grid:
   path: /ingredient/grid
@@ -67,7 +73,10 @@ app_ingredient_search:
 ### LOCATION
 app_location:
   path: /location
-  controller: App\Controller\LocationController::grid
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+  defaults:
+    path: /location/grid
+    permanent: true
 
 app_location_grid:
   path: /location/grid
@@ -90,6 +99,6 @@ app_location_delete:
   controller: App\Controller\LocationController::delete
 
 ### SEARCH
-search_results:
+app_search_results:
   path: /search/results
   controller: App\Controller\SearchController::results

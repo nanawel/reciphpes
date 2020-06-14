@@ -4,7 +4,7 @@
     <h1>{% trans %} Results for "%query%" {% endtrans %}</h1>
 
     <div class="search-container container mb-3">
-        <form class="row form-inline my-2 my-lg-0" action="{{ path('search_results') }}" method="get">
+        <form class="row form-inline my-2 my-lg-0" action="{{ path('app_search_results') }}" method="get">
             <input class="col-lg form-control mr-sm-2" type="search"
                    placeholder="{% trans %} Search {% endtrans %}"
                    aria-label="{% trans %} Search {% endtrans %}" name="q" value="{{ query }}">

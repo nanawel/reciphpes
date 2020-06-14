@@ -7,3 +7,5 @@ twig:
         #- 'bootstrap_4_layout.html.twig'
         - 'bootstrap_4_horizontal_layout.html.twig'
         - '_form/custom_types.html.twig'
+    globals:
+        html_class: '@App\Twig\Variable\HtmlClass'

@@ -18,7 +18,7 @@ class SearchController extends AbstractController
             )
             ->addItem(
                 'breadcrumb.search_results',
-                $this->get('router')->generate('search_results')
+                $this->get('router')->generate('app_search_results')
             );
 
         $query = $request->query->get('q');

@@ -12,7 +12,8 @@ $primary: darken(#428bca, 20%);
 @import "~easymde/dist/easymde.min.css";
 @import "~jquery-ui/themes/base/all.css";
 
-html {
+html.action-edit,
+html.action-masscreate {
     scroll-behavior: smooth;
 }
 
