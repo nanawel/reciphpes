@@ -147,7 +147,7 @@ class RecipeController extends AbstractController
                         '%count%' => count($formData['recipes']),
                         '%create_more_url%' => $this->get('router')->generate(
                             'app_recipe_masscreate',
-                            json_decode($formData['query_string'], JSON_OBJECT_AS_ARRAY)
+                            json_decode($formData['query_string'] ?? '[]', JSON_OBJECT_AS_ARRAY)
                         )
                     ]
                 );
