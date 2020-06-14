@@ -44,13 +44,15 @@
         <hr class="my-4">
         <h2 class="ingredients">{% trans %} Ingredients {% endtrans %}</h2>
         {% if recipe.recipeIngredients.count() %}
-            <ul>
+            <dl class="row">
                 {% for i in recipe.recipeIngredients %}
-                    <li><a href="{{ path('app_ingredient_show', {id: i.ingredient.id}) }}">{{ i.ingredient.name }}</a>
-                        {% if i.note %} <span class="ingredient-note">({{ i.note }})</span>{% endif %}
-                    </li>
+                    <dt class="col-sm-2">
+                        <a href="{{ path('app_ingredient_show', {id: i.ingredient.id}) }}">{{ i.ingredient.name }}</a>
+                    </dt>
+                    <dd class="col-sm-10">{% if i.note %} <span class="ingredient-note">{{ i.note }}</span>{% endif %}
+                    </dd>
                 {% endfor %}
-            </ul>
+            </dl>
         {% else %}
             <div class="alert alert-danger" role="alert">{% trans %} No ingredients defined. {% endtrans %}</div>
         {% endif %}
