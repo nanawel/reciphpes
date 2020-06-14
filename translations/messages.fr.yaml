@@ -26,7 +26,7 @@ grid:
       location: Emplacement
       locationDetails: Détails
 
-'%count% recipe(s) saved successfully!': '%count% recette(s) enregistrée(s) avec succès !'
+'%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>': '%count% recette(s) enregistrée(s) avec succès ! <a href="%create_more_url%">En créer d''autres !</a>'
 Actions: Actions
 Additional note about the ingredient (quantity, etc.): Précision complémentaire sur l'ingrédient (quantité, etc.)
 Choose a location...: Choisissez un emplacement...

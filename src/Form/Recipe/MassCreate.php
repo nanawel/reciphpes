@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,7 +39,15 @@ class MassCreate extends AbstractType
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        parse_str($this->router->getContext()->getQueryString(), $queryString);
         $builder
+            ->add(
+                'query_string',
+                HiddenType::class,
+                [
+                    'data' => json_encode($queryString)
+                ]
+            )
             ->add(
                 'tags',
                 TextType::class,

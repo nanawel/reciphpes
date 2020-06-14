@@ -12,6 +12,7 @@ use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Markup;
 
 class RecipeController extends AbstractController
 {
@@ -141,14 +142,18 @@ class RecipeController extends AbstractController
                 $this->getEntityManager()->flush();
 
                 $message = $this->getTranslator()->trans(
-                    '%count% recipe(s) saved successfully!',
+                    '%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>',
                     [
-                        '%count%' => count($formData['recipes'])
+                        '%count%' => count($formData['recipes']),
+                        '%create_more_url%' => $this->get('router')->generate(
+                            'app_recipe_masscreate',
+                            json_decode($formData['query_string'], JSON_OBJECT_AS_ARRAY)
+                        )
                     ]
                 );
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    $message
+                    new Markup($message, 'utf-8')
                 );
                 $success = true;
             } catch (\Throwable $e) {
