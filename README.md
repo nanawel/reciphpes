@@ -20,10 +20,12 @@ reciphpes!
 > **Notice:** Currently the application **cannot be accessed** from a URL using
 > a custom path:
 >
-> - :ballot_box_with_check: http://reciphpes.myhost.org/
-> - :x: http://something.myhost.org/reciphpes
+> :ballot_box_with_check: http://reciphpes.myhost.org/  
+> :x: http://something.myhost.org/reciphpes
 
 ### Run (Docker)
+
+> Uses the prebuilt image available on Docker Hub: https://hub.docker.com/r/nanawel/reciphpes
 
 Create a dedicated folder (here `/opt/reciphpes`) to hold `docker-compose.yml`
 and the data directory and give the latter required permissions for `www-data`
