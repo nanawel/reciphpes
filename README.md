@@ -23,9 +23,13 @@ reciphpes!
 > :ballot_box_with_check: http://reciphpes.myhost.org/  
 > :x: http://something.myhost.org/reciphpes
 
-### Run (Docker)
+### Docker
 
-> Uses the prebuilt image available on Docker Hub: https://hub.docker.com/r/nanawel/reciphpes
+> See prebuilt image available on Docker Hub: https://hub.docker.com/r/nanawel/reciphpes
+
+```
+docker pull nanawel/reciphpes
+```
 
 Create a dedicated folder (here `/opt/reciphpes`) to hold `docker-compose.yml`
 and the data directory and give the latter required permissions for `www-data`
@@ -73,14 +77,14 @@ You may now access the application at http://localhost:8000/.
 
 See next section when upgrading.
 
-### Upgrade (Docker)
+### Upgrade
 
 ```
 docker-compose pull
 gzip -c data/db/app.db > data/db/app.$(date +%F_%H-%M-%S).sqlite.gz
 docker-compose up -d
 docker-compose exec -u www-data app bin/console doctrine:migrations:migrate -n
-docker-compose exec app make new-secret
+docker-compose exec app make new-secret    # (optional)
 ```
 
 ### Build from source
