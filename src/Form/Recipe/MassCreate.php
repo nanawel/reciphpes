@@ -5,6 +5,7 @@ namespace App\Form\Recipe;
 use App\Entity\Recipe;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Form\Type\RecipeSummary;
+use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -69,6 +70,10 @@ class MassCreate extends AbstractType
                     'help' => 'Optional. Will be applied to all created recipes below.',
                     'required' => false,
                     'class' => \App\Entity\Location::class,
+                    'query_builder' => function (LocationRepository $r) {
+                        return $r->createQueryBuilder('l')
+                            ->orderBy('l.name', 'ASC');
+                    },
                     'choice_label' => 'name',
                     'placeholder' => 'Choose a location...',
                 ]
