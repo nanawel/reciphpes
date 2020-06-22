@@ -19,6 +19,8 @@ push_image_latest:
   script:
     - time docker tag reciphpes:${WEBAPP_VERSION:-latest} ${CONTAINER_RELEASE_IMAGE}:latest
     - time docker push ${CONTAINER_RELEASE_IMAGE}:latest
+  only:
+    - master
 
 push_image_tagged:
   stage: release
