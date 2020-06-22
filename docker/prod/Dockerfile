@@ -44,8 +44,10 @@ FROM node:14-alpine as assets-builder
 
 RUN apk add git yarn
 
-COPY assets /build/assets
+COPY assets                                   /build/assets
 COPY package.json webpack.config.js yarn.lock /build/
+# Needed for bundles providing assets (omines/datatables-bundle)
+COPY --from=php-builder /build/vendor         /build/vendor
 
 RUN cd /build \
  && yarn install --pure-lockfile \
