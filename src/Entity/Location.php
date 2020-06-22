@@ -25,7 +25,7 @@ class Location extends AbstractEntity
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=255) */
+    /** @ORM\Column(type="string", length=255, options={"collation": "NOCASE"}) */
     protected $name;
 
     /**

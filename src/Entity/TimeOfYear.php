@@ -25,7 +25,7 @@ class TimeOfYear extends AbstractEntity
     /** @ORM\Column(type="string", length=32, unique=true) */
     protected $code;
 
-    /** @ORM\Column(type="string", length=255, unique=true) */
+    /** @ORM\Column(type="string", length=255, unique=true, options={"collation": "NOCASE"}) */
     protected $name;
 
     /**

@@ -27,7 +27,7 @@ class Recipe extends AbstractEntity
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=255) */
+    /** @ORM\Column(type="string", length=255, options={"collation": "NOCASE"}) */
     protected $name;
 
     /** @ORM\ManyToMany(
@@ -51,7 +51,14 @@ class Recipe extends AbstractEntity
      */
     protected $location;
 
-    /** @ORM\Column(type="string", length=255, name="location_details", nullable=true) */
+    /** @ORM\Column(
+     *     type="string",
+     *     length=255,
+     *     name="location_details",
+     *     nullable=true,
+     *     options={"collation": "NOCASE"}
+     * )
+     */
     protected $locationDetails;
 
     /**
@@ -73,7 +80,12 @@ class Recipe extends AbstractEntity
      */
     protected $recipeIngredients;
 
-    /** @ORM\Column(type="text", nullable=true) */
+    /** @ORM\Column(
+     *     type="text",
+     *     nullable=true,
+     *     options={"collation": "NOCASE"}
+     *  )
+     */
     protected $instructions;
 
     /**
