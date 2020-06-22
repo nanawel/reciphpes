@@ -27,7 +27,8 @@ class Tag extends AbstractEntity
                     'field' => 'tag.name',
                     'link_route' => 'app_tag_show',
                 ]
-            );
+            )
+            ->addOrderBy('name');
         $this->addDefaultActions($dataTable, $options);
     }
 }

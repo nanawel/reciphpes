@@ -54,7 +54,8 @@ class Recipe extends AbstractEntity
                     'className' => 'col-locationDetails',
                     'template' => '_datatables/column/locationDetails.html.twig',
                 ]
-            );
+            )
+            ->addOrderBy('name');
         $this->addDefaultActions($dataTable, $options);
     }
 }

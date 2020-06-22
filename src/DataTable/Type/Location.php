@@ -27,7 +27,8 @@ class Location extends AbstractEntity
                     'field' => 'location.name',
                     'link_route' => 'app_location_show',
                 ]
-            );
+            )
+            ->addOrderBy('name');
         $this->addDefaultActions($dataTable, $options);
     }
 }

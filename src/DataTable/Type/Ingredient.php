@@ -27,7 +27,8 @@ class Ingredient extends AbstractEntity
                     'field' => 'ingredient.name',
                     'link_route' => 'app_ingredient_show',
                 ]
-            );
+            )
+            ->addOrderBy('name');
         $this->addDefaultActions($dataTable, $options);
     }
 }
