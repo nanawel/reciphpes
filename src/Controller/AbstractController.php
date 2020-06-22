@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Registry;
 use Doctrine\ORM\EntityManagerInterface;
+use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
@@ -19,6 +20,7 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
                 'session' => 'Symfony\Component\HttpFoundation\Session\Session',
                 'translator' => 'Symfony\Contracts\Translation\TranslatorInterface',
                 'white_october_breadcrumbs' => 'WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs',
+                'datatable_factory' => 'Omines\DataTablesBundle\DataTableFactory'
             ];
     }
 
@@ -55,5 +57,12 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
      */
     protected function getTranslator() {
         return $this->get('translator');
+    }
+
+    /**
+     * @return DataTableFactory
+     */
+    protected function getDataTableFactory() {
+        return $this->get('datatable_factory');
     }
 }

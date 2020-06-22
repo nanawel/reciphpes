@@ -17,6 +17,7 @@ require('datatables.net');
 require('datatables.net-responsive-bs4');
 require('jquery-ui/ui/widgets/autocomplete');
 require('@yaireo/tagify/dist/jQuery.tagify.min');
+require('../../vendor/omines/datatables-bundle/src/Resources/public/js/datatables');
 const EasyMDE = require('easymde/dist/easymde.min');
 
 $('textarea.markdown').each(el => new EasyMDE({element: el, spellChecker: false}));
@@ -28,15 +29,16 @@ $('form').submit(function (ev) {
     return true;
 });
 
-$('.btn-delete').click(function (ev) {
-    if (!confirm('Confirmer la suppression ?')) {
-        ev.preventDefault();
-        return false;
-    }
-    return true;
-});
-
 const refreshElementObservers = function () {
+    // Confirm dialog on delete buttons
+    $('.btn-delete').click(function (ev) {
+        if (!confirm('Confirmer la suppression ?')) {
+            ev.preventDefault();
+            return false;
+        }
+        return true;
+    });
+
     // Tagify
     $('input.autocomplete-tag').each(function (i, el) {
         if (!$(el).data('tagify')) {
@@ -132,6 +134,18 @@ $(document).on('keydown', 'form .form-recipe-ingredients-type, form .form-recipe
 
         return false;
     }
+});
+
+$('.datatables-container').each(function (i, el) {
+    let settings = $.extend(
+        true,
+        $(el).data('datatables-settings'),
+        {options: {responsive: true}}
+    );
+    $(el).initDataTables(settings);
+    $(el).on('draw.dt', function () {
+        refreshElementObservers();
+    });
 });
 
 refreshElementObservers();

@@ -19,6 +19,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "erusev/parsedown": "^1.7",
         "league/csv": "^9.6",
+        "omines/datatables-bundle": "^0.4.2",
         "sensio/framework-extra-bundle": "^5.5",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/console": "4.4.*",

@@ -2457,6 +2457,14 @@ datatables.net-bs4@^1.10.15:
     datatables.net "1.10.21"
     jquery ">=1.7"
 
+datatables.net-dt@^1.10.21:
+  version "1.10.21"
+  resolved "https://registry.yarnpkg.com/datatables.net-dt/-/datatables.net-dt-1.10.21.tgz#2a3bb65bbb39362a36e75b989da7d08bc1fb4313"
+  integrity sha512-P89PgkhVCB6shP0CbigmB1Z812yfdfhvAbUdg08mLuF7tuvLFPQC9F+WIV30Hj9mgMsPALWAEJEYAA3aJjuqIA==
+  dependencies:
+    datatables.net "1.10.21"
+    jquery ">=1.7"
+
 datatables.net-responsive-bs4@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/datatables.net-responsive-bs4/-/datatables.net-responsive-bs4-2.2.5.tgz#c81e6c24b80237ee326454a40b08345563361ebb"

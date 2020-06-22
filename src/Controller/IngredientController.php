@@ -4,12 +4,11 @@ namespace App\Controller;
 
 
 use App\Entity\Ingredient;
-use App\Entity\Recipe;
 use App\Form\DataTransformer\IngredientsToJsonTransformer;
-use App\Grid\Builder;
-use App\Grid\Builder\Registry;
 use App\Repository\TagRepository;
 use Doctrine\ORM\QueryBuilder;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
+use Omines\DataTablesBundle\DataTable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,8 +23,8 @@ class IngredientController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
-        return $this->gridAction($registry, $request);
+    public function grid(Request $request) {
+        return $this->gridAction($request);
     }
 
     /**
@@ -33,25 +32,37 @@ class IngredientController extends AbstractController
      *
      * @inheritDoc
      */
-    public function show(Registry $registry, Request $request, $entity) {
+    public function show(Request $request, $entity) {
         $this->showBefore($entity);
 
-        /** @var QueryBuilder $qb */
-        $qb = $this->getEntityManager()->getRepository(Recipe::class)->createQueryBuilder('r');
-        $qb->leftJoin('r.recipeIngredients', 'ri')
-            ->where('ri.ingredient = :ingredient_id')->setParameter('ingredient_id', $entity->getId());
+        /** @var DataTable $recipeDatatable */
+        $recipeDatatable = $this->getDataTableFactory()
+            ->createFromType($this->getEntityRegistry()->getEntityConfig('recipe', 'datatable_type_class'));
+        $recipeDatatable->getAdapter()->configure(
+            [
+                'entity' => $this->getEntityRegistry()->getEntityConfig('recipe', 'class'),
+                'criteria' => [
+                    function (QueryBuilder $builder) use ($entity) {
+                        $builder->distinct()
+                            ->leftJoin('recipe.recipeIngredients', 'ri')
+                            ->where('ri.ingredient = :ingredient')->setParameter('ingredient', $entity);
+                    },
+                    new SearchCriteriaProvider(),
+                ],
+            ]
+        );
+        $recipeDatatable->handleRequest($request);
 
-        /** @var Builder $gridBuilder */
-        $recipeGridBuilder = $registry->getGridBuilder('recipe')
-            ->withEntityConfig($this->getEntityRegistry()->getEntityConfig('recipe'))
-            ->withQueryBuilder($qb);
+        if ($recipeDatatable->isCallback()) {
+            return $recipeDatatable->getResponse();
+        }
 
         return $this->render(
             sprintf('%s/show.html.twig', $this->getEntityConfig('template_prefix')),
             [
                 'entity' => $entity,
                 $this->getEntityConfig('type') => $entity,
-                'recipeGridConfig' => $recipeGridBuilder->build()
+                'recipeDatatable' => $recipeDatatable
             ]
         );
     }

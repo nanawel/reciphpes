@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 
-use App\Grid\Builder;
-use App\Grid\Builder\Registry;
+use Doctrine\ORM\QueryBuilder;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
+use Omines\DataTablesBundle\DataTable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,8 +20,8 @@ class LocationController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
-        return $this->gridAction($registry, $request);
+    public function grid(Request $request) {
+        return $this->gridAction($request);
     }
 
     /**
@@ -28,21 +29,36 @@ class LocationController extends AbstractController
      *
      * @inheritDoc
      */
-    public function show(Registry $registry, Request $request, $entity) {
+    public function show(Request $request, $entity) {
         $this->showBefore($entity);
 
-        /** @var Builder $gridBuilder */
-        $recipeGridBuilder = $registry->getGridBuilder('recipe')
-            ->withEntityConfig($this->getEntityRegistry()->getEntityConfig('recipe'))
-            ->withSearchQuery($request->get('q'))
-            ->withSearchCriteria(['location' => $entity]);
+        /** @var DataTable $recipeDatatable */
+        $recipeDatatable = $this->getDataTableFactory()
+            ->createFromType($this->getEntityRegistry()->getEntityConfig('recipe', 'datatable_type_class'));
+        $recipeDatatable->getAdapter()->configure(
+            [
+                'entity' => $this->getEntityRegistry()->getEntityConfig('recipe', 'class'),
+                'criteria' => [
+                    function (QueryBuilder $builder) use ($entity) {
+                        $builder->distinct()
+                            ->where('recipe.location = :location')->setParameter('location', $entity);
+                    },
+                    new SearchCriteriaProvider(),
+                ],
+            ]
+        );
+        $recipeDatatable->handleRequest($request);
+
+        if ($recipeDatatable->isCallback()) {
+            return $recipeDatatable->getResponse();
+        }
 
         return $this->render(
             sprintf('%s/show.html.twig', $this->getEntityConfig('template_prefix')),
             [
                 'entity' => $entity,
                 $this->getEntityConfig('type') => $entity,
-                'recipeGridConfig' => $recipeGridBuilder->build()
+                'recipeDatatable' => $recipeDatatable
             ]
         );
     }

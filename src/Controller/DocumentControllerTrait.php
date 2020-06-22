@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Grid\Builder;
+use Omines\DataTablesBundle\DataTable;
+use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Markup;
@@ -10,11 +11,12 @@ use Twig\Markup;
 /**
  * Trait DocumentControllerTrait
  *
+ * @method DataTableFactory getDataTableFactory()
  * @method TranslatorInterface getTranslator()
  */
 trait DocumentControllerTrait
 {
-    public function gridAction(\App\Grid\Builder\Registry $registry, Request $request) {
+    public function gridAction(Request $request) {
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',
@@ -25,14 +27,17 @@ trait DocumentControllerTrait
                 $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             );
 
-        /** @var Builder $gridBuilder */
-        $gridBuilder = $registry->getGridBuilder($this->getEntityConfig('type'))
-            ->withEntityConfig($this->getEntityConfig())
-            ->withSearchQuery($request->get('q'));
+        /** @var DataTable $table */
+        $table = $this->getDataTableFactory()->createFromType($this->getEntityConfig('datatable_type_class'))
+            ->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getResponse();
+        }
 
         return $this->render(
             sprintf('%s/grid.html.twig', $this->getEntityConfig('template_prefix')),
-            ['gridConfig' => $gridBuilder->build()]
+            ['datatable' => $table]
         );
     }
 

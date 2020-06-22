@@ -1,0 +1,5 @@
+{% for tag in row.tags %}
+    <a href="{{ path('app_tag_show', {id: tag.id}) }}">
+        <span class="tag badge {{ tag_class | default('') }}">{{ tag.name }}</span>
+    </a>
+{% endfor %}

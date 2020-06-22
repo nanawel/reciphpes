@@ -10,5 +10,8 @@
     </div>
     <h1><i class="fas fa-book"></i>&nbsp;Emplacements</h1>
 
-    {% include '_grid.html.twig' %}
+    <div class="datatables-container" data-datatables-settings="{{ datatable_settings(datatable) | e('html_attr') }}">
+        {% trans %} Loading... {% endtrans %}
+    </div>
+
 {% endblock %}

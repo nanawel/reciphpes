@@ -27,8 +27,8 @@ class RecipeController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function grid(\App\Grid\Builder\Registry $registry, Request $request) {
-        return $this->gridAction($registry, $request);
+    public function grid(Request $request) {
+        return $this->gridAction($request);
     }
 
     /**

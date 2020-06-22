@@ -1,31 +1,46 @@
 {% extends 'content.html.twig' %}
 
 {% block content %}
-    <h1>{% trans %} Results for "%query%" {% endtrans %}</h1>
+    <h1><i class="fas fa-search"></i>&nbsp;{% trans %} Results for "%query%" {% endtrans %}</h1>
 
     <div class="search-container container mb-3">
         <form class="row form-inline my-2 my-lg-0" action="{{ path('app_search_results') }}" method="get">
             <input class="col-lg form-control mr-sm-2" type="search"
                    placeholder="{% trans %} Search {% endtrans %}"
                    aria-label="{% trans %} Search {% endtrans %}" name="q" value="{{ query }}">
-            <button class="col col-lg-2 btn btn-outline-success my-2 my-sm-0" type="submit"><i
-                        class="fas fa-search"></i>Rechercher
+            <button class="col col-lg-2 btn btn-outline-success my-2 my-sm-0" type="submit">
+                <i class="fas fa-search"></i>&nbsp;Rechercher
             </button>
         </form>
     </div>
 
     <div class="results-container">
         <div class="mb-2">
-            <h2>{% trans %} Recipes {% endtrans %}</h2>
-            {% include grids.recipes.template with {gridConfig: grids.recipes.gridConfig} %}
+            <h2><i class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes {% endtrans %}</h2>
+            <div class="datatables-container"
+                 data-datatables-settings="{{ datatable_settings(recipeDatatable) | e('html_attr') }}">
+                {% trans %} Loading... {% endtrans %}
+            </div>
         </div>
+
+        <hr/>
+
         <div class="mb-2">
-            <h2>{% trans %} Ingredients {% endtrans %}</h2>
-            {% include grids.ingredients.template with {gridConfig: grids.ingredients.gridConfig} %}
+            <h2><i class="fas fa-carrot"></i>&nbsp;{% trans %} Ingredients {% endtrans %}</h2>
+            <div class="datatables-container"
+                 data-datatables-settings="{{ datatable_settings(ingredientDatatable) | e('html_attr') }}">
+                {% trans %} Loading... {% endtrans %}
+            </div>
         </div>
+
+        <hr/>
+
         <div class="mb-2">
-            <h2>{% trans %} Locations {% endtrans %}</h2>
-            {% include grids.locations.template with {gridConfig: grids.locations.gridConfig} %}
+            <h2><i class="fas fa-book"></i>&nbsp;{% trans %} Locations {% endtrans %}</h2>
+            <div class="datatables-container"
+                 data-datatables-settings="{{ datatable_settings(locationDatatable) | e('html_attr') }}">
+                {% trans %} Loading... {% endtrans %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -50,6 +50,7 @@ services:
                     route_prefix: recipe
                     template_prefix: recipe
                     import_class: App\Import\Recipe
+                    datatable_type_class: App\DataTable\Type\Recipe
                 ingredient:
                     class: App\Entity\Ingredient
                     form_class: App\Form\Ingredient
@@ -57,6 +58,7 @@ services:
                     type: ingredient
                     route_prefix: ingredient
                     template_prefix: ingredient
+                    datatable_type_class: App\DataTable\Type\Ingredient
                 location:
                     class: App\Entity\Location
                     form_class: App\Form\Location
@@ -64,6 +66,7 @@ services:
                     type: location
                     route_prefix: location
                     template_prefix: location
+                    datatable_type_class: App\DataTable\Type\Location
                 tag:
                     class: App\Entity\Tag
                     form_class: App\Form\Tag
@@ -71,33 +74,7 @@ services:
                     type: tag
                     route_prefix: tag
                     template_prefix: tag
-
-    ### GRIDS
-    App\Grid\Builder\Registry:
-        class: ~
-        arguments:
-            $gridBuilders: !tagged { tag: 'grid.builder', index_by: 'key' }
-        public: true
-
-    grid.builder.recipe:
-        class: App\Grid\Builder\RecipeBuilder
-        tags: [{ name: 'grid.builder', key: 'recipe' }]
-        public: true
-
-    grid.builder.ingredient:
-        class: App\Grid\Builder\DefaultBuilder
-        tags: [{ name: 'grid.builder', key: 'ingredient' }]
-        public: true
-
-    grid.builder.location:
-        class: App\Grid\Builder\DefaultBuilder
-        tags: [{ name: 'grid.builder', key: 'location' }]
-        public: true
-
-    grid.builder.tag:
-        class: App\Grid\Builder\DefaultBuilder
-        tags: [{ name: 'grid.builder', key: 'tag' }]
-        public: true
+                    datatable_type_class: App\DataTable\Type\Tag
 
     ### COMMANDS
     App\Command\Import\Entities:

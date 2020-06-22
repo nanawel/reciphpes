@@ -1,0 +1,7 @@
+<div class="actions btn-group" role="group" aria-label="{% trans %} Actions {% endtrans %}">
+    {% for action in actions %}
+        <a href="{{ path(action.route, {id: row.id}) }}" class="btn action btn-sm {{ action.class }}">
+            <span>{{ action.label | trans }}</span>
+        </a>
+    {% endfor %}
+</div>

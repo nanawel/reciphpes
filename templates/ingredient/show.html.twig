@@ -19,9 +19,13 @@
             </p>
         {% endif %}
 
-        <h2 class="recipes"><i
-                    class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes using this ingredient {% endtrans %}</h2>
+        <h2 class="recipes">
+            <i class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes using this ingredient {% endtrans %}
+        </h2>
 
-        {% include '_grid.html.twig' with {gridConfig: recipeGridConfig} %}
+        <div class="datatables-container"
+             data-datatables-settings="{{ datatable_settings(recipeDatatable) | e('html_attr') }}">
+            {% trans %} Loading... {% endtrans %}
+        </div>
     </div>
 {% endblock %}

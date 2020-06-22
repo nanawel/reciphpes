@@ -3,6 +3,7 @@ $primary: darken(#428bca, 20%);
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 @import "~datatables.net-bs4";
+@import "~datatables.net-responsive-bs4";
 @import "~@fortawesome/fontawesome-free";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
@@ -63,9 +64,16 @@ table {
     background-color: #fff;
 }
 
-.grid .col-header-actions,
-.grid .col-body-actions {
+.data-table .col-actions {
     white-space: nowrap;
+
+    @include media-breakpoint-up(md) {
+        text-align: right;
+    }
+}
+
+.dataTables_length select {
+    width: auto !important;
 }
 
 .breadcrumb {
@@ -181,7 +189,7 @@ blockquote {
 }
 
 // Special display for delete button in grids
-.grid-wrapper .btn-delete {
+.data-table .btn-delete {
     &:before {
         margin-right: auto;
     }

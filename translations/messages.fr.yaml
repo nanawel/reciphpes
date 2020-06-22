@@ -15,22 +15,25 @@ breadcrumb:
     new: Nouveau tag
   search_results: Résultats de recherche
 
-grid:
-  ingredient:
-    header:
-      name: Nom
-  location:
-    header:
-      name: Nom
-  tag:
-    header:
-      name: Nom
-  recipe:
-    header:
-      name: Nom
-      tags: Tags
-      location: Emplacement
-      locationDetails: Détails
+recipes-dt:
+  columns:
+    name: Nom
+    tags: Tags
+    location: Emplacement
+    locationDetails: Détails
+    actions: Actions
+ingredients-dt:
+  columns:
+    name: Nom
+    actions: Actions
+locations-dt:
+  columns:
+    name: Nom
+    actions: Actions
+tags-dt:
+  columns:
+    name: Nom
+    actions: Actions
 
 '%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>': '%count% recette(s) enregistrée(s) avec succès ! <a href="%create_more_url%">En créer d''autres !</a>'
 Actions: Actions
@@ -44,6 +47,7 @@ Ingredient: Ingrédient
 Ingredient %i%: Ingrédient %i%
 Ingredients: Ingrédients
 Instructions: Instructions
+Loading...: Chargement...
 Location: Emplacement
 Locations: Emplacements
 Location details: Détails de l'emplacement
