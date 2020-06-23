@@ -3,12 +3,15 @@
 
 {% block content %}
     {{ form_start(form) }}
+
+    {% set saveBtn = form_widget(form.save) %}
+    {% set saveAddMoreBtn = form_widget(form.saveAddMore) %}
+
     <div class="float-right">
         <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
             <div class="btn-group mr-2" role="group" aria-label="Actions">
-                <button type="submit" class="btn btn-primary btn-save">
-                    <span>{% trans %} Save all {% endtrans %}</span></a>
-                </button>
+                {{ saveBtn | raw }}
+                {{ saveAddMoreBtn | raw }}
             </div>
         </div>
     </div>
@@ -35,6 +38,13 @@
     <hr>
     {{ form_row(form.recipes) }}
     <hr>
-    {{ form_row(form.save) }}
+    <div class="float-right">
+        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group mr-2" role="group" aria-label="Actions">
+                {{ saveBtn | raw }}
+                {{ saveAddMoreBtn | raw }}
+            </div>
+        </div>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

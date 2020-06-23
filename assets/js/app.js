@@ -24,7 +24,11 @@ $('textarea.markdown').each(el => new EasyMDE({element: el, spellChecker: false}
 
 // Prevent multiple form submit
 $('form').submit(function (ev) {
-    $('button[type="submit"]', this).prop('disabled', true);
+    if ($(ev.target).data('submitting')) {
+        console.warn('Prevented multiple submit!');
+        return false;
+    }
+    $(ev.target).data('submitting', true);
 
     return true;
 });

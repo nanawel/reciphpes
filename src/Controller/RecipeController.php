@@ -92,7 +92,6 @@ class RecipeController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $success = false;
             try {
                 $formData = $form->getData();
 
@@ -143,21 +142,46 @@ class RecipeController extends AbstractController
                 }
                 $this->getEntityManager()->flush();
 
-                $message = $this->getTranslator()->trans(
-                    '%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>',
-                    [
-                        '%count%' => count($formData['recipes']),
-                        '%create_more_url%' => $this->get('router')->generate(
-                            'app_recipe_masscreate',
-                            json_decode($formData['query_string'] ?? '[]', JSON_OBJECT_AS_ARRAY)
-                        )
-                    ]
-                );
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    new Markup($message, 'utf-8')
-                );
-                $success = true;
+                // Prepare redirect URL with selected common location and/or tags
+                $redirectParams = [];
+                if ($location = $formData['location']) {
+                    $redirectParams['location'] = $location->getId();
+                }
+                foreach ($formData['tags'] as $tag) {
+                    $redirectParams['tags'][] = $tag->getId();
+                }
+
+                if ($form->get('saveAddMore')->isClicked()) {
+                    $message = $this->getTranslator()->trans(
+                        '%count% recipe(s) saved successfully!',
+                        [
+                            '%count%' => count($formData['recipes']),
+                        ]
+                    );
+                    $this->get('session')->getFlashBag()->add(
+                        'success',
+                        new Markup($message, 'utf-8')
+                    );
+
+                    $redirect = $this->redirectToRoute('app_recipe_masscreate', $redirectParams);
+                }
+                else {
+                    $message = $this->getTranslator()->trans(
+                        '%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>',
+                        [
+                            '%count%' => count($formData['recipes']),
+                            '%create_more_url%' => $this->get('router')->generate(
+                                'app_recipe_masscreate',
+                                $redirectParams
+                            )
+                        ]
+                    );
+                    $this->get('session')->getFlashBag()->add(
+                        'success',
+                        new Markup($message, 'utf-8')
+                    );
+                    $redirect = $this->redirectToRoute(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')));
+                }
             } catch (\Throwable $e) {
                 $this->getLogger()->error($e);
                 $this->addFlash(
@@ -166,13 +190,8 @@ class RecipeController extends AbstractController
                 );
             }
 
-            if ($success) {
-                return $this->redirectToRoute(
-                    sprintf(
-                        'app_%s_grid',
-                        $this->getEntityConfig('route_prefix')
-                    )
-                );
+            if (! empty($redirect)) {
+                return $redirect;
             }
         }
 
