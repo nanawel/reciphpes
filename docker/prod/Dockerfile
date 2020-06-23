@@ -34,8 +34,8 @@ RUN apt-get update \
 
 COPY ./ /build
 
-RUN cd /build \
- && composer install --no-dev
+WORKDIR /build
+RUN composer install --no-dev
 
 ###############################################################################
 # ASSETS BUILDER
@@ -49,8 +49,8 @@ COPY package.json webpack.config.js yarn.lock /build/
 # Needed for bundles providing assets (omines/datatables-bundle)
 COPY --from=php-builder /build/vendor         /build/vendor
 
-RUN cd /build \
- && yarn install --pure-lockfile \
+WORKDIR /build
+RUN yarn install --pure-lockfile \
  && yarn encore production
 
 ###############################################################################
