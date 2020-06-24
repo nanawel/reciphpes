@@ -6,7 +6,6 @@ services:
   app:
     image: 'reciphpes:${WEBAPP_VERSION:-latest}'
     build:
-      dockerfile: './docker/prod/Dockerfile'
       context: './'
     ports:
       - '${HTTP_PORT:-80}:80'

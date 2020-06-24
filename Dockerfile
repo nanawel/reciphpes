@@ -32,9 +32,9 @@ RUN apt-get update \
         git \
         libfreetype6-dev
 
-COPY ./ /build
-
 WORKDIR /build
+COPY . /build/
+
 RUN composer install --no-dev
 
 ###############################################################################
@@ -44,12 +44,12 @@ FROM node:14-alpine as assets-builder
 
 RUN apk add git yarn
 
+WORKDIR /build
 COPY assets                                   /build/assets
 COPY package.json webpack.config.js yarn.lock /build/
 # Needed for bundles providing assets (omines/datatables-bundle)
 COPY --from=php-builder /build/vendor         /build/vendor
 
-WORKDIR /build
 RUN yarn install --pure-lockfile \
  && yarn encore production
 
@@ -78,10 +78,6 @@ RUN sed -i 's/^ServerTokens OS/ServerTokens Prod/' /etc/apache2/conf-available/s
 # Copy webapp files
 COPY --from=php-builder    /build              /var/www/webapp
 COPY --from=assets-builder /build/public/build /var/www/webapp/public/build
-
-# Force APP_ENV using .env.local (environment variable set in Dockerfile
-# would be ignored because of the .env also used by docker-compose AFAIK)
-RUN echo 'APP_ENV=prod' > /var/www/webapp/.env.local
 
 # Clear up content in var/
 RUN rm -rf /var/www/webapp/var/*
