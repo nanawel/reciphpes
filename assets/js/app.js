@@ -80,7 +80,20 @@ const refreshElementObservers = function () {
                     fetchUrl,
                     {term: request.term},
                     function (data, textStatus, jqXHR) {
-                        response(data.map(result => result.value));
+                        // Also add terms present in similar inputs on the page
+                        var similarInputValues = $.map(
+                                $('input.jq-autocomplete[data-fetch-url="' + fetchUrl + '"]'),
+                                similarInput => similarInput === el ? '' : $(similarInput).val()
+                            )
+                            .filter(str => typeof str === 'string' && str.length > 0);
+
+                        var results = similarInputValues.concat(data.map(result => result.value));
+
+                        // Return sorted, unique values
+                        response(
+                            results.filter((el, i) => results.indexOf(el) === i)
+                                .sort()
+                        );
                     }
                 );
             }
