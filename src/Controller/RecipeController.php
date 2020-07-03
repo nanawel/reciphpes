@@ -122,6 +122,8 @@ class RecipeController extends AbstractController
                             }
                         }
                     }
+
+                    $recipeIngredientIds = [];
                     // Handle new ingredients present several times in the submitted form:
                     // once the first occurence is saved, update subsequent recipes with this instance
                     /** @var RecipeIngredient $recipeIngredient */
@@ -129,12 +131,23 @@ class RecipeController extends AbstractController
                         if (! $recipeIngredient->getIngredient()->getId()) {
                             if (isset($newIngredients[strtolower($recipeIngredient->getName())])) {
                                 // Replace with the first instance that should have an ID by now
-                                $recipeIngredient->setIngredient($newIngredients[$recipeIngredient->getName()]);
+                                $recipeIngredient->setIngredient(
+                                    $newIngredients[strtolower($recipeIngredient->getName())]
+                                );
                             }
                             else {
                                 $newIngredients[strtolower($recipeIngredient->getName())]
                                     = $recipeIngredient->getIngredient();
                             }
+                        }
+
+                        // Also check that the same ingredient won't be added twice or more
+                        if (! in_array($recipeIngredient->getIngredient()->getId(), $recipeIngredientIds)) {
+                            $recipeIngredientIds[] = $recipeIngredient->getIngredient()->getId();
+                        }
+                        else {
+                            // Duplicate => remove
+                            $recipe->removeRecipeIngredient($recipeIngredient);
                         }
                     }
 
