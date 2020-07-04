@@ -26,6 +26,11 @@ h1 {
     margin-bottom: 2rem;
 }
 
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 #navbar-logo {
     width: 1.5em;
     height: 1.5em;
@@ -147,6 +152,22 @@ i.fa-circle-o-notch {
 
 form .btn-save {
     float: right;
+}
+
+.row.ingredient-list {
+    padding-left: 1em;
+
+    dt:nth-of-type(even), dd:nth-of-type(even) {
+        background-color: transparent;
+    }
+
+    dt:nth-of-type(odd), dd:nth-of-type(odd) {
+        background-color: #fefefe;
+    }
+
+    dd {
+        margin-bottom: 0;
+    }
 }
 
 .ingredient-note {

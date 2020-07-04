@@ -29,7 +29,7 @@
         {% else %}
             <div class="alert alert-light" role="alert">{% trans %} No location defined. {% endtrans %}</div>
         {% endif %}
-        <div class="row">
+        <div class="row tag-list">
             <div class="tags col col-6">
                 {% for tag in recipe.tags %}
                     <span class="tag badge badge-secondary">{{ tag.name }}</span>
@@ -44,12 +44,12 @@
         <hr class="my-4">
         <h2 class="ingredients">{% trans %} Ingredients {% endtrans %}</h2>
         {% if recipe.recipeIngredients.count() %}
-            <dl class="row">
+            <dl class="row ingredient-list">
                 {% for i in recipe.recipeIngredients %}
-                    <dt class="col-sm-2">
+                    <dt class="col-sm-4">
                         <a href="{{ path('app_ingredient_show', {id: i.ingredient.id}) }}">{{ i.ingredient.name }}</a>
                     </dt>
-                    <dd class="col-sm-10">{% if i.note %} <span class="ingredient-note">{{ i.note }}</span>{% endif %}
+                    <dd class="col-sm-8">{% if i.note %} <span class="ingredient-note">{{ i.note }}</span>{% endif %}
                     </dd>
                 {% endfor %}
             </dl>
