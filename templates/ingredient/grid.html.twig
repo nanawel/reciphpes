@@ -1,5 +1,7 @@
 {% extends 'content.html.twig' %}
 
+{% block title %}{{ parent() }} - {% trans %} Ingredients {% endtrans %}{% endblock %}
+
 {% block content %}
     <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
         <div class="btn-group mr-2" role="group" aria-label="Actions">

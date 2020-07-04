@@ -1,5 +1,6 @@
 {%  extends 'content.html.twig' %}
 
+{% block title %}{{ parent() }} - {% if ingredient.id %} {{ ingredient.name }} {% else %} {% trans %} New ingredient {% endtrans %} {% endif %}{% endblock %}
 
 {% block content %}
     {% if ingredient.id %}

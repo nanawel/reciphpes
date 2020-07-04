@@ -1,5 +1,6 @@
 {% extends 'content.html.twig' %}
 
+{% block title %}{{ parent() }} - {% if location.id %} {{ location.name }} {% else %} {% trans %} New location {% endtrans %} {% endif %}{% endblock %}
 
 {% block content %}
     {% if location.id %}

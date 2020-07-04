@@ -1,5 +1,6 @@
 {%  extends 'content.html.twig' %}
 
+{% block title %}{{ parent() }} - {% if recipe.id %} {{ recipe.name }} {% else %} {% trans %} New recipe {% endtrans %} {% endif %}{% endblock %}
 
 {% block content %}
     {{ form_start(form) }}
