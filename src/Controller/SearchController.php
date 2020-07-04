@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\DataTable;
@@ -38,6 +39,14 @@ class SearchController extends AbstractController
         $recipeDatatable->getAdapter()->configure(
             [
                 'entity' => $this->getEntityRegistry()->getEntityConfig('recipe', 'class'),
+                'query' => [
+                    new AutomaticQueryBuilder(
+                        $this->getEntityManager(),
+                        $this->getEntityManager()->getClassMetadata(
+                            $this->getEntityRegistry()->getEntityConfig('recipe', 'class')
+                        )
+                    )
+                ],
                 'criteria' => [
                     function (QueryBuilder $builder) use ($query) {
                         $builder->distinct()
@@ -61,6 +70,14 @@ class SearchController extends AbstractController
         $ingredientDatatable->getAdapter()->configure(
             [
                 'entity' => $this->getEntityRegistry()->getEntityConfig('ingredient', 'class'),
+                'query' => [
+                    new AutomaticQueryBuilder(
+                        $this->getEntityManager(),
+                        $this->getEntityManager()->getClassMetadata(
+                            $this->getEntityRegistry()->getEntityConfig('ingredient', 'class')
+                        )
+                    )
+                ],
                 'criteria' => [
                     function (QueryBuilder $builder) use ($query) {
                         $builder->distinct()
@@ -82,6 +99,14 @@ class SearchController extends AbstractController
         $locationDatatable->getAdapter()->configure(
             [
                 'entity' => $this->getEntityRegistry()->getEntityConfig('location', 'class'),
+                'query' => [
+                    new AutomaticQueryBuilder(
+                        $this->getEntityManager(),
+                        $this->getEntityManager()->getClassMetadata(
+                            $this->getEntityRegistry()->getEntityConfig('location', 'class')
+                        )
+                    )
+                ],
                 'criteria' => [
                     function (QueryBuilder $builder) use ($query) {
                         $builder->distinct()

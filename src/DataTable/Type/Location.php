@@ -4,15 +4,17 @@ namespace App\DataTable\Type;
 
 use App\DataTable\Column\FieldWithLink;
 use App\Entity\Registry;
+use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\DataTable;
 
 class Location extends AbstractEntity
 {
     public function __construct(
+        EntityManagerInterface $entityManager,
         Registry $entityRegistry,
         $entityType = null
     ) {
-        parent::__construct($entityRegistry, $entityType ?? 'location');
+        parent::__construct($entityManager, $entityRegistry, $entityType ?? 'location');
     }
 
     public function configure(DataTable $dataTable, array $options) {

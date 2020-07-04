@@ -2,14 +2,19 @@
 
 namespace App\DataTable\Type;
 
+use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use App\DataTable\Column\Actions;
 use App\Entity\Registry;
+use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableTypeInterface;
 
 abstract class AbstractEntity implements DataTableTypeInterface
 {
+    /** @var EntityManagerInterface */
+    private $em;
+
     /** @var Registry */
     protected $entityRegistry;
 
@@ -17,9 +22,11 @@ abstract class AbstractEntity implements DataTableTypeInterface
     protected $entityType;
 
     public function __construct(
+        EntityManagerInterface $entityManager,
         Registry $entityRegistry,
         $entityType
     ) {
+        $this->em = $entityManager;
         $this->entityRegistry = $entityRegistry;
         $this->entityType = $entityType;
     }
@@ -29,6 +36,12 @@ abstract class AbstractEntity implements DataTableTypeInterface
             ORMAdapter::class,
             [
                 'entity' => $this->getEntityConfig('class'),
+                'query' => [
+                    new AutomaticQueryBuilder(
+                        $this->em,
+                        $this->em->getClassMetadata($this->getEntityConfig('class'))
+                    )
+                ]
             ]
         );
     }

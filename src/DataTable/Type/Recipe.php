@@ -4,16 +4,18 @@ namespace App\DataTable\Type;
 
 use App\DataTable\Column\FieldWithLink;
 use App\Entity\Registry;
+use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Column\TwigColumn;
 use Omines\DataTablesBundle\DataTable;
 
 class Recipe extends AbstractEntity
 {
     public function __construct(
+        EntityManagerInterface $entityManager,
         Registry $entityRegistry,
         $entityType = null
     ) {
-        parent::__construct($entityRegistry, $entityType ?? 'recipe');
+        parent::__construct($entityManager, $entityRegistry, $entityType ?? 'recipe');
     }
 
     public function configure(DataTable $dataTable, array $options) {

@@ -4,15 +4,17 @@ namespace App\DataTable\Type;
 
 use App\DataTable\Column\FieldWithLink;
 use App\Entity\Registry;
+use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\DataTable;
 
 class Tag extends AbstractEntity
 {
     public function __construct(
+        EntityManagerInterface $entityManager,
         Registry $entityRegistry,
         $entityType = null
     ) {
-        parent::__construct($entityRegistry, $entityType ?? 'tag');
+        parent::__construct($entityManager, $entityRegistry, $entityType ?? 'tag');
     }
 
     public function configure(DataTable $dataTable, array $options) {
