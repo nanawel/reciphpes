@@ -125,6 +125,10 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                 'allow_delete' => true,
                 'delete_empty' => true,
                 'by_reference' => false,
+                'prototype_name' => '__recipeIngredientIdx__',
+                'attr' => [
+                    'data-prototype-name' => '__recipeIngredientIdx__',
+                ],
                 'data' => $initRecipeIngredients
             ]
         );

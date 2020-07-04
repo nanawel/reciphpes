@@ -80,7 +80,11 @@ class MassCreate extends AbstractType
                     'required' => true,
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'data' => [new Recipe()]  // Init with 1 empty recipe
+                    'prototype_name' => '__recipeIdx__',
+                    'attr' => [
+                        'data-prototype-name' => '__recipeIdx__',
+                    ],
+                    'data' => [new Recipe()],  // Init with 1 empty recipe
                 ]
             )
             ->add(

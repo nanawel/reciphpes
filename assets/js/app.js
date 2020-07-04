@@ -110,10 +110,11 @@ const refreshElementObservers = function () {
     });
 };
 
-const addCollectionItem = function($collectionHolder) {
+const addCollectionItem = function ($collectionHolder, prototypeName) {
+    prototypeName = prototypeName || $collectionHolder.data('prototype-name') || '__name__';
     const prototype = $collectionHolder.data('prototype');
     let index = $collectionHolder.data('index') || $collectionHolder.children().length;
-    const $newForm = $(prototype.replace(/__name__/g, index));
+    const $newForm = $(prototype.replace(new RegExp(prototypeName, 'g'), index));
 
     $collectionHolder.append($newForm);
 
