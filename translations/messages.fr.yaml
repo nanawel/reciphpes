@@ -48,6 +48,7 @@ Ingredient: Ingrédient
 Ingredient %i%: Ingrédient %i%
 Ingredients: Ingrédients
 Instructions: Instructions
+Latest Added Recipes: Dernières recettes créées
 Loading...: Chargement...
 Location: Emplacement
 Locations: Emplacements
@@ -85,5 +86,5 @@ Toolbar: Barre d'outils
 'Unable to save element: %cause%': "Impossible d'enregistrer l'élément : %cause%"
 'Unable to save elements: %cause%': "Impossible d'enregistrer les éléments : %cause%"
 View: Voir
-View recipes: Voir les recettes
+View all %recipeCount% recipes: Voir les %recipeCount% recettes
 Welcome: Bienvenue

@@ -8,7 +8,22 @@
         <hr class="my-4">
         <div style="text-align: center">
             <a class="btn btn-primary btn-lg" href="{{ path('app_recipe') }}" role="button"><i
-                        class="fa fa-pizza-slice"></i>&nbsp;{% trans %} View recipes {% endtrans %}</a>
+                        class="fa fa-pizza-slice"></i>&nbsp;{% trans %} View all %recipeCount% recipes {% endtrans %}
+            </a>
         </div>
+        <hr class="my-4">
+        <h2>{% trans %} Latest Added Recipes {% endtrans %}</h2>
+        {% if latestRecipes %}
+            <div id="latest-recipes">
+                <ul>
+                    {% for recipe in latestRecipes %}
+                        <li><a href="{{ path('app_recipe_show', {id: recipe.id}) }}">{{ recipe.name }}</a>
+                            {% for tags in recipe.tags %}<span
+                                    class="tag badge badge-secondary">{{ tag.name }}</span> {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
