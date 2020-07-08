@@ -35,11 +35,11 @@ tags-dt:
     name: Nom
     actions: Actions
 
-'%count% recipe(s) saved successfully!': '%count% recette(s) enregistrée(s) avec succès !'
-'%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>': '%count% recette(s) enregistrée(s) avec succès ! <a href="%create_more_url%">En créer d''autres !</a>'
 Actions: Actions
 Additional note about the ingredient (quantity, etc.): Précision complémentaire sur l'ingrédient (quantité, etc.)
 Choose a location...: Choisissez un emplacement...
+'%count% recipe(s) saved successfully!': '%count% recette(s) enregistrée(s) avec succès !'
+'%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>': '%count% recette(s) enregistrée(s) avec succès ! <a href="%create_more_url%">En créer d''autres !</a>'
 Delete: Supprimer
 Edit: Modifier
 Element saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>: Élément enregistré avec succès !&nbsp;<a href="%url%">Cliquez ici pour le voir.</a>
@@ -80,6 +80,7 @@ Results for "%query%": Résultats pour "%query%"
 Save: Sauvegarder
 Save and add more: Sauvegarder et continuer
 Search: Rechercher
+'<strong>%name%</strong> saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>': '<strong>%name%</strong> enregistré(e) avec succès !&nbsp;<a href="%url%">Cliquez ici pour le voir.</a>'
 Tags: Tags
 Time(s) of year: Époque(s) de l'année
 Toolbar: Barre d'outils

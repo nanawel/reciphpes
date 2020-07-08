@@ -111,8 +111,9 @@ trait DocumentControllerTrait
 
                 $message = new Markup(
                     $this->getTranslator()->trans(
-                        'Element saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>',
+                        '<strong>%name%</strong> saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>',
                         [
+                            '%name%' => htmlspecialchars($entity->getName(), ENT_QUOTES | ENT_SUBSTITUTE),
                             '%url%' => $this->get('router')->generate(
                                 sprintf(
                                     'app_%s_show',
