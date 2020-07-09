@@ -5,11 +5,13 @@ namespace App\Form\Type;
 
 
 use App\Entity\Ingredient;
+use App\Entity\Recipe;
 use App\Entity\RecipeIngredient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Exception;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -67,6 +69,16 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
                     ],
                     $options['note_opts']
                 )
+            )
+            ->add(
+                'deleted',
+                HiddenType::class,
+                [
+                    'empty_data' => 0,
+                    'attr' => [
+                        'class' => 'deleted-flag',
+                    ]
+                ]
             )
             ->setDataMapper($this);
     }
@@ -143,7 +155,22 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
                 ->setName($name);
         }
         if (! $viewData) {
-            $viewData = new RecipeIngredient();
+            // This section is necessary to deal with issue #24 (removing and re-adding an ingredient to
+            // an existing recipe in a single submit)
+            /** @var Recipe $recipe */
+            $recipe = $forms['name']->getParent()->getParent()->getParent()->getViewData();
+            if ($recipe->getId() && $ingredient->getId()) {
+                $recipeIngredient = $this->entityManager->getRepository(RecipeIngredient::class)
+                    ->findOneBy(['recipe' => $recipe, 'ingredient' => $ingredient]);
+
+                if ($recipeIngredient) {
+                    $viewData = $recipeIngredient;
+                }
+            }
+
+            if (! $viewData) {
+                $viewData = new RecipeIngredient();
+            }
         }
 
         $viewData->setIngredient($ingredient)

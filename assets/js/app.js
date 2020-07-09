@@ -102,6 +102,15 @@ const refreshElementObservers = function () {
         $(el).attr('autocomplete', autocompleteValue);
     });
 
+    // Init CollectionType inputs with fixed index
+    // See addCollectionItem below
+    $('[data-prototype]').each(function (i, el) {
+        const $collectionHolder = $(el);
+        if (!$collectionHolder.data('index')) {
+            $collectionHolder.data('index', $collectionHolder.children().length);
+        }
+    });
+
     // Disable ENTER key default handling (form submission)
     $(document).on('keydown', 'form.no-submit-on-enter', function (ev) {
         if (!$(document.activeElement).hasClass('tagify__input')) {

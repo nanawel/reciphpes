@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\TimeOfYear;
-use App\Form\DataTransformer\LocationToIdTransformer;
 use App\Form\DataTransformer\TagsToJsonTransformer;
 use App\Form\Type\RecipeIngredientType;
 use App\Repository\LocationRepository;
