@@ -218,14 +218,25 @@ blockquote {
     }
 }
 
-// Special display for delete button in grids
-.data-table .btn-delete {
-    &:before {
-        margin-right: auto;
+.data-table {
+    td.col-createdAt {
+        @extend .small;
+        white-space: nowrap;
     }
 
-    > span {
-        display: none;
+    td.col-locationDetails {
+        @extend .small;
+    }
+
+    // Special display for delete button in grids
+    .btn-delete {
+        &:before {
+            margin-right: auto;
+        }
+
+        > span {
+            display: none;
+        }
     }
 }
 

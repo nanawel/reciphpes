@@ -5,6 +5,7 @@ namespace App\DataTable\Type;
 use App\DataTable\Column\FieldWithLink;
 use App\Entity\Registry;
 use Doctrine\ORM\EntityManagerInterface;
+use Omines\DataTablesBundle\Column\TwigColumn;
 use Omines\DataTablesBundle\DataTable;
 
 class Ingredient extends AbstractEntity
@@ -28,6 +29,14 @@ class Ingredient extends AbstractEntity
                     'className' => 'col-name',
                     'field' => 'ingredient.name',
                     'link_route' => 'app_ingredient_show',
+                ]
+            )
+            ->add(
+                'createdAt',
+                TwigColumn::class,
+                [
+                    'className' => 'col-createdAt',
+                    'template' => '_datatables/column/createdAt.html.twig',
                 ]
             )
             ->addOrderBy('name');

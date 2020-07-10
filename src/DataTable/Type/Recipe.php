@@ -57,6 +57,14 @@ class Recipe extends AbstractEntity
                     'template' => '_datatables/column/locationDetails.html.twig',
                 ]
             )
+            ->add(
+                'createdAt',
+                TwigColumn::class,
+                [
+                    'className' => 'col-createdAt',
+                    'template' => '_datatables/column/createdAt.html.twig',
+                ]
+            )
             ->addOrderBy('name');
         $this->addDefaultActions($dataTable, $options);
     }

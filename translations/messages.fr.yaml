@@ -21,14 +21,17 @@ recipes-dt:
     tags: Tags
     location: Emplacement
     locationDetails: Détails
+    createdAt: Créée le
     actions: Actions
 ingredients-dt:
   columns:
     name: Nom
+    createdAt: Créé le
     actions: Actions
 locations-dt:
   columns:
     name: Nom
+    createdAt: Créé le
     actions: Actions
 tags-dt:
   columns:

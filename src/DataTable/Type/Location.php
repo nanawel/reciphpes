@@ -5,6 +5,7 @@ namespace App\DataTable\Type;
 use App\DataTable\Column\FieldWithLink;
 use App\Entity\Registry;
 use Doctrine\ORM\EntityManagerInterface;
+use Omines\DataTablesBundle\Column\TwigColumn;
 use Omines\DataTablesBundle\DataTable;
 
 class Location extends AbstractEntity
@@ -28,6 +29,14 @@ class Location extends AbstractEntity
                     'className' => 'col-name',
                     'field' => 'location.name',
                     'link_route' => 'app_location_show',
+                ]
+            )
+            ->add(
+                'createdAt',
+                TwigColumn::class,
+                [
+                    'className' => 'col-createdAt',
+                    'template' => '_datatables/column/createdAt.html.twig',
                 ]
             )
             ->addOrderBy('name');
