@@ -71,6 +71,9 @@ Encore
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
 
+    // https://symfony.com/doc/current/frontend/encore/postcss.html
+    .enablePostCssLoader()
+
     .addPlugin(new CopyWebpackPlugin({
         patterns: [
             {from: './assets/images', to: 'images'},
