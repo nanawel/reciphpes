@@ -235,7 +235,9 @@ class Recipe extends AbstractEntity
      */
     public function setRecipeIngredient($recipeIngredients): Recipe {
         foreach ($recipeIngredients as $recipeIngredient) {
-            $recipeIngredient->setRecipe($this);
+            if ($recipeIngredient instanceof RecipeIngredient) {
+                $recipeIngredient->setRecipe($this);
+            }
         }
         $this->recipeIngredients = $recipeIngredients;
 
@@ -247,9 +249,11 @@ class Recipe extends AbstractEntity
      * @return $this
      */
     public function addRecipeIngredient($recipeIngredient): Recipe {
-        if (! $this->recipeIngredients->contains($recipeIngredient)) {
-            $recipeIngredient->setRecipe($this);
-            $this->recipeIngredients->add($recipeIngredient);
+        if ($recipeIngredient instanceof RecipeIngredient) {
+            if (! $this->recipeIngredients->contains($recipeIngredient)) {
+                $recipeIngredient->setRecipe($this);
+                $this->recipeIngredients->add($recipeIngredient);
+            }
         }
 
         return $this;
@@ -260,9 +264,11 @@ class Recipe extends AbstractEntity
      * @return $this
      */
     public function removeRecipeIngredient($recipeIngredient): Recipe {
-        if ($this->recipeIngredients->contains($recipeIngredient)) {
-            $recipeIngredient->setRecipe(null);
-            $this->recipeIngredients->removeElement($recipeIngredient);
+        if ($recipeIngredient instanceof RecipeIngredient) {
+            if ($this->recipeIngredients->contains($recipeIngredient)) {
+                $recipeIngredient->setRecipe(null);
+                $this->recipeIngredients->removeElement($recipeIngredient);
+            }
         }
 
         return $this;
