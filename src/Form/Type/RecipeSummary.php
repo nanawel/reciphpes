@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RecipeSummary extends AbstractType implements DataMapperInterface
 {
-    const INGREDIENT_ROWS = 3;
+    const INGREDIENT_ROWS = 1;
 
     /** @var EntityManagerInterface */
     private $entityManager;
@@ -100,6 +100,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
             'recipeIngredients',
             CollectionType::class,
             [
+                'help' => 'Hint: you can use Ctrl+Enter to add a new ingredient row.',
                 'block_name' => 'recipe_ingredients',
                 'entry_type' => RecipeIngredientType::class,
                 'label' => 'Ingredients',
@@ -127,6 +128,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
                 'by_reference' => false,
                 'prototype_name' => '__recipeIngredientIdx__',
                 'attr' => [
+                    'class' => 'recipe-ingredients',
                     'data-prototype-name' => '__recipeIngredientIdx__',
                 ],
                 'data' => $initRecipeIngredients

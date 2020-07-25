@@ -48,7 +48,7 @@ dev-install:
 		&& yarn install'
 
 dev-encore-watch:
-	yarn run encore dev --watch
+	test -f /.dockerenv && yarn run encore dev --watch || docker-compose exec app yarn run encore dev --watch
 
 new-secret:
 	sed -i "s/APP_SECRET=.*/APP_SECRET=$$(openssl rand -base64 32 | md5sum | awk '{ print $$1 }')/" .env
