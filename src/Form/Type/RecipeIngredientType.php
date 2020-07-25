@@ -143,10 +143,6 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
         $name = trim($forms['name']->getData());
         $note = trim($forms['note']->getData());
 
-        if (! strlen($name)) {
-            return;
-        }
-
         $ingredient = $this->entityManager->getRepository(Ingredient::class)
             ->findOneBy(['name' => $name]);
 
