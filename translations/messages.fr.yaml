@@ -87,6 +87,7 @@ Search: Rechercher
 '<strong>%name%</strong> saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>': '<strong>%name%</strong> enregistré(e) avec succès !&nbsp;<a href="%url%">Cliquez ici pour le voir.</a>'
 Tags: Tags
 Time(s) of year: Époque(s) de l'année
+Today's Recipe: Recette du jour
 Toolbar: Barre d'outils
 'Unable to save element: %cause%': "Impossible d'enregistrer l'élément : %cause%"
 'Unable to save elements: %cause%': "Impossible d'enregistrer les éléments : %cause%"

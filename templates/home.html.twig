@@ -11,9 +11,34 @@
                         class="fa fa-pizza-slice"></i>&nbsp;{% trans %} View all %recipeCount% recipes {% endtrans %}
             </a>
         </div>
-        <hr class="my-4">
-        <h2>{% trans %} Latest Added Recipes {% endtrans %}</h2>
+        {% if todaysRecipe %}
+            <hr class="my-4">
+            <h2 class="text-center">{% trans %} Today's Recipe {% endtrans %}</h2>
+            <div id="random-recipe">
+                <h3><a href="{{ path('app_recipe_show', {id: todaysRecipe.id}) }}">{{ todaysRecipe.name }}</a></h3>
+                <div class="row">
+                    <div class="tag-list col-md-3">
+                        <div class="tags">
+                            {% for tag in todaysRecipe.tags %}
+                                <div class="tag-wrapper text-center">
+                                    <div class="tag badge badge-secondary">{{ tag.name }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if todaysRecipe.recipeIngredients.count() %}
+                        <dl class="ingredient-list col-md-9">
+                            {% for i in todaysRecipe.recipeIngredients %}
+                                <dt class="col-sm-12">{{ i.ingredient.name }}</dt>
+                            {% endfor %}
+                        </dl>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
         {% if latestRecipes %}
+            <hr class="my-4">
+            <h2 class="text-center">{% trans %} Latest Added Recipes {% endtrans %}</h2>
             <div id="latest-recipes">
                 <ul>
                     {% for recipe in latestRecipes %}

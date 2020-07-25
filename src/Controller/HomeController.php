@@ -11,7 +11,8 @@ class HomeController extends AbstractController
             'home.html.twig',
             [
                 'recipeCount' => $this->getRecipeCount(),
-                'latestRecipes' => $this->getLatestRecipes()
+                'todaysRecipe' => $this->getTodaysRecipe(),
+                'latestRecipes' => $this->getLatestRecipes(),
             ]
         );
     }
@@ -35,5 +36,25 @@ class HomeController extends AbstractController
     protected function getLatestRecipes() {
         return $this->getEntityManager()->getRepository(Recipe::class)
             ->findBy([], ['createdAt' => 'desc'], 10);
+    }
+
+    /**
+     * @return Recipe|null
+     */
+    protected function getTodaysRecipe() {
+        $recipeIds = array_column(
+            $this->getEntityManager()->createQueryBuilder()
+                ->select('r.id')
+                ->from(Recipe::class, 'r')
+                ->getQuery()
+                ->execute(),
+            'id'
+        );
+        sort($recipeIds);
+
+        $recipeId = $recipeIds[floor(time() / 86400) % count($recipeIds)];
+
+        return $this->getEntityManager()->getRepository(Recipe::class)
+            ->find($recipeId);
     }
 }

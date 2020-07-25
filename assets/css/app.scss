@@ -26,6 +26,10 @@ h1 {
     margin-bottom: 2rem;
 }
 
+dt {
+    font-weight: normal;
+}
+
 .row {
     margin-left: 0;
     margin-right: 0;
@@ -153,7 +157,7 @@ form .btn-save {
     float: right;
 }
 
-.row.ingredient-list {
+.ingredient-list {
     padding-left: 1em;
 
     dt:nth-of-type(even), dd:nth-of-type(even) {
