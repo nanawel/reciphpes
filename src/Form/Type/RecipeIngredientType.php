@@ -159,7 +159,7 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
             // an existing recipe in a single submit)
             /** @var Recipe $recipe */
             $recipe = $forms['name']->getParent()->getParent()->getParent()->getViewData();
-            if ($recipe->getId() && $ingredient->getId()) {
+            if ($recipe instanceof Recipe && $recipe->getId() && $ingredient->getId()) {
                 $recipeIngredient = $this->entityManager->getRepository(RecipeIngredient::class)
                     ->findOneBy(['recipe' => $recipe, 'ingredient' => $ingredient]);
 
