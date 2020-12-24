@@ -71,7 +71,7 @@ const refreshElementObservers = function () {
 
     // JQuery-ui Autocomplete
     $('input.jq-autocomplete').each(function (i, el) {
-        const autocompleteValue = $(el).attr('autocomplete');
+        $(el).attr('autocomplete', 'off');
         $(el).autocomplete({
             source: function (request, response) {
                 const fetchUrl = $(el).data('fetch-url');
@@ -98,8 +98,6 @@ const refreshElementObservers = function () {
                 );
             }
         });
-        // Restore custom autocomplete after JQuery-ui overwrote it
-        $(el).attr('autocomplete', autocompleteValue);
     });
 
     // Init CollectionType inputs with fixed index
