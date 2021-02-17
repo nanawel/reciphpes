@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\DataTable;
@@ -38,6 +39,14 @@ class TagController extends AbstractController
         $recipeDatatable->getAdapter()->configure(
             [
                 'entity' => $this->getEntityRegistry()->getEntityConfig('recipe', 'class'),
+                'query' => [
+                    new AutomaticQueryBuilder(
+                        $this->getEntityManager(),
+                        $this->getEntityManager()->getClassMetadata(
+                            $this->getEntityRegistry()->getEntityConfig('recipe', 'class')
+                        )
+                    )
+                ],
                 'criteria' => [
                     function (QueryBuilder $builder) use ($entity) {
                         $builder->distinct()

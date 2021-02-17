@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use App\Entity\Ingredient;
 use App\Form\DataTransformer\IngredientsToJsonTransformer;
 use App\Repository\TagRepository;
@@ -41,6 +42,14 @@ class IngredientController extends AbstractController
         $recipeDatatable->getAdapter()->configure(
             [
                 'entity' => $this->getEntityRegistry()->getEntityConfig('recipe', 'class'),
+                'query' => [
+                    new AutomaticQueryBuilder(
+                        $this->getEntityManager(),
+                        $this->getEntityManager()->getClassMetadata(
+                            $this->getEntityRegistry()->getEntityConfig('recipe', 'class')
+                        )
+                    )
+                ],
                 'criteria' => [
                     function (QueryBuilder $builder) use ($entity) {
                         $builder->distinct()
