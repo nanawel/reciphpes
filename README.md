@@ -117,7 +117,7 @@ commands provided in the section below.
 > **Requirements**
 > - Apache 2 with PHP 7.1+
 > - Composer
-> - NodeJS 10+
+> - NodeJS 14+
 > - yarn
 
 ```shell
