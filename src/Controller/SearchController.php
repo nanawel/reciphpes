@@ -33,6 +33,13 @@ class SearchController extends AbstractController
             $query = $request->query->get('q');
         }
 
+        $terms = array_filter(
+            preg_split('/\s+/', $query),
+            function ($w) {
+                return strlen($w) > 0;
+            }
+        );
+
         /** @var DataTable $table */
         $recipeDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('recipe', 'datatable_type_class'));
@@ -48,12 +55,14 @@ class SearchController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($query) {
+                    function (QueryBuilder $builder) use ($terms) {
                         $builder->distinct()
-                            ->leftJoin('recipe.tags', 't')
-                            ->where('recipe.name LIKE :query')
-                            ->orWhere('t.name LIKE :query')
-                            ->setParameter('query', "%$query%");
+                            ->leftJoin('recipe.tags', 't');
+
+                        foreach ($terms as $w => $term) {
+                            $builder->andWhere("(recipe.name LIKE :term{$w}) OR (t.name LIKE :term{$w})")
+                                ->setParameter("term{$w}", "%$term%");
+                        }
                     },
                     new SearchCriteriaProvider(),
                 ],
@@ -79,10 +88,13 @@ class SearchController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($query) {
-                        $builder->distinct()
-                            ->where('ingredient.name LIKE :query')
-                            ->setParameter('query', "%$query%");
+                    function (QueryBuilder $builder) use ($terms) {
+                        $builder->distinct();
+
+                        foreach ($terms as $w => $term) {
+                            $builder->andWhere("(ingredient.name LIKE :term{$w})")
+                                ->setParameter("term{$w}", "%$term%");
+                        }
                     },
                     new SearchCriteriaProvider(),
                 ],
@@ -108,10 +120,13 @@ class SearchController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($query) {
-                        $builder->distinct()
-                            ->where('location.name LIKE :query')
-                            ->setParameter('query', "%$query%");
+                    function (QueryBuilder $builder) use ($terms) {
+                        $builder->distinct();
+
+                        foreach ($terms as $w => $term) {
+                            $builder->andWhere("(location.name LIKE :term{$w})")
+                                ->setParameter("term{$w}", "%$term%");
+                        }
                     },
                     new SearchCriteriaProvider(),
                 ],
