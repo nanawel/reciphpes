@@ -10,14 +10,14 @@ use Twig\Environment;
 class FieldWithLink extends AbstractColumn
 {
     /** @var Environment */
-    private $twig;
+    protected $twig;
 
     /**
      * TwigColumn constructor.
      */
     public function __construct(Environment $twig = null) {
         if (null === ($this->twig = $twig)) {
-            throw new MissingDependencyException('You must have TwigBundle installed to use ' . self::class);
+            throw new MissingDependencyException('You must have TwigBundle installed to use ' . static::class);
         }
     }
 

@@ -3,24 +3,10 @@
 namespace App\DataTable\Column;
 
 use Omines\DataTablesBundle\Column\TwigColumn;
-use Omines\DataTablesBundle\Exception\MissingDependencyException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Twig\Environment;
 
 class Actions extends TwigColumn
 {
-    /** @var Environment */
-    private $twig;
-
-    /**
-     * TwigColumn constructor.
-     */
-    public function __construct(Environment $twig = null) {
-        if (null === ($this->twig = $twig)) {
-            throw new MissingDependencyException('You must have TwigBundle installed to use ' . self::class);
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
