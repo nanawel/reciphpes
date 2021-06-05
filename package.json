@@ -10,7 +10,7 @@
     "dependencies": {
         "@allmarkedup/purl": "https://github.com/allmarkedup/purl.git",
         "@fortawesome/fontawesome-free": "^5.13.0",
-        "@yaireo/tagify": "^3.10.1",
+        "@yaireo/tagify": "^4.1.4",
         "copy-webpack-plugin": "^6.0.1",
         "datatables.net-dt": "^1.10.21",
         "datatables.net-responsive-bs4": "^2.2.5",

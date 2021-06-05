@@ -16,10 +16,10 @@ require('bootstrap');
 require('datatables.net');
 require('datatables.net-responsive-bs4');
 require('jquery-ui/ui/widgets/autocomplete');
+window.Tagify = require('@yaireo/tagify/dist/tagify.min');
 require('@yaireo/tagify/dist/jQuery.tagify.min');
 require('../../vendor/omines/datatables-bundle/src/Resources/public/js/datatables');
 const EasyMDE = require('easymde/dist/easymde.min');
-
 $('textarea.markdown').each(el => new EasyMDE({element: el, spellChecker: false}));
 
 // Prevent multiple form submit
@@ -45,6 +45,7 @@ const refreshElementObservers = function () {
 
     // Tagify
     $('input.autocomplete-tag').each(function (i, el) {
+        var requests = [];
         if (!$(el).data('tagify')) {
             $(el).tagify({
                 'autoComplete.rightKey': true
@@ -57,13 +58,23 @@ const refreshElementObservers = function () {
                     tagify.settings.whitelist.length = 0;
                     tagify.loading(true).dropdown.hide.call(tagify);
 
-                    $.get(
-                        fetchUrl,
-                        {term: value},
-                        function (data, textStatus, jqXHR) {
-                            tagify.settings.whitelist.splice(0, data.length, ...data);
-                            tagify.loading(false).dropdown.show.call(tagify, value);
-                        }
+                    // Abort unfinished requests (prevent duplicate results)
+                    requests.forEach(function (r) {
+                        r.abort();
+                    });
+
+                    requests.push(
+                        $.get(
+                            fetchUrl,
+                            {term: value},
+                            function (data, textStatus, jqXHR) {
+                                tagify.settings.whitelist.splice(0, data.length, ...data);
+                                tagify.loading(false).dropdown.show.call(tagify, value);
+                            }
+                        ).always(function (data, textStatus, jqXHR) {
+                            // Remove finished request from the "abortable" list
+                            requests.splice(requests.indexOf(jqXHR), 1);
+                        })
                     );
                 });
         }
