@@ -47,9 +47,10 @@ const refreshElementObservers = function () {
     $('input.autocomplete-tag').each(function (i, el) {
         var requests = [];
         if (!$(el).data('tagify')) {
-            $(el).tagify({
-                'autoComplete.rightKey': true
-            })
+            $(el)
+                .tagify({
+                    'autoComplete.rightKey': true
+                })
                 .on('input', function (e, input) {
                     const value = input.value;
                     const tagify = $(this).data('tagify');

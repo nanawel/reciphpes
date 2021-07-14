@@ -108,7 +108,7 @@ class RecipeController extends AbstractController
                     }
 
                     // Handle new tags present several times in the submitted form:
-                    // once the first occurence is saved, update subsequent recipes with this instance
+                    // once the first occurrence is saved, update subsequent recipes with this instance
                     /** @var Tag $tag */
                     foreach ($recipe->getTags() as $tag) {
                         if (! $tag->getId()) {
@@ -125,7 +125,7 @@ class RecipeController extends AbstractController
 
                     $recipeIngredientIds = [];
                     // Handle new ingredients present several times in the submitted form:
-                    // once the first occurence is saved, update subsequent recipes with this instance
+                    // once the first occurrence is saved, update subsequent recipes with this instance
                     /** @var RecipeIngredient $recipeIngredient */
                     foreach ($recipe->getRecipeIngredients() as $recipeIngredient) {
                         if (! $recipeIngredient->getIngredient()->getId()) {

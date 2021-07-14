@@ -24,7 +24,7 @@ class SearchController extends AbstractController
                 $this->get('router')->generate('app_search_results')
             );
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
             // FIXME Ugly workaround - See https://github.com/omines/datatables-bundle/issues/160
             parse_str(parse_url($request->headers->get('referer'), PHP_URL_QUERY), $queryParts);
             $query = $queryParts['q'] ?? null;
@@ -40,6 +40,33 @@ class SearchController extends AbstractController
             }
         );
 
+        $recipeDatatable = $this->buildRecipeDatatable($request, $terms);
+        if ($recipeDatatable->isCallback()) {
+            return $recipeDatatable->getResponse();
+        }
+
+        $ingredientDatatable = $this->buildIngredientDatatable($request, $terms);
+        if ($ingredientDatatable->isCallback()) {
+            return $ingredientDatatable->getResponse();
+        }
+
+        $locationDatatable = $this->buildLocationDatatable($request, $terms);
+        if ($locationDatatable->isCallback()) {
+            return $locationDatatable->getResponse();
+        }
+
+        return $this->render(
+            'search/results.html.twig',
+            [
+                'query' => $query,
+                'recipeDatatable' => $recipeDatatable,
+                'ingredientDatatable' => $ingredientDatatable,
+                'locationDatatable' => $locationDatatable,
+            ]
+        );
+    }
+
+    protected function buildRecipeDatatable(Request $request, array $terms) {
         /** @var DataTable $table */
         $recipeDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('recipe', 'datatable_type_class'));
@@ -68,11 +95,11 @@ class SearchController extends AbstractController
                 ],
             ]
         );
-        $recipeDatatable->handleRequest($request);
-        if ($recipeDatatable->isCallback()) {
-            return $recipeDatatable->getResponse();
-        }
 
+        return $recipeDatatable->handleRequest($request);
+    }
+
+    protected function buildIngredientDatatable(Request $request, array $terms) {
         /** @var DataTable $table */
         $ingredientDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('ingredient', 'datatable_type_class'));
@@ -100,11 +127,11 @@ class SearchController extends AbstractController
                 ],
             ]
         );
-        $ingredientDatatable->handleRequest($request);
-        if ($ingredientDatatable->isCallback()) {
-            return $ingredientDatatable->getResponse();
-        }
 
+        return $ingredientDatatable->handleRequest($request);
+    }
+
+    protected function buildLocationDatatable(Request $request, array $terms) {
         /** @var DataTable $table */
         $locationDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('location', 'datatable_type_class'));
@@ -132,19 +159,7 @@ class SearchController extends AbstractController
                 ],
             ]
         );
-        $locationDatatable->handleRequest($request);
-        if ($locationDatatable->isCallback()) {
-            return $locationDatatable->getResponse();
-        }
 
-        return $this->render(
-            'search/results.html.twig',
-            [
-                'query' => $query,
-                'recipeDatatable' => $recipeDatatable,
-                'ingredientDatatable' => $ingredientDatatable,
-                'locationDatatable' => $locationDatatable,
-            ]
-        );
+        return $locationDatatable->handleRequest($request);
     }
 }
