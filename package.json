@@ -15,7 +15,7 @@
         "datatables.net-dt": "^1.10.21",
         "datatables.net-responsive-bs4": "^2.2.5",
         "easymde": "^2.10.1",
-        "jquery-ui": "^1.12.1"
+        "jquery-ui": "^1.13.0"
     },
     "devDependencies": {
         "@symfony/webpack-encore": "^1.2.0",
