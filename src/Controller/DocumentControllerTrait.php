@@ -80,6 +80,12 @@ trait DocumentControllerTrait
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, object $entity = null) {
+        if (! $this->getAccessManager()->hasWriteAccess()) {
+            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed :('));
+
+            return $this->redirectToRoute('index');
+        }
+
         if (! $entity) {
             $entity = $this->newEntity($request);
         }
@@ -169,6 +175,12 @@ trait DocumentControllerTrait
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, object $entity) {
+        if (! $this->getAccessManager()->hasWriteAccess()) {
+            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed :('));
+
+            return $this->redirectToRoute('index');
+        }
+
         try {
             $this->getEntityManager()->remove($entity);
             $this->getEntityManager()->flush();

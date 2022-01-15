@@ -52,6 +52,7 @@ Ingredient: Ingrédient
 Ingredient %i%: Ingrédient %i%
 Ingredients: Ingrédients
 Instructions: Instructions
+'Invalid password :(': Mot de passe invalide :(
 Latest Added Recipes: Dernières recettes créées
 Loading...: Chargement...
 Location: Emplacement
@@ -72,10 +73,12 @@ No location defined.: Pas d'emplacement associé.
 No ingredients defined.: Pas d'ingrédients associés.
 No instructions defined.: Pas d'instructions associées.
 No item found.: Aucun résultat.
+'Not allowed :(': Action non-autorisée :(
 Note: Note
 Optional: Facultatif
 Optional. Will be applied to all created recipes below.: Facultatif. Sera affecté à toutes les recettes créées ci-dessous.
 'Page #, path, etc.': N° de page, chemin, etc.
+Password: Mot de passe
 Recipe: Recette
 Recipe (batch): Recettes (en masse)
 Recipes: Recettes
@@ -85,6 +88,10 @@ Save: Sauvegarder
 Save and add more: Sauvegarder et continuer
 Search: Rechercher
 '<strong>%name%</strong> saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>': '<strong>%name%</strong> enregistré(e) avec succès !&nbsp;<a href="%url%">Cliquez ici pour le voir.</a>'
+Sign In: S'identifier
+Sign in to be able to add/edit/delete data on this instance of Reciphes!: Identifiez-vous afin de pouvoir ajouter/modifier/supprimer des données sur cette instance de Reciphpes!
+Sign Out: Se déconnecter
+Submit: Valider
 Tags: Tags
 Time(s) of year: Époque(s) de l'année
 Today's Recipe: Recette du jour
@@ -94,3 +101,6 @@ Toolbar: Barre d'outils
 View: Voir
 View all %recipeCount% recipes: Voir les %recipeCount% recettes
 Welcome: Bienvenue
+You are already signed in!: Vous êtes déjà identifié !
+You are successfully signed in!: Vous êtes identifié avec succès !
+You have signed out sucessfully.: Vous vous êtes déconnecté avec succès.

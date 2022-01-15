@@ -6,9 +6,11 @@
     <div class="jumbotron">
         <div class="btn-toolbar float-right" role="toolbar" aria-label="{% trans %} Toolbar {% endtrans %}">
             <div class="btn-group mr-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
-                <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn action btn-secondary">
-                    <i class="fas fa-edit"></i>&nbsp;<span>{% trans %} Edit {% endtrans %}</span>
-                </a>
+                {% if access_manager.hasWriteAccess() %}
+                    <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn action btn-secondary">
+                        <i class="fas fa-edit"></i>&nbsp;<span>{% trans %} Edit {% endtrans %}</span>
+                    </a>
+                {% endif %}
             </div>
         </div>
         <h1><i class="fas fa-book"></i>&nbsp;{{ location.name }}</h1>
@@ -21,16 +23,18 @@
         {% endif %}
 
         <div class="btn-toolbar float-right" role="toolbar" aria-label="{% trans %} Toolbar {% endtrans %}">
-            <div class="btn-group mr-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
-                <a href="{{ path('app_recipe_new', {location: location.id}) }}"
-                   class="btn action btn-secondary btn-">
-                    <i class="fas fa-plus-circle"></i>&nbsp;<span>{% trans %} New {% endtrans %}</span>
-                </a>
-                <a href="{{ path('app_recipe_masscreate', {location: location.id}) }}"
-                   class="btn action btn-mass-create btn-secondary">
-                    <i class="fas fa-truck-loading"></i>&nbsp;<span>{% trans %} Mass create {% endtrans %}</span>
-                </a>
-            </div>
+            {% if access_manager.hasWriteAccess() %}
+                <div class="btn-group mr-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
+                    <a href="{{ path('app_recipe_new', {location: location.id}) }}"
+                       class="btn action btn-secondary btn-">
+                        <i class="fas fa-plus-circle"></i>&nbsp;<span>{% trans %} New {% endtrans %}</span>
+                    </a>
+                    <a href="{{ path('app_recipe_masscreate', {location: location.id}) }}"
+                       class="btn action btn-mass-create btn-secondary">
+                        <i class="fas fa-truck-loading"></i>&nbsp;<span>{% trans %} Mass create {% endtrans %}</span>
+                    </a>
+                </div>
+            {% endif %}
         </div>
         <h2 class="recipes"><i class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipes {% endtrans %}</h2>
 

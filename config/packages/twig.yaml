@@ -8,4 +8,5 @@ twig:
         - 'bootstrap_4_horizontal_layout.html.twig'
         - '_form/custom_types.html.twig'
     globals:
+        access_manager: '@App\Service\AccessManager'
         html_class: '@App\Twig\Variable\HtmlClass'

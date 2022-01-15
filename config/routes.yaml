@@ -130,3 +130,12 @@ app_tag_delete:
 app_search_results:
   path: /search/results
   controller: App\Controller\SearchController::results
+
+### SIGN IN / SIGN GOUT
+signin:
+  path: /signin
+  controller: App\Controller\SigninController::form
+
+signout:
+  path: /signout
+  controller: App\Controller\SignoutController::index

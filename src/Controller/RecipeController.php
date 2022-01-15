@@ -74,6 +74,12 @@ class RecipeController extends AbstractController
     }
 
     public function massCreate(Request $request) {
+        if (! $this->getAccessManager()->hasWriteAccess()) {
+            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed :('));
+
+            return $this->redirectToRoute('index');
+        }
+
         $form = $this->createForm(
             \App\Form\Recipe\MassCreate::class,
             $this->prepareFormData($request)

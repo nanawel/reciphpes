@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Registry;
+use App\Service\AccessManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -13,6 +14,8 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
 {
     public static function getSubscribedServices() {
         return parent::getSubscribedServices() + [
+                'access_manager' => 'App\Service\AccessManager',
+                'datatable_factory' => 'Omines\DataTablesBundle\DataTableFactory',
                 'entity_manager' => 'Doctrine\ORM\EntityManagerInterface',
                 'entity_registry' => 'App\Entity\Registry',
                 'logger' => 'Psr\Log\LoggerInterface',
@@ -20,8 +23,14 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
                 'session' => 'Symfony\Component\HttpFoundation\Session\Session',
                 'translator' => 'Symfony\Contracts\Translation\TranslatorInterface',
                 'white_october_breadcrumbs' => 'WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs',
-                'datatable_factory' => 'Omines\DataTablesBundle\DataTableFactory'
             ];
+    }
+
+    /**
+     * @return AccessManager
+     */
+    protected function getAccessManager() {
+        return $this->get('access_manager');
     }
 
     /**

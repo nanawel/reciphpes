@@ -8,9 +8,11 @@
             <div class="btn-group mr-2" role="group" aria-label="Actions">
                 <a href="{{ path('app_location_show', {id: location.id}) }}"
                    class="btn action btn-secondary btn-show"><span>{% trans %} View {% endtrans %}</span></a>
-                <a href="{{ path('app_location_delete', {id: location.id}) }}"
-                   class="btn action btn-danger btn-delete"><span>{% trans %} Delete {% endtrans %}</span>
-                </a>
+                {% if access_manager.hasWriteAccess() %}
+                    <a href="{{ path('app_location_delete', {id: location.id}) }}"
+                       class="btn action btn-danger btn-delete"><span>{% trans %} Delete {% endtrans %}</span>
+                    </a>
+                {% endif %}
             </div>
         </div>
     {% endif %}

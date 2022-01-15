@@ -8,16 +8,20 @@
             <div class="btn-group mr-2" role="group" aria-label="Actions">
                 <a href="{{ path('app_tag_show', {id: tag.id}) }}"
                    class="btn action btn-secondary btn-show"><span>{% trans %} View {% endtrans %}</span></a>
-                <a href="{{ path('app_tag_delete', {id: tag.id}) }}"
-                   class="btn action btn-danger btn-delete"><span>{% trans %} Delete {% endtrans %}</span>
-                </a>
+                {% if access_manager.hasWriteAccess() %}
+                    <a href="{{ path('app_tag_delete', {id: tag.id}) }}"
+                       class="btn action btn-danger btn-delete"><span>{% trans %} Delete {% endtrans %}</span>
+                    </a>
+                {% endif %}
             </div>
         </div>
     {% endif %}
     {% if tag.id %}
         <h1><i class="fas fa-edit"></i>&nbsp;{{ tag.name }}</h1>
     {% else %}
-        <h1><i class="fas fa-plus-circle"></i>&nbsp;{% trans %} New tag {% endtrans %}</h1>
+        {% if access_manager.hasWriteAccess() %}
+            <h1><i class="fas fa-plus-circle"></i>&nbsp;{% trans %} New tag {% endtrans %}</h1>
+        {% endif %}
     {% endif %}
 
     <div class="clearfix"></div>

@@ -1,0 +1,12 @@
+{% extends 'content.html.twig' %}
+
+{% block title %}{{ parent() }} - {% trans %} Sign In {% endtrans %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans %} Sign In {% endtrans %}</h1>
+
+    <p class="text-center">
+        <i class="fas fa-info-circle"></i> {% trans %} Sign in to be able to add/edit/delete data on this instance of Reciphes! {% endtrans %}
+    </p>
+    {{ form(form) }}
+{% endblock %}

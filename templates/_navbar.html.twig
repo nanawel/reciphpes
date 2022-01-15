@@ -29,25 +29,36 @@
         </ul>
         <div>
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-plus-circle"></i>&nbsp;{% trans %} New... {% endtrans %}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ path('app_recipe_new') }}"><i
-                                    class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipe {% endtrans %}</a>
-                        <a class="dropdown-item" href="{{ path('app_ingredient_new') }}"><i
-                                    class="fas fa-carrot"></i>&nbsp;{% trans %} Ingredient {% endtrans %}</a>
-                        <a class="dropdown-item" href="{{ path('app_location_new') }}"><i
-                                    class="fas fa-book"></i>&nbsp;{% trans %} Location {% endtrans %}</a>
+                {% if access_manager.isRestrictedAccessEnabled() %}
+                    {% if not access_manager.isSignedIn() %}
+                        <li class="nav-item">
+                            <a class="btn btn-outline-secondary mr-sm-2" href="{{ path('signin') }}"><i
+                                        class="fas fa-sign-in-alt"></i>&nbsp;{% trans %} Sign In {% endtrans %}</a>
+                        </li>
+                    {% endif %}
+                    {% if access_manager.hasWriteAccess() %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-plus-circle"></i>&nbsp;{% trans %} New... {% endtrans %}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path('app_recipe_new') }}"><i
+                                            class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipe {% endtrans %}</a>
+                                <a class="dropdown-item" href="{{ path('app_ingredient_new') }}"><i
+                                            class="fas fa-carrot"></i>&nbsp;{% trans %} Ingredient {% endtrans %}</a>
+                                <a class="dropdown-item" href="{{ path('app_location_new') }}"><i
+                                            class="fas fa-book"></i>&nbsp;{% trans %} Location {% endtrans %}</a>
 
-                        <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>
 
-                        <a class="dropdown-item" href="{{ path('app_recipe_masscreate') }}"><i
-                                    class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipe (batch) {% endtrans %}</a>
-                    </div>
-                </li>
+                                <a class="dropdown-item" href="{{ path('app_recipe_masscreate') }}"><i
+                                            class="fas fa-pizza-slice"></i>&nbsp;{% trans %} Recipe (batch) {% endtrans %}
+                                </a>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endif %}
                 <li>
                     <form class="form-inline my-2 my-lg-0" action="{{ path('app_search_results') }}" method="get">
                         <input class="form-control mr-sm-2" type="search"
@@ -58,6 +69,16 @@
                         </button>
                     </form>
                 </li>
+                {% if access_manager.isRestrictedAccessEnabled() %}
+                    {% if access_manager.isSignedIn() %}
+                        <li class="nav-item">
+                            <a class="btn btn-outline-secondary mx-sm-2" href="{{ path('signout') }}">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="d-sm-inline d-md-none">&nbsp;{% trans %} Sign Out {% endtrans %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
             </ul>
         </div>
     </div>

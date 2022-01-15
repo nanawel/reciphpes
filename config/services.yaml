@@ -37,6 +37,12 @@ services:
             - name: doctrine.event_subscriber
               connection: default
 
+    App\Service\AccessManager:
+        class: ~
+        arguments:
+            $session: '@session'
+            $writeAccessPassword: '%env(RECIPHPES_PASSWORD)%'
+
     ### MODELS
     App\Entity\Registry:
         class: App\Entity\Registry
