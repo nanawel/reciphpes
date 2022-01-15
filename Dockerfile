@@ -21,8 +21,7 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql \
 ###############################################################################
 FROM php-base AS php-builder
 
-RUN curl --location --output /usr/local/bin/composer https://github.com/composer/getcomposer.org/raw/master/web/download/1.10.6/composer.phar \
- && chmod +x /usr/local/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update \
  && apt-get install --no-install-recommends -y \

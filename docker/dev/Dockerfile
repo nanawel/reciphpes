@@ -1,8 +1,7 @@
 FROM php:7.4-apache-buster
 
 # Composer
-RUN curl --location --output /usr/local/bin/composer https://github.com/composer/getcomposer.org/raw/master/web/download/1.10.6/composer.phar \
- && chmod +x /usr/local/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 # Base packages
 RUN apt-get update \

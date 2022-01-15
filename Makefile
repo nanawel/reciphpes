@@ -34,6 +34,9 @@ down:
 logs:
 	docker-compose logs -f --tail=50
 
+ps:
+	docker-compose ps
+
 install:
 	bin/console doctrine:migrations:migrate --no-interaction
 	bin/console doctrine:fixtures:load --append
