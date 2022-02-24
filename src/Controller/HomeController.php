@@ -50,8 +50,11 @@ class HomeController extends AbstractController
                 ->execute(),
             'id'
         );
-        sort($recipeIds);
+        if (! $recipeIds) {
+            return null;
+        }
 
+        sort($recipeIds);
         $recipeId = $recipeIds[floor(time() / 86400) % count($recipeIds)];
 
         return $this->getEntityManager()->getRepository(Recipe::class)
