@@ -29,7 +29,7 @@ class IngredientController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Ingredient")
+     * @ParamConverter("entity", class="App\Entity\Ingredient")
      *
      * @inheritDoc
      */
@@ -77,7 +77,7 @@ class IngredientController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Ingredient", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Ingredient", isOptional="true")
      *
      * @inheritDoc
      */
@@ -86,7 +86,7 @@ class IngredientController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Ingredient", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Ingredient", isOptional="true")
      *
      * @inheritDoc
      */

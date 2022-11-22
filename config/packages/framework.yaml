@@ -1,5 +1,7 @@
 framework:
     secret: '%env(APP_SECRET)%'
+    set_locale_from_accept_language: true
+    set_content_language_from_locale: true
     #csrf_protection: true
     #http_method_override: true
 
@@ -14,6 +16,3 @@ framework:
     #fragments: true
     php_errors:
         log: true
-
-    templating:
-        engines: ['twig']

@@ -26,7 +26,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Tag")
+     * @ParamConverter("entity", class="App\Entity\Tag")
      *
      * @inheritDoc
      */
@@ -74,7 +74,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Tag", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Tag", isOptional="true")
      *
      * @inheritDoc
      */
@@ -83,7 +83,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Tag", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Tag", isOptional="true")
      *
      * @inheritDoc
      */

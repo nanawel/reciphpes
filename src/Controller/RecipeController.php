@@ -32,7 +32,7 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Recipe")
+     * @ParamConverter("entity", class="App\Entity\Recipe")
      *
      * @inheritDoc
      */
@@ -41,7 +41,7 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Recipe", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Recipe", isOptional="true")
      *
      * @inheritDoc
      */
@@ -65,7 +65,7 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Recipe", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Recipe", isOptional="true")
      *
      * @inheritDoc
      */

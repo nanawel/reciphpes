@@ -25,7 +25,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Location")
+     * @ParamConverter("entity", class="App\Entity\Location")
      *
      * @inheritDoc
      */
@@ -64,7 +64,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Location", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Location", isOptional="true")
      *
      * @inheritDoc
      */
@@ -73,7 +73,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @ParamConverter("entity", class="App:Location", isOptional="true")
+     * @ParamConverter("entity", class="App\Entity\Location", isOptional="true")
      *
      * @inheritDoc
      */

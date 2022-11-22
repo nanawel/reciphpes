@@ -1,3 +1,8 @@
+ENV_FILE  ?= .env.local
+
+include $(ENV_FILE)
+export $(shell grep -vE '^(#|$$)' $(ENV_FILE) | sed 's/=.*//')
+
 export HTTP_PORT ?= 80
 
 dev-%: export COMPOSE_FILE = docker-compose.dev.yml

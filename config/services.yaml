@@ -51,7 +51,6 @@ services:
                 recipe:
                     class: App\Entity\Recipe
                     form_class: App\Form\Recipe
-                    type_id: App:Recipe
                     type: recipe
                     route_prefix: recipe
                     template_prefix: recipe
@@ -60,7 +59,6 @@ services:
                 ingredient:
                     class: App\Entity\Ingredient
                     form_class: App\Form\Ingredient
-                    type_id: App:Ingredient
                     type: ingredient
                     route_prefix: ingredient
                     template_prefix: ingredient
@@ -68,7 +66,6 @@ services:
                 location:
                     class: App\Entity\Location
                     form_class: App\Form\Location
-                    type_id: App:Location
                     type: location
                     route_prefix: location
                     template_prefix: location
@@ -76,7 +73,6 @@ services:
                 tag:
                     class: App\Entity\Tag
                     form_class: App\Form\Tag
-                    type_id: App:Tag
                     type: tag
                     route_prefix: tag
                     template_prefix: tag

@@ -12,40 +12,44 @@
         "issues": "https://github.com/nanawel/reciphpes/issues"
     },
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-pdo_sqlite": "*",
+        "composer/package-versions-deprecated": "1.11.99.5",
+        "doctrine/doctrine-bundle": "^2",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "doctrine/doctrine-migrations-bundle": "^2.1",
+        "doctrine/orm": "^2",
         "erusev/parsedown": "^1.7",
         "league/csv": "^9.6",
+        "mhujer/breadcrumbs-bundle": "^1.5",
         "omines/datatables-bundle": "^0.5.4",
         "sensio/framework-extra-bundle": "^5.5",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/apache-pack": "^1.0",
-        "symfony/console": "4.4.*",
-        "symfony/debug-pack": "^1.0",
-        "symfony/dotenv": "4.4.*",
+        "symfony/console": "5.4.*",
+        "symfony/dotenv": "5.4.*",
         "symfony/flex": "^1.3.1",
-        "symfony/form": "4.4.*",
-        "symfony/framework-bundle": "4.4.*",
+        "symfony/form": "5.4.*",
+        "symfony/framework-bundle": "5.4.*",
         "symfony/maker-bundle": "^1.18",
         "symfony/monolog-bundle": "^3.5",
-        "symfony/orm-pack": "^1.0",
-        "symfony/security-bundle": "4.4.*",
-        "symfony/translation": "4.4.*",
-        "symfony/twig-bundle": "4.4.*",
+        "symfony/security-bundle": "5.4.*",
+        "symfony/translation": "5.4.*",
+        "symfony/twig-bundle": "5.4.*",
         "symfony/webpack-encore-bundle": "^1.7",
-        "symfony/yaml": "4.4.*",
+        "symfony/yaml": "5.4.*",
         "twig/extensions": "^1.5",
         "twig/extra-bundle": "^3.0",
         "twig/markdown-extra": "^3.0",
-        "twig/twig": "~2.0",
-        "whiteoctober/breadcrumbs-bundle": "^1.4"
+        "twig/twig": "~2.0"
     },
     "require-dev": {
+        "symfony/debug-bundle": "5.4.*",
+        "symfony/stopwatch": "5.4.*",
+        "symfony/web-profiler-bundle": "5.4.*"
     },
     "config": {
         "preferred-install": {
@@ -54,6 +58,10 @@
         "sort-packages": true,
         "platform": {
             "ext-mongo": "1.6.16"
+        },
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true
         }
     },
     "autoload": {
@@ -92,7 +100,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": "true",
-            "require": "4.4.*"
+            "require": "5.4.*"
         },
         "patches": {}
     }

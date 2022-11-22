@@ -105,14 +105,11 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
-    "laminas/laminas-eventmanager": {
-        "version": "3.2.1"
-    },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.0.4"
-    },
     "league/csv": {
         "version": "9.6.0"
+    },
+    "mhujer/breadcrumbs-bundle": {
+        "version": "1.5.8"
     },
     "monolog/monolog": {
         "version": "1.25.4"
@@ -214,9 +211,6 @@
     "symfony/contracts": {
         "version": "v1.1.0"
     },
-    "symfony/debug": {
-        "version": "v4.4.9"
-    },
     "symfony/debug-bundle": {
         "version": "4.1",
         "recipe": {
@@ -294,19 +288,10 @@
             "src/Kernel.php"
         ]
     },
-    "symfony/http-client-contracts": {
-        "version": "v2.4.0"
-    },
     "symfony/http-foundation": {
         "version": "v4.4.9"
     },
     "symfony/http-kernel": {
-        "version": "v4.4.9"
-    },
-    "symfony/inflector": {
-        "version": "v4.4.9"
-    },
-    "symfony/intl": {
         "version": "v4.4.9"
     },
     "symfony/maker-bundle": {
@@ -317,9 +302,6 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
-    },
-    "symfony/mime": {
-        "version": "v4.4.9"
     },
     "symfony/monolog-bridge": {
         "version": "v4.4.9"
@@ -346,9 +328,6 @@
         "version": "v1.0.8"
     },
     "symfony/polyfill-intl-icu": {
-        "version": "v1.17.0"
-    },
-    "symfony/polyfill-intl-idn": {
         "version": "v1.17.0"
     },
     "symfony/polyfill-intl-normalizer": {
@@ -417,9 +396,6 @@
         "version": "v2.1.2"
     },
     "symfony/stopwatch": {
-        "version": "v4.4.9"
-    },
-    "symfony/templating": {
         "version": "v4.4.9"
     },
     "symfony/translation": {
@@ -517,8 +493,5 @@
     },
     "twig/twig": {
         "version": "v2.12.5"
-    },
-    "whiteoctober/breadcrumbs-bundle": {
-        "version": "1.4.5"
     }
 }
