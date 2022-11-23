@@ -3,8 +3,10 @@ ENV_LOCAL_FILE  ?= .env.local
 
 include $(ENV_FILE)
 export $(shell grep -vE '^(#|$$)' $(ENV_FILE) | sed 's/=.*//')
-include $(ENV_LOCAL_FILE)
-export $(shell grep -vE '^(#|$$)' $(ENV_LOCAL_FILE) | sed 's/=.*//')
+ifneq ("$(wildcard $(ENV_LOCAL_FILE))","")
+	include $(ENV_LOCAL_FILE)
+	export $(shell grep -vE '^(#|$$)' $(ENV_LOCAL_FILE) | sed 's/=.*//')
+endif
 
 export HTTP_PORT ?= 80
 
