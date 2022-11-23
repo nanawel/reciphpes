@@ -81,7 +81,7 @@ trait DocumentControllerTrait
      */
     public function editAction(Request $request, object $entity = null) {
         if (! $this->getAccessManager()->hasWriteAccess()) {
-            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed :('));
+            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed 😕 Please log in first.'));
 
             return $this->redirectToRoute('index');
         }
@@ -176,7 +176,7 @@ trait DocumentControllerTrait
      */
     public function deleteAction(Request $request, object $entity) {
         if (! $this->getAccessManager()->hasWriteAccess()) {
-            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed :('));
+            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed 😕 Please log in first.'));
 
             return $this->redirectToRoute('index');
         }

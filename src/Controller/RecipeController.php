@@ -75,7 +75,7 @@ class RecipeController extends AbstractController
 
     public function massCreate(Request $request) {
         if (! $this->getAccessManager()->hasWriteAccess()) {
-            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed :('));
+            $this->addFlash('danger', $this->getTranslator()->trans('Not allowed 😕 Please log in first.'));
 
             return $this->redirectToRoute('index');
         }
