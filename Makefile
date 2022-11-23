@@ -1,7 +1,10 @@
-ENV_FILE  ?= .env.local
+ENV_FILE        ?= .env
+ENV_LOCAL_FILE  ?= .env.local
 
 include $(ENV_FILE)
 export $(shell grep -vE '^(#|$$)' $(ENV_FILE) | sed 's/=.*//')
+include $(ENV_LOCAL_FILE)
+export $(shell grep -vE '^(#|$$)' $(ENV_LOCAL_FILE) | sed 's/=.*//')
 
 export HTTP_PORT ?= 80
 
@@ -52,7 +55,7 @@ dev-install:
 		&& bin/console doctrine:database:create \
 		&& bin/console make:migration \
 		&& bin/console doctrine:migrations:migrate \
-		&& bin/console doctrine:fixtures:load --append
+		&& bin/console doctrine:fixtures:load --append \
 		&& yarn install'
 
 dev-encore-watch:

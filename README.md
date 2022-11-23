@@ -18,10 +18,10 @@ reciphpes!
 ## Installation
 
 > **Notice:** Currently the application **cannot be accessed** from a URL using
-> a custom path:
+> a custom base path:
 >
-> :ballot_box_with_check: http://reciphpes.myhost.org/  
-> :x: http://something.myhost.org/reciphpes
+> :ballot_box_with_check: WILL WORK: http://reciphpes.myhost.org/  
+> :x: WILL NOT WORK: http://something.myhost.org/reciphpes
 
 ### Docker
 
