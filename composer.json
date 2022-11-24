@@ -39,7 +39,7 @@
         "symfony/security-bundle": "5.4.*",
         "symfony/translation": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
-        "symfony/webpack-encore-bundle": "^1.7",
+        "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "5.4.*",
         "twig/extensions": "^1.5",
         "twig/extra-bundle": "^3.0",

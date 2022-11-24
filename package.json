@@ -5,29 +5,37 @@
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "build": "encore production --progress",
+        "postinstall": "patch-package"
     },
     "dependencies": {
         "@allmarkedup/purl": "https://github.com/allmarkedup/purl.git",
         "@fortawesome/fontawesome-free": "^5.13.0",
-        "@yaireo/tagify": "^4.1.4",
+        "@yaireo/tagify": "^4.17.4",
         "copy-webpack-plugin": "^6.0.1",
         "datatables.net-dt": "^1.10.21",
         "datatables.net-responsive-bs4": "^2.2.5",
         "easymde": "^2.10.1",
-        "jquery-ui": "^1.12.1"
+        "jquery-ui": "^1.12.1",
+        "patch-package": "^6.5.0"
     },
     "devDependencies": {
-        "@symfony/webpack-encore": "^1.2.0",
+        "@babel/core": "^7.17.0",
+        "@babel/preset-env": "^7.16.0",
+        "@symfony/webpack-encore": "^4.1.2",
         "autoprefixer": "^10.2.5",
         "bootstrap": "^4.5.0",
         "core-js": "^3.0.0",
         "jquery": "^3.5.1",
         "node-sass": "^4.14.1",
         "popper.js": "^1.16.1",
-        "postcss-loader": "^4.0.3",
+        "postcss": "^8.1.0",
+        "postcss-loader": "^7.0.0",
+        "prop-types": "^15.7.2",
         "regenerator-runtime": "^0.13.2",
-        "sass-loader": "^8.0.0",
+        "sass-loader": "^13.0.0",
+        "webpack": "^5.0.0",
+        "webpack-cli": "^4.9.1",
         "webpack-notifier": "^1.6.0"
     }
 }

@@ -1,0 +1,33 @@
+diff --git a/node_modules/@yaireo/tagify/src/tagify.scss b/node_modules/@yaireo/tagify/src/tagify.scss
+index bd7918c..3de6401 100644
+--- a/node_modules/@yaireo/tagify/src/tagify.scss
++++ b/node_modules/@yaireo/tagify/src/tagify.scss
+@@ -261,7 +261,7 @@
+         &:focus{
+             div{  // :not([contenteditable])
+                 &::before{
+-                    --tag-bg-inset: #{math.div(-$tagMargin, 2)};
++                    --tag-bg-inset: -$tagMargin / 2;
+                     --tag-bg: var(--tag-hover);
+                 }
+             }
+@@ -370,7 +370,7 @@
+ 
+             width          : $size;
+             height         : $size;
+-            margin-right   : math.div($size,3);
++            margin-right   : $size / 3;
+             margin-left    : auto;
+ 
+             overflow       : hidden;
+@@ -549,8 +549,8 @@
+             right: 0;
+             bottom: 0;
+             font: $size monospace;
+-            line-height: math.div($size,2);
+-            height: math.div($size,2);
++            line-height: $size / 2;
++            height: $size / 2;
+             pointer-events: none;
+             transform: translate(-150%, -50%) scaleX(1.2) rotate(90deg);
+             transition: .2s ease-in-out;
