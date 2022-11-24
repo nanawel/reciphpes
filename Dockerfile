@@ -45,6 +45,7 @@ RUN apk add git yarn
 
 WORKDIR /build
 COPY assets                                                     /build/assets
+COPY patches                                                    /build/patches
 COPY package.json postcss.config.js webpack.config.js yarn.lock /build/
 # Needed for bundles providing assets (omines/datatables-bundle)
 COPY --from=php-builder /build/vendor                           /build/vendor
