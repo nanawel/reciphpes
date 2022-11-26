@@ -1,0 +1,106 @@
+breadcrumb:
+  home: Home
+  recipe:
+    grid: Recipes
+    new: New recipe
+    masscreate: Mass create
+  ingredient:
+    grid: Ingredients
+    new: New ingredient
+  location:
+    grid: Locations
+    new: New location
+  tag:
+    grid: Tags
+    new: New tag
+  search_results: Search results
+
+recipes-dt:
+  columns:
+    name: Name
+    tags: Tags
+    location: Location
+    locationDetails: Details
+    createdAt: Created at
+    actions: Actions
+ingredients-dt:
+  columns:
+    name: Name
+    createdAt: Created at
+    actions: Actions
+locations-dt:
+  columns:
+    name: Name
+    createdAt: Created at
+    actions: Actions
+tags-dt:
+  columns:
+    name: Name
+    actions: Actions
+
+Actions: Actions
+Additional note about the ingredient (quantity, etc.): Additional note about the ingredient (quantity, etc.)
+Choose a location...: Choose a location...
+'%count% recipe(s) saved successfully!': '%count% recipe(s) saved successfully!'
+'%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>': '%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>'
+Delete: Delete
+Edit: Edit
+Element saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>: Element saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>
+'Hint: you can use Ctrl+Enter to add a new ingredient row.': 'Hint: you can use Ctrl+Enter to add a new ingredient row.'
+'Hint: you can use Ctrl+Enter to add a new row.': 'Hint: you can use Ctrl+Enter to add a new row.'
+Ingredient: Ingredient
+Ingredient %i%: Ingredient %i%
+Ingredients: Ingredients
+Instructions: Instructions
+'Invalid password 😕': Invalid password 😕
+Latest Added Recipes: Latest Added Recipes
+Loading...: Loading...
+Location: Location
+Locations: Locations
+Location details: Location details
+Location (details): Location (details)
+Mass create: Mass create
+Name: Name
+Name...: Name...
+New: New
+New...: New...
+New ingredient: New ingredient
+New location: New location
+New tag: New tag
+New recipe: New recipe
+New recipes...: New recipes...
+No location defined.: No location defined.
+No ingredients defined.: No ingredients defined.
+No instructions defined.: No instructions defined.
+No item found.: No item found.
+'Not allowed 😕 Please log in first.': 'Not allowed 😕 Please log in first.'
+Note: Note
+Optional: Optional
+Optional. Will be applied to all created recipes below.: Optional. Will be applied to all created recipes below.
+'Page #, path, etc.': 'Page #, path, etc.'
+Password: Password
+Recipe: Recipe
+Recipe (batch): Recipe (batch)
+Recipes: Recipes
+Recipes using this ingredient: Recipes using this ingredient
+Results for "%query%": Results for "%query%"
+Save: Save
+Save and add more: Save and add more
+Search: Search
+'<strong>%name%</strong> saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>': '<strong>%name%</strong> saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>'
+Sign In: Sign In
+Sign in to be able to add/edit/delete data on this instance of Reciphes!: Sign in to be able to add/edit/delete data on this instance of Reciphes!
+Sign Out: Sign Out
+Submit: Submit
+Tags: Tags
+Time(s) of year: Time(s) of year
+Today's Recipe: Today's Recipe
+Toolbar: Toolbar
+'Unable to save element: %cause%': 'Unable to save element: %cause%'
+'Unable to save elements: %cause%': 'Unable to save elements: %cause%'
+View: View
+View all %recipeCount% recipes: View all %recipeCount% recipes
+Welcome: Welcome
+You are already signed in!: You are already signed in!
+You are successfully signed in!: You are successfully signed in!
+You have signed out sucessfully.: You have signed out sucessfully.
