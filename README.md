@@ -55,6 +55,10 @@ services:
     volumes:
       - './data/db:/var/www/webapp/var/db:rw'
       - './data/log:/var/www/webapp/var/log:rw'
+      #environment:
+      #APP_DEFAULT_LOCALE: en                       # default is "fr" for historical reasons
+      #APP_SET_LOCALE_FROM_ACCEPT_LANGUAGE: false   # default is true
+      #APP_SET_CONTENT_LANGUAGE_FROM_LOCALE: false  # default is true
 ```
 
 Start the container with

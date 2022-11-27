@@ -1,7 +1,11 @@
+parameters:
+    env(APP_SET_LOCALE_FROM_ACCEPT_LANGUAGE): 'true'
+    env(APP_SET_CONTENT_LANGUAGE_FROM_LOCALE): 'true'
+
 framework:
-    secret: '%env(APP_SECRET)%'
-    set_locale_from_accept_language: true
-    set_content_language_from_locale: true
+    secret: '%env(string:APP_SECRET)%'
+    set_locale_from_accept_language: '%env(bool:APP_SET_LOCALE_FROM_ACCEPT_LANGUAGE)%'
+    set_content_language_from_locale: '%env(bool:APP_SET_CONTENT_LANGUAGE_FROM_LOCALE)%'
     enabled_locales: [ 'en', 'fr' ]
     #csrf_protection: true
     #http_method_override: true
