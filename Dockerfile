@@ -36,7 +36,7 @@ RUN apt-get update \
 WORKDIR /build
 COPY . /build/
 
-RUN composer install --no-dev
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev
 
 ###############################################################################
 # ASSETS BUILDER
