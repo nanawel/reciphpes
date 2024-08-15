@@ -1,7 +1,7 @@
 ###############################################################################
 # PHP BASE
 ###############################################################################
-FROM php:7.4-apache-buster AS php-base
+FROM php:8.2-apache-bookworm AS php-base
 
 RUN apt-get update \
  && apt-get install --no-install-recommends -y \
@@ -10,9 +10,9 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install -j$(nproc) pdo_mysql \
- && docker-php-ext-install -j$(nproc) intl \
+RUN docker-php-ext-install -j$(nproc) intl \
  && docker-php-ext-install -j$(nproc) opcache \
+ && docker-php-ext-install -j$(nproc) pdo_mysql \
  && docker-php-ext-install -j$(nproc) zip \
  && rm -rf /tmp/*
 
@@ -25,11 +25,13 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update \
  && apt-get install --no-install-recommends -y \
+        git \
+        libfreetype6-dev \
+        unzip \
         wget \
         zip \
-        unzip \
-        git \
-        libfreetype6-dev
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 COPY . /build/
@@ -39,7 +41,7 @@ RUN composer install --no-dev
 ###############################################################################
 # ASSETS BUILDER
 ###############################################################################
-FROM node:14-alpine as assets-builder
+FROM node:18-alpine as assets-builder
 
 RUN apk add git yarn
 

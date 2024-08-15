@@ -12,7 +12,7 @@
         "issues": "https://github.com/nanawel/reciphpes/issues"
     },
     "require": {
-        "php": "^7.2.5",
+        "php": "^8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",

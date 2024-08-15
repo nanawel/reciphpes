@@ -1,7 +1,5 @@
 # Reciphpes - Prod Image
 
-version: '3.2'
-
 services:
   app:
     image: 'reciphpes:${WEBAPP_VERSION:-latest}'

@@ -1,7 +1,5 @@
 # Reciphpes - Dev Image
 
-version: '3.2'
-
 services:
   app:
     image: 'reciphpes:dev'
