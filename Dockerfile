@@ -43,7 +43,10 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev
 ###############################################################################
 FROM node:18-alpine as assets-builder
 
-RUN apk add git yarn
+RUN apk add \
+    git \
+    python3 \
+    yarn
 
 WORKDIR /build
 COPY assets                                                     /build/assets
