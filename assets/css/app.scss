@@ -187,6 +187,10 @@ form .btn-save {
 .instructions-wrapper {
     padding: 1em;
     background-color: lightyellow;
+
+    img {
+        max-width: 90%;
+    }
 }
 
 blockquote {
