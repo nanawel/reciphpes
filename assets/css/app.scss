@@ -140,6 +140,10 @@ i.fa-circle-o-notch {
     padding: 1rem .5rem;
 }
 
+.form-group {
+    @extend .mb-2;
+}
+
 .form-recipe-ingredients-type {
     margin-bottom: 0;
 
@@ -298,4 +302,9 @@ textarea.markdown ~ div {
             content: fa-content($fa-var-calendar-alt);
         }
     }
+}
+
+// Fix display
+small#recipe_recipeIngredients_help {
+    display: block;
 }
