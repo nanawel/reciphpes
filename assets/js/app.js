@@ -47,37 +47,35 @@ const refreshElementObservers = function () {
     $('input.autocomplete-tag').each(function (i, el) {
         var requests = [];
         if (!$(el).data('tagify')) {
-            $(el)
-                .tagify({
-                    'autoComplete.rightKey': true
-                })
-                .on('input', function (e, input) {
-                    const value = input.value;
-                    const tagify = $(this).data('tagify');
-                    const fetchUrl = $(this).data('fetch-url');
+            const tagify = new Tagify(el, {
+                'autoComplete.rightKey': true
+            });
+            tagify.on('input', function (e) {
+                const value = e.detail.value;
+                const fetchUrl = $(el).data('fetch-url');
 
-                    tagify.settings.whitelist.length = 0;
-                    tagify.loading(true).dropdown.hide.call(tagify);
+                tagify.settings.whitelist.length = 0;
+                tagify.loading(true).dropdown.hide.call(tagify);
 
-                    // Abort unfinished requests (prevent duplicate results)
-                    requests.forEach(function (r) {
-                        r.abort();
-                    });
-
-                    requests.push(
-                        $.get(
-                            fetchUrl,
-                            {term: value},
-                            function (data, textStatus, jqXHR) {
-                                tagify.settings.whitelist.splice(0, data.length, ...data);
-                                tagify.loading(false).dropdown.show.call(tagify, value);
-                            }
-                        ).always(function (data, textStatus, jqXHR) {
-                            // Remove finished request from the "abortable" list
-                            requests.splice(requests.indexOf(jqXHR), 1);
-                        })
-                    );
+                // Abort unfinished requests (prevent duplicate results)
+                requests.forEach(function (r) {
+                    r.abort();
                 });
+
+                requests.push(
+                    $.get(
+                        fetchUrl,
+                        {term: value},
+                        function (data, textStatus, jqXHR) {
+                            tagify.settings.whitelist.splice(0, data.length, ...data);
+                            tagify.loading(false).dropdown.show.call(tagify, value);
+                        }
+                    ).always(function (data, textStatus, jqXHR) {
+                        // Remove finished request from the "abortable" list
+                        requests.splice(requests.indexOf(jqXHR), 1);
+                    })
+                );
+            });
         }
     });
 
@@ -124,7 +122,7 @@ const refreshElementObservers = function () {
     // Disable ENTER key default handling (form submission)
     $(document).on('keydown', 'form.no-submit-on-enter', function (ev) {
         if (!$(document.activeElement).hasClass('tagify__input')) {
-            return ev.key != 'Enter';
+            return ev.key !== 'Enter';
         }
     });
 };
@@ -164,7 +162,7 @@ $('.form-group > div').on('click', 'button.delete-collection-widget', function (
 
 // Add hotkey for "Add ingredient" action on recipes
 $(document).on('keydown', 'form .form-recipe-ingredients-type, form .form-recipe-summary-type', function (ev) {
-    if (ev.key == 'Enter' && ev.ctrlKey) {
+    if (ev.key === 'Enter' && ev.ctrlKey) {
         const $collectionHolder = $(ev.target).closest('[data-prototype]');
 
         addCollectionItem($collectionHolder);

@@ -9,8 +9,7 @@ $primary: darken(#428bca, 20%);
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
-// ~@yaireo does not work anymore here. Why?!
-@import "../../node_modules/@yaireo/tagify/src/tagify.scss";
+@import "~@yaireo/tagify/src/tagify.scss";
 @import "~easymde/dist/easymde.min.css";
 @import "~jquery-ui/themes/base/all.css";
 
@@ -33,10 +32,6 @@ dt {
 
 a {
     text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 .row {
