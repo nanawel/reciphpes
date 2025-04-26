@@ -13,11 +13,11 @@ window.$ = window.jQuery = $;
 
 require('@allmarkedup/purl/purl');
 require('bootstrap');
+require('@fortawesome/fontawesome-free');
 require('datatables.net');
-require('datatables.net-responsive-bs4');
+require('datatables.net-responsive-bs5');
 require('jquery-ui/ui/widgets/autocomplete');
 window.Tagify = require('@yaireo/tagify/dist/tagify.min');
-require('@yaireo/tagify/dist/jQuery.tagify.min');
 require('../../vendor/omines/datatables-bundle/src/Resources/public/js/datatables');
 const EasyMDE = require('easymde/dist/easymde.min');
 $('textarea.markdown').each(el => new EasyMDE({element: el, spellChecker: false}));

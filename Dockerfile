@@ -36,7 +36,9 @@ RUN apt-get update \
 WORKDIR /build
 COPY . /build/
 
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev
+RUN APP_ENV=prod \
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    composer install --no-dev --optimize-autoloader
 
 ###############################################################################
 # ASSETS BUILDER

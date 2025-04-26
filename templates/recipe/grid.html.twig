@@ -4,8 +4,8 @@
 
 {% block content %}
     {% if access_manager.hasWriteAccess() %}
-        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
-            <div class="btn-group mr-2" role="group" aria-label="Actions">
+        <div class="btn-toolbar float-end" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group me-2" role="group" aria-label="Actions">
                 <a href="{{ path('app_recipe_new') }}" class="btn action btn-secondary">
                     <i class="fas fa-plus-circle"></i>&nbsp;<span>{% trans %} New {% endtrans %}</span>
                 </a>

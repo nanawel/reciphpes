@@ -7,9 +7,9 @@
     {% set saveBtn = form_widget(form.save) %}
     {% set saveAddMoreBtn = form_widget(form.saveAddMore) %}
 
-    <div class="float-right">
-        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
-            <div class="btn-group mr-2" role="group" aria-label="Actions">
+    <div class="float-end">
+        <div class="btn-toolbar float-end" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group me-2" role="group" aria-label="Actions">
                 {{ saveBtn | raw }}
                 {{ saveAddMoreBtn | raw }}
             </div>
@@ -38,9 +38,9 @@
     <hr>
     {{ form_row(form.recipes) }}
     <hr>
-    <div class="float-right">
-        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
-            <div class="btn-group mr-2" role="group" aria-label="Actions">
+    <div class="float-end">
+        <div class="btn-toolbar float-end" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group me-2" role="group" aria-label="Actions">
                 {{ saveBtn | raw }}
                 {{ saveAddMoreBtn | raw }}
             </div>

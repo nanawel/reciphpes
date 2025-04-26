@@ -1,8 +1,8 @@
 {% extends 'content.html.twig' %}
 
 {% block content %}
-    <div class="jumbotron">
-        <img src="{{ asset('build/images/logo.svg') }}" id="home-logo" alt="Logo" class="float-left">
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <img src="{{ asset('build/images/logo.svg') }}" id="home-logo" alt="Logo" class="float-start">
         <h1 class="display-4">Reciphpes!</h1>
         <p class="lead">{% trans %} Welcome {% endtrans %}&nbsp;<i class="far fa-smile-beam"></i></p>
         <hr class="my-4">
@@ -21,7 +21,7 @@
                         <div class="tags">
                             {% for tag in todaysRecipe.tags %}
                                 <div class="tag-wrapper text-center">
-                                    <div class="tag badge badge-secondary">{{ tag.name }}</div>
+                                    <div class="tag badge bg-secondary">{{ tag.name }}</div>
                                 </div>
                             {% endfor %}
                         </div>
@@ -44,7 +44,7 @@
                     {% for recipe in latestRecipes %}
                         <li><a href="{{ path('app_recipe_show', {id: recipe.id}) }}">{{ recipe.name }}</a>
                             {% for tag in recipe.tags %}<span
-                                    class="tag badge badge-secondary">{{ tag.name }}</span> {% endfor %}
+                                    class="tag badge bg-secondary">{{ tag.name }}</span> {% endfor %}
                         </li>
                     {% endfor %}
                 </ul>

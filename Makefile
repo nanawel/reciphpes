@@ -35,6 +35,12 @@ start:
 startd:
 	docker-compose up -d
 
+up:
+	docker-compose up
+
+upd:
+	docker-compose up -d
+
 stop:
 	docker-compose stop
 

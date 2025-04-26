@@ -2,14 +2,15 @@ $primary: darken(#428bca, 20%);
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
-@import "~datatables.net-bs4";
-@import "~datatables.net-responsive-bs4";
+@import "~datatables.net-bs5";
+@import "~datatables.net-responsive-bs5";
 @import "~@fortawesome/fontawesome-free";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
-@import "~@yaireo/tagify/src/tagify.scss";
+// ~@yaireo does not work anymore here. Why?!
+@import "../../node_modules/@yaireo/tagify/src/tagify.scss";
 @import "~easymde/dist/easymde.min.css";
 @import "~jquery-ui/themes/base/all.css";
 
@@ -28,6 +29,14 @@ h1 {
 
 dt {
     font-weight: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .row {
@@ -133,7 +142,6 @@ i.fa-circle-o-notch {
 }
 
 .form-recipe-summary-type {
-    @extend .jumbotron;
     padding: 1rem .5rem;
 }
 
@@ -261,8 +269,8 @@ textarea.markdown ~ div {
 
 .badge {
     &.location {
-        color: white;
-        background-color: #17a2b8;
+        color: white !important;
+        background-color: #17a2b8 !important;
 
         &:before {
             @extend %fa-icon;
@@ -273,8 +281,8 @@ textarea.markdown ~ div {
     }
 
     &.tag {
-        color: white;
-        background-color: #218838;
+        color: white !important;
+        background-color: #218838 !important;
 
         &:before {
             @extend %fa-icon;
@@ -285,8 +293,8 @@ textarea.markdown ~ div {
     }
 
     &.timeofyear {
-        color: #533f03;
-        background-color: #c69500;
+        color: #533f03 !important;
+        background-color: #c69500 !important;
 
         &:before {
             @extend %fa-icon;

@@ -4,17 +4,17 @@
 
 {% block content %}
     {{ form_start(form) }}
-    <div class="float-right">
-        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
-            <div class="btn-group mr-2" role="group" aria-label="Actions">
+    <div class="float-end">
+        <div class="btn-toolbar float-end" role="toolbar" aria-label="Toolbar">
+            <div class="btn-group me-2" role="group" aria-label="Actions">
                 <button type="submit" class="btn btn-primary btn-save">
                     <span>{% trans %} Save {% endtrans %}</span></a>
                 </button>
             </div>
         </div>
         {% if recipe.id %}
-            <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar">
-                <div class="btn-group mr-2" role="group" aria-label="Actions">
+            <div class="btn-toolbar float-end" role="toolbar" aria-label="Toolbar">
+                <div class="btn-group me-2" role="group" aria-label="Actions">
                     <a href="{{ path('app_recipe_show', {id: recipe.id}) }}"
                        class="btn action edit btn-secondary btn-show"><span>{% trans %} View {% endtrans %}</span></a>
                     <a href="{{ path('app_recipe_delete', {id: recipe.id}) }}"

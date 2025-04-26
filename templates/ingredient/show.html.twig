@@ -3,9 +3,9 @@
 {% block title %}{{ parent() }} - {{ ingredient.name }}{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <div class="btn-toolbar float-right" role="toolbar" aria-label="{% trans %} Toolbar {% endtrans %}">
-            <div class="btn-group mr-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="btn-toolbar float-end" role="toolbar" aria-label="{% trans %} Toolbar {% endtrans %}">
+            <div class="btn-group me-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
                 {% if access_manager.hasWriteAccess() %}
                     <a href="{{ path('app_ingredient_edit', {id: ingredient.id}) }}" class="btn action btn-secondary">
                         <i class="fas fa-edit"></i>&nbsp;<span>{% trans %} Edit {% endtrans %}</span>
@@ -16,7 +16,7 @@
         <h1><i class="fas fa-carrot"></i>&nbsp;{{ ingredient.name }}</h1>
         {% if ingredient.createdAt %}
             <p>
-                <span class="badge badge-secondary">
+                <span class="badge bg-secondary">
                     {% trans with {'%createdAt%': ingredient.createdAt | localizeddate()} %} Créé le %createdAt% {% endtrans %}
                 </span>
             </p>

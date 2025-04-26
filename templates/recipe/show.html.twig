@@ -3,9 +3,9 @@
 {% block title %}{{ parent() }} - {{ recipe.name }}{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <div class="btn-toolbar float-right" role="toolbar" aria-label="{% trans %} Toolbar {% endtrans %}">
-            <div class="btn-group mr-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="btn-toolbar float-end" role="toolbar" aria-label="{% trans %} Toolbar {% endtrans %}">
+            <div class="btn-group me-2" role="group" aria-label="{% trans %} Actions {% endtrans %}">
                 {% if access_manager.hasWriteAccess() %}
                     <a href="{{ path('app_recipe_edit', {id: recipe.id}) }}" class="btn action edit btn-secondary">
                         <i class="fas fa-edit"></i>&nbsp;<span>{% trans %} Edit {% endtrans %}</span>
@@ -35,12 +35,12 @@
         <div class="row tag-list">
             <div class="tags col-md-6">
                 {% for tag in recipe.tags %}
-                    <span class="tag badge badge-secondary">{{ tag.name }}</span>
+                    <span class="tag badge bg-secondary">{{ tag.name }}</span>
                 {% endfor %}
             </div>
             <div class="timesofyear col-md-6">
                 {% for toy in recipe.timesOfYear %}
-                    <span class="timeofyear badge badge-secondary">{{ toy.name }}</span>
+                    <span class="timeofyear badge bg-secondary">{{ toy.name }}</span>
                 {% endfor %}
             </div>
         </div>
@@ -70,7 +70,7 @@
         {% endif %}
         {% if recipe.createdAt %}
             <p>
-                <span class="badge badge-secondary float-right">
+                <span class="badge bg-secondary float-end">
                     {% trans with {'%createdAt%': recipe.createdAt | localizeddate()} %} Créée le %createdAt% {% endtrans %}
                 </span>
             </p>
