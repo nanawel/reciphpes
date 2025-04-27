@@ -91,10 +91,11 @@ const refreshElementObservers = function () {
                     {term: request.term},
                     function (data, textStatus, jqXHR) {
                         // Also add terms present in similar inputs on the page
-                        var similarInputValues = $.map(
-                            $('input.jq-autocomplete[data-fetch-url="' + fetchUrl + '"]'),
-                            similarInput => similarInput === el ? '' : $(similarInput).val()
-                        )
+                        var similarInputValues = $
+                            .map(
+                                $('input.jq-autocomplete[data-fetch-url="' + fetchUrl + '"]'),
+                                similarInput => similarInput === el ? '' : $(similarInput).val()
+                            )
                             .filter(str => typeof str === 'string' && str.length > 0 && str.match(request.term));
 
                         var results = similarInputValues.concat(data.map(result => result.value));
