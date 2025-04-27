@@ -6,7 +6,7 @@
                 <th scope="col" class="col-header-{{ header }}">{{ headerLabel | trans }}</th>
             {% endfor %}
             {% if gridConfig.shouldShowActions() %}
-                <th scope="col" class="col-header-actions text-right">{% trans %} Actions {% endtrans %}</th>
+                <th scope="col" class="col-header-actions text-end">{% trans %} Actions {% endtrans %}</th>
             {% endif %}
         </tr>
         </thead>
@@ -24,7 +24,7 @@
                 {% endfor %}
 
                 {% if gridConfig.shouldShowActions() %}
-                    <td class="col-body-actions text-right">
+                    <td class="col-body-actions text-end">
                         {% include '_grid/actions.html.twig' %}
                         </td>
                     {%  endif %}
