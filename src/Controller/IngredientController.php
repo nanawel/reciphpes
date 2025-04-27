@@ -7,6 +7,7 @@ use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use App\Entity\Ingredient;
 use App\Form\DataTransformer\IngredientsToJsonTransformer;
 use App\Repository\IngredientRepository;
+use App\Service\Transliterator;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\DataTable;
@@ -95,12 +96,12 @@ class IngredientController extends AbstractController
     }
 
     public function search(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer) {
-        $term = $request->get('term');
+        $term = Transliterator::sortNameTransliterator()->transliterate($request->get('term'));
 
         /** @var IngredientRepository $repository */
         $repository = $this->getEntityManager()->getRepository(Ingredient::class);
 
-        $result = $ingredientsToJsonTransformer->transformToArray($repository->findLike($term));
+        $result = $ingredientsToJsonTransformer->transformToArray($repository->findLike($term, 'sortName'));
 
         return $this->json($result);
     }
