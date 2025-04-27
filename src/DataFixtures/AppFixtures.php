@@ -15,7 +15,8 @@ class AppFixtures extends Fixture
         'winter' => 'Hiver',
     ];
 
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager): void
+    {
         foreach (self::DEFAULT_TIMES_OF_YEAR as $code => $name) {
             $manager->persist(
                 (new TimeOfYear())

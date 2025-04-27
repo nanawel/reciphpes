@@ -102,9 +102,6 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.41"
     },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
-    },
     "league/csv": {
         "version": "9.6.0"
     },

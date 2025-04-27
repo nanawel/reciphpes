@@ -8,11 +8,14 @@ use App\Entity\Registry;
 use App\Service\AccessManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\DataTableFactory;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
-    public static function getSubscribedServices() {
+    public static function getSubscribedServices()
+    {
         return parent::getSubscribedServices() + [
                 'access_manager' => 'App\Service\AccessManager',
                 'datatable_factory' => 'Omines\DataTablesBundle\DataTableFactory',
@@ -64,14 +67,32 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
     /**
      * @return TranslatorInterface
      */
-    protected function getTranslator() {
+    protected function getTranslator()
+    {
         return $this->get('translator');
     }
 
     /**
      * @return DataTableFactory
      */
-    protected function getDataTableFactory() {
+    protected function getDataTableFactory()
+    {
         return $this->get('datatable_factory');
+    }
+
+    /**
+     * @return UrlGeneratorInterface
+     */
+    protected function getRouter()
+    {
+        return $this->get('router');
+    }
+
+    /**
+     * @return Session
+     */
+    protected function getSession()
+    {
+        return $this->get('session');
     }
 }

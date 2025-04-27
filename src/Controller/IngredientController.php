@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use App\Entity\Ingredient;
 use App\Form\DataTransformer\IngredientsToJsonTransformer;
-use App\Repository\TagRepository;
+use App\Repository\IngredientRepository;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\DataTable;
@@ -97,7 +97,7 @@ class IngredientController extends AbstractController
     public function search(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer) {
         $term = $request->get('term');
 
-        /** @var TagRepository $repository */
+        /** @var IngredientRepository $repository */
         $repository = $this->getEntityManager()->getRepository(Ingredient::class);
 
         $result = $ingredientsToJsonTransformer->transformToArray($repository->findLike($term));

@@ -88,11 +88,11 @@ class RecipeController extends AbstractController
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',
-                $this->get('router')->generate('index')
+                $this->getRouter()->generate('index')
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
+                $this->getRouter()->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             )
             ->addItem(sprintf('breadcrumb.%s.masscreate', $this->getEntityConfig('type')));
 
@@ -177,7 +177,7 @@ class RecipeController extends AbstractController
                             '%count%' => count($formData['recipes']),
                         ]
                     );
-                    $this->get('session')->getFlashBag()->add(
+                    $this->getSession()->getFlashBag()->add(
                         'success',
                         new Markup($message, 'utf-8')
                     );
@@ -189,13 +189,13 @@ class RecipeController extends AbstractController
                         '%count% recipe(s) saved successfully! <a href="%create_more_url%">Create more!</a>',
                         [
                             '%count%' => count($formData['recipes']),
-                            '%create_more_url%' => $this->get('router')->generate(
+                            '%create_more_url%' => $this->getRouter()->generate(
                                 'app_recipe_masscreate',
                                 $redirectParams
                             )
                         ]
                     );
-                    $this->get('session')->getFlashBag()->add(
+                    $this->getSession()->getFlashBag()->add(
                         'success',
                         new Markup($message, 'utf-8')
                     );

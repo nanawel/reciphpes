@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\Transliterator;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -15,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *         @ORM\Index(name="INGREDIENT_NAME_IDX", columns={"name"})
  *     }
  * )
+ * @ORM\HasLifecycleCallbacks
  */
 class Ingredient extends AbstractEntity
 {
@@ -27,6 +29,18 @@ class Ingredient extends AbstractEntity
 
     /** @ORM\Column(type="string", length=255, unique=true, options={"collation": "NOCASE"}) */
     protected $name;
+
+    /**
+     * @ORM\Column(
+     *     type="string",
+     *     length=255,
+     *     name="sort_name",
+     *     unique=true,
+     *     nullable=true,
+     *     options={"collation": "NOCASE"}
+     * )
+     */
+    protected $sortName;
 
     /**
      * @ORM\OneToMany(
@@ -69,10 +83,11 @@ class Ingredient extends AbstractEntity
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -81,7 +96,27 @@ class Ingredient extends AbstractEntity
     /**
      * @return mixed
      */
-    public function getRecipeIngredients() {
+    public function getSortName()
+    {
+        return $this->sortName;
+    }
+
+    /**
+     * @param string $sortName
+     * @return $this
+     */
+    public function setSortName($sortName)
+    {
+        $this->sortName = $sortName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecipeIngredients()
+    {
         return $this->recipeIngredients;
     }
 
@@ -96,19 +131,29 @@ class Ingredient extends AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCreatedAt() {
         return $this->createdAt;
     }
 
     /**
-     * @param mixed $createdAt
+     * @param string $createdAt
      * @return $this
      */
-    public function setCreatedAt($createdAt) {
+    public function setCreatedAt($createdAt)
+    {
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateSortName()
+    {
+        $this->sortName = Transliterator::sortNameTransliterator()->transliterate($this->name);
     }
 }

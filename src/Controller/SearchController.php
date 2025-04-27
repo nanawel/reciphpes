@@ -17,11 +17,11 @@ class SearchController extends AbstractController
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',
-                $this->get('router')->generate('index')
+                $this->getRouter()->generate('index')
             )
             ->addItem(
                 'breadcrumb.search_results',
-                $this->get('router')->generate('app_search_results')
+                $this->getRouter()->generate('app_search_results')
             );
 
         if ($request->getMethod() === 'POST') {

@@ -20,11 +20,11 @@ trait DocumentControllerTrait
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',
-                $this->get('router')->generate('index')
+                $this->getRouter()->generate('index')
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
+                $this->getRouter()->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             );
 
         /** @var DataTable $table */
@@ -48,11 +48,11 @@ trait DocumentControllerTrait
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',
-                $this->get('router')->generate('index')
+                $this->getRouter()->generate('index')
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
+                $this->getRouter()->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             )
             ->addItem($entity->getName());
     }
@@ -94,11 +94,11 @@ trait DocumentControllerTrait
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',
-                $this->get('router')->generate('index')
+                $this->getRouter()->generate('index')
             )
             ->addItem(
                 sprintf('breadcrumb.%s.grid', $this->getEntityConfig('type')),
-                $this->get('router')->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
+                $this->getRouter()->generate(sprintf('app_%s_grid', $this->getEntityConfig('route_prefix')))
             )
             ->addItem(
                 $entity->getId()
@@ -120,7 +120,7 @@ trait DocumentControllerTrait
                         '<strong>%name%</strong> saved successfully!&nbsp;<a href="%url%">Click here to see it.</a>',
                         [
                             '%name%' => htmlspecialchars($entity->getName(), ENT_QUOTES | ENT_SUBSTITUTE),
-                            '%url%' => $this->get('router')->generate(
+                            '%url%' => $this->getRouter()->generate(
                                 sprintf(
                                     'app_%s_show',
                                     $this->getEntityConfig('route_prefix')
@@ -131,7 +131,7 @@ trait DocumentControllerTrait
                     ),
                     'utf-8'
                 );
-                $this->get('session')->getFlashBag()->add(
+                $this->getSession()->getFlashBag()->add(
                     'success',
                     $message
                 );
