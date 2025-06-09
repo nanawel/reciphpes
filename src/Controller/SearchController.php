@@ -12,8 +12,9 @@ class SearchController extends AbstractController
 {
     public function results(
         \App\Entity\Registry $entityRegistry,
-        Request $request
-    ) {
+        Request              $request
+    ): \Symfony\Component\HttpFoundation\Response
+    {
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',

@@ -58,7 +58,7 @@ class Tag extends AbstractEntity
      */
     public function setName($name): static
     {
-        if (!strlen(trim((string)$name))) {
+        if (trim((string)$name) === '') {
             throw new \InvalidArgumentException('A tag cannot have an empty name.');
         }
         // FIXME Need to force case here as I could not find how to do it in SQLite with Doctrine

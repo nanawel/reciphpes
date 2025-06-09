@@ -8,7 +8,7 @@ class Transliterator
 
     public static function sortNameTransliterator(): \Transliterator
     {
-        if (!self::$sortNameTransliterator) {
+        if (!self::$sortNameTransliterator instanceof \Transliterator) {
             self::$sortNameTransliterator = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC');
         }
 

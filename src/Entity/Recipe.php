@@ -257,11 +257,9 @@ class Recipe extends AbstractEntity
      * @return $this
      */
     public function addRecipeIngredient($recipeIngredient): Recipe {
-        if ($recipeIngredient instanceof RecipeIngredient) {
-            if (! $this->recipeIngredients->contains($recipeIngredient)) {
-                $recipeIngredient->setRecipe($this);
-                $this->recipeIngredients->add($recipeIngredient);
-            }
+        if ($recipeIngredient instanceof RecipeIngredient && !$this->recipeIngredients->contains($recipeIngredient)) {
+            $recipeIngredient->setRecipe($this);
+            $this->recipeIngredients->add($recipeIngredient);
         }
 
         return $this;
@@ -271,12 +269,11 @@ class Recipe extends AbstractEntity
      * @param RecipeIngredient $recipeIngredient
      * @return $this
      */
-    public function removeRecipeIngredient($recipeIngredient): Recipe {
-        if ($recipeIngredient instanceof RecipeIngredient) {
-            if ($this->recipeIngredients->contains($recipeIngredient)) {
-                $recipeIngredient->setRecipe(null);
-                $this->recipeIngredients->removeElement($recipeIngredient);
-            }
+    public function removeRecipeIngredient($recipeIngredient): Recipe
+    {
+        if ($recipeIngredient instanceof RecipeIngredient && $this->recipeIngredients->contains($recipeIngredient)) {
+            $recipeIngredient->setRecipe(null);
+            $this->recipeIngredients->removeElement($recipeIngredient);
         }
 
         return $this;

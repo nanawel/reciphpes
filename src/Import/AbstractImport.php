@@ -59,7 +59,7 @@ class AbstractImport
             else {
                 $entityErrors = $this->validateEntityData($entityData, $entityType);
                 $errors[$entityRecordId + 1] = $entityErrors;
-                $hasErrors |= ! empty($entityErrors);
+                $hasErrors |= $entityErrors !== [];
             }
             $progress->advance();
         }
@@ -226,8 +226,9 @@ class AbstractImport
                 if (!is_array($value)) {
                     $value = [$value];
                 }
-                if ($associations[$field]['type'] & ClassMetadataInfo::TO_MANY) {
-                    for ($i = 0; $i < count($value); $i++) {
+                if (($associations[$field]['type'] & ClassMetadataInfo::TO_MANY) !== 0) {
+                    $counter = count($value);
+                    for ($i = 0; $i < $counter; $i++) {
                         $this->setToManyAssociationFieldValue(
                             $entityData,
                             $field,
@@ -237,8 +238,7 @@ class AbstractImport
                             $associations[$field]
                         );
                     }
-                }
-                else {
+                } else {
                     $this->setToOneAssociationFieldValue(
                         $entityData,
                         $field,

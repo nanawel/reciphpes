@@ -17,7 +17,7 @@ class Recipe extends AbstractImport
      * @param mixed $value
      */
     protected function setEntityProperty(AbstractEntity $entity, string $property, $value) {
-        if ($property == 'recipeIngredients' && ($recipeId = $entity->getId())) {
+        if ($property === 'recipeIngredients' && ($recipeId = $entity->getId())) {
             // Force reload all RecipeIngredient instance from EM to correctly trigger INSERT or UPDATE
             foreach ($value as $idx => $incompleteRecipeIngredient) {
                 if ($ingredientId = $incompleteRecipeIngredient->getIngredient()->getId()) {
@@ -54,14 +54,13 @@ class Recipe extends AbstractImport
         array $entityAssociation
     ) {
         // Special handling for "recipeIngredients.name" (virtual field)
-        if ($field == 'recipeIngredients' && $subField == 'name') {
-            if (! array_key_exists($idx, $entityData[$field] ?? [])) {
+        if ($field === 'recipeIngredients' && $subField === 'name') {
+            if (!array_key_exists($idx, $entityData[$field] ?? [])) {
                 $entityData[$field][$idx] = new RecipeIngredient();
             }
 
             $entityData[$field][$idx]->setIngredient($this->getIngredient($subField, $value));
-        }
-        else {
+        } else {
             parent::setToManyAssociationFieldValue($entityData, $field, $idx, $subField, $value, $entityAssociation);
         }
     }

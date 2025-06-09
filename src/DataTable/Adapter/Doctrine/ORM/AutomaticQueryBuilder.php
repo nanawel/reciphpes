@@ -44,7 +44,7 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
      */
     public function process(QueryBuilder $builder, DataTableState $state): void
     {
-        if (empty($this->selectColumns) && empty($this->joins)) {
+        if ($this->selectColumns === [] && $this->joins === []) {
             foreach ($state->getDataTable()->getColumns() as $column) {
                 $this->processColumn($column);
             }
@@ -97,7 +97,7 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
         }
     }
 
-    private function addSelectColumn($columnTableName, $data): static
+    private function addSelectColumn($columnTableName, ?string $data): static
     {
         if (isset($this->selectColumns[$columnTableName])) {
             if (!in_array($data, $this->selectColumns[$columnTableName], true)) {
@@ -130,7 +130,7 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
     private function setSelectFrom(QueryBuilder $qb): static
     {
         foreach ($this->selectColumns as $key => $value) {
-            if (false === empty($key)) {
+            if (false === ($key === 0 || ($key === '' || $key === '0'))) {
                 $qb->addSelect('partial ' . $key . '.{' . implode(',', $value) . '}');
             } else {
                 $qb->addSelect($value);

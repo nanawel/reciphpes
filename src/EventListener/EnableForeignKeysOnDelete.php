@@ -72,10 +72,10 @@ class EnableForeignKeysOnDelete implements EventSubscriber
             $rsm->addScalarResult('foreign_keys', 'fk');
             $result = $entityManager->createNativeQuery('PRAGMA foreign_keys', $rsm)
                 ->execute();
-            if (! count($result)) {
+            if (count($result) === 0) {
                 throw new \OutOfBoundsException('No row returned, cannot check for FK status.');
             }
-            $this->fkEnabledByDefault = ! ! $result[0]['fk'];
+            $this->fkEnabledByDefault = (bool)$result[0]['fk'];
         }
 
         return $this->fkEnabledByDefault;

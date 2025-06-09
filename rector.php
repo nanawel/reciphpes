@@ -10,7 +10,7 @@ return RectorConfig::configure()
         __DIR__ . '/public',
         __DIR__ . '/src',
     ])
-    ->withPhpSets(php82: true)
+    ->withPhpSets(php83: true)
     ->withSymfonyContainerXml(
         __DIR__ . '/var/cache/dev/App_KernelDevDebugContainer.xml'
     )
@@ -19,8 +19,7 @@ return RectorConfig::configure()
         \Rector\Symfony\Set\SymfonySetList::SYMFONY_CODE_QUALITY,
         \Rector\Symfony\Set\SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
     ])
-    ->withPreparedSets(typeDeclarations: true)
+    ->withPreparedSets(typeDeclarations: true, codeQuality: true)
     ->withComposerBased(symfony: true)
     ->withDeadCodeLevel(1)
-    ->withCodeQualityLevel(1)
     ->withoutParallel();

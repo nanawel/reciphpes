@@ -14,8 +14,8 @@ class AccessManager
      * @param string $writeAccessPassword
      */
     public function __construct(
-        private RequestStack $requestStack,
-        private              $writeAccessPassword
+        private readonly RequestStack $requestStack,
+        private                       $writeAccessPassword
     )
     {
     }

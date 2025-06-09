@@ -15,7 +15,7 @@ class FieldWithLink extends AbstractColumn
      * TwigColumn constructor.
      */
     public function __construct(Environment $twig = null) {
-        if (null === ($this->twig = $twig)) {
+        if (!($this->twig = $twig) instanceof \Twig\Environment) {
             throw new MissingDependencyException('You must have TwigBundle installed to use ' . static::class);
         }
     }

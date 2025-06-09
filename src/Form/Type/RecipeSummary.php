@@ -157,7 +157,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
             ->setLocationDetails($forms['locationDetails']->getData())
             ->setTags($forms['tags']->getData());
         foreach ($forms['recipeIngredients']->getData() as $recipeIngredient) {
-            if (trim((string)$recipeIngredient->getName())) {
+            if (trim((string)$recipeIngredient->getName()) !== '' && trim((string)$recipeIngredient->getName()) !== '0') {
                 $viewData->addRecipeIngredient($recipeIngredient);
             }
         }

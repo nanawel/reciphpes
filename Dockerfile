@@ -1,7 +1,7 @@
 ###############################################################################
 # PHP BASE
 ###############################################################################
-FROM php:8.2-apache-bookworm AS php-base
+FROM php:8.3-apache-bookworm AS php-base
 
 RUN apt-get update \
  && apt-get install --no-install-recommends -y \

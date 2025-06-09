@@ -227,7 +227,7 @@ class RecipeController extends AbstractController
      */
     protected function prepareFormData(Request $request): array {
         $data = [];
-        if ($location = (int)$request->get('location')) {
+        if (($location = (int)$request->get('location')) !== 0) {
             $data['location'] = $this->getEntityManager()->getRepository(Location::class)->find($location);
         }
         if ($tags = $request->get('tags')) {

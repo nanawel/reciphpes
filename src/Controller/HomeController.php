@@ -51,7 +51,7 @@ class HomeController extends AbstractController
                 ->execute(),
             'id'
         );
-        if (! $recipeIds) {
+        if ($recipeIds === []) {
             return null;
         }
 
