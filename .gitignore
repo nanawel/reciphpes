@@ -18,3 +18,7 @@ yarn-error.log
 
 .idea
 !/var/db
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
