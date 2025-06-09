@@ -4,7 +4,6 @@ namespace App\DataTable\Type;
 
 use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use App\DataTable\Column\Actions;
-use App\Entity\Registry;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\DataTable;
@@ -12,22 +11,14 @@ use Omines\DataTablesBundle\DataTableTypeInterface;
 
 abstract class AbstractEntity implements DataTableTypeInterface
 {
-    /** @var Registry */
-    protected $entityRegistry;
-
     /**
      * @param string $entityType
      */
-    public function __construct(
-        private readonly EntityManagerInterface $em,
-        Registry                                $entityRegistry,
-        protected                               $entityType
-    )
+    public function __construct(private readonly EntityManagerInterface $em, protected \App\Entity\Registry $entityRegistry, protected $entityType)
     {
-        $this->entityRegistry = $entityRegistry;
     }
 
-    public function configure(DataTable $dataTable, array $options)
+    public function configure(DataTable $dataTable, array $options): void
     {
         $dataTable->createAdapter(
             ORMAdapter::class,
@@ -43,7 +34,8 @@ abstract class AbstractEntity implements DataTableTypeInterface
         );
     }
 
-    public function addDefaultActions(DataTable $dataTable, array $options) {
+    public function addDefaultActions(DataTable $dataTable, array $options): void
+    {
         $dataTable->add(
             'actions',
             Actions::class,

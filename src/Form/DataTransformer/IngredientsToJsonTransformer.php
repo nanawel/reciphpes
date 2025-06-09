@@ -28,11 +28,12 @@ class IngredientsToJsonTransformer implements DataTransformerInterface
      * @param \Doctrine\Common\Collections\Collection|array $ingredients
      * @return array JSON
      */
-    public function transformToArray($ingredients) {
-        if (! $ingredients) {
+    public function transformToArray($ingredients): array
+    {
+        if (!$ingredients) {
             return [];
         }
-        if (! is_array($ingredients)) {
+        if (!is_array($ingredients)) {
             $ingredients = $ingredients->toArray();
         }
 

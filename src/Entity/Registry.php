@@ -5,12 +5,8 @@ namespace App\Entity;
 
 class Registry
 {
-    protected $entityConfigurations;
-
-    public function __construct(
-        array $entityConfigurations
-    ) {
-        $this->entityConfigurations = $entityConfigurations;
+    public function __construct(protected array $entityConfigurations)
+    {
     }
 
     /**
@@ -18,7 +14,8 @@ class Registry
      * @param null|string $config
      * @return mixed|array
      */
-    public function getEntityConfig($entityType, $config = null) {
+    public function getEntityConfig($entityType, $config = null)
+    {
         return $config === null
             ? $this->entityConfigurations[$entityType]
             : $this->entityConfigurations[$entityType][$config] ?? null;

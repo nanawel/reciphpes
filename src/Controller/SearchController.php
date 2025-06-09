@@ -35,7 +35,7 @@ class SearchController extends AbstractController
 
         $terms = array_filter(
             preg_split('/\s+/', $query),
-            fn($w) => strlen((string)$w) > 0
+            fn($w): bool => strlen((string)$w) > 0
         );
 
         $recipeDatatable = $this->buildRecipeDatatable($request, $terms);
@@ -64,7 +64,8 @@ class SearchController extends AbstractController
         );
     }
 
-    protected function buildRecipeDatatable(Request $request, array $terms) {
+    protected function buildRecipeDatatable(Request $request, array $terms): \Omines\DataTablesBundle\DataTable
+    {
         /** @var DataTable $table */
         $recipeDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('recipe', 'datatable_type_class'));
@@ -97,7 +98,8 @@ class SearchController extends AbstractController
         return $recipeDatatable->handleRequest($request);
     }
 
-    protected function buildIngredientDatatable(Request $request, array $terms) {
+    protected function buildIngredientDatatable(Request $request, array $terms): \Omines\DataTablesBundle\DataTable
+    {
         /** @var DataTable $table */
         $ingredientDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('ingredient', 'datatable_type_class'));
@@ -129,7 +131,8 @@ class SearchController extends AbstractController
         return $ingredientDatatable->handleRequest($request);
     }
 
-    protected function buildLocationDatatable(Request $request, array $terms) {
+    protected function buildLocationDatatable(Request $request, array $terms): \Omines\DataTablesBundle\DataTable
+    {
         /** @var DataTable $table */
         $locationDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('location', 'datatable_type_class'));

@@ -4,7 +4,6 @@ namespace App\Form\Type;
 
 use App\Entity\Recipe;
 use App\Entity\RecipeIngredient;
-use App\Form\DataTransformer\TagsToJsonTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
@@ -12,34 +11,17 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RecipeSummary extends AbstractType implements DataMapperInterface
 {
     const INGREDIENT_ROWS = 1;
 
-    /** @var RouterInterface */
-    protected $router;
-
-    /** @var TranslatorInterface */
-    protected $translator;
-
-    /** @var TagsToJsonTransformer */
-    protected $tagsToJsonTransformer;
-
-    public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        RouterInterface                         $router,
-        TranslatorInterface                     $translator,
-        TagsToJsonTransformer                   $tagsToJsonTransformer
-    ) {
-        $this->router = $router;
-        $this->translator = $translator;
-        $this->tagsToJsonTransformer = $tagsToJsonTransformer;
+    public function __construct(private readonly EntityManagerInterface $entityManager, protected \Symfony\Component\Routing\RouterInterface $router, protected \Symfony\Contracts\Translation\TranslatorInterface $translator, protected \App\Form\DataTransformer\TagsToJsonTransformer $tagsToJsonTransformer)
+    {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $builder
             ->add(
                 'name',
@@ -138,7 +120,8 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
     /**
      * @inheritdoc
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults(
             [
                 'row_attr' => [
@@ -157,7 +140,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
     /**
      * @inheritDoc
      */
-    public function mapDataToForms($viewData, \Traversable $forms)
+    public function mapDataToForms($viewData, \Traversable $forms): void
     {
         // not used
     }
@@ -165,7 +148,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
     /**
      * @inheritDoc
      */
-    public function mapFormsToData(\Traversable $forms, &$viewData)
+    public function mapFormsToData(\Traversable $forms, &$viewData): void
     {
         $forms = \iterator_to_array($forms);
 

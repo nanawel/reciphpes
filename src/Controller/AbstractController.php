@@ -14,7 +14,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
-    public static function getSubscribedServices()
+    public function __construct(
+        private readonly \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs  $breadcrumbs,
+        private readonly \Symfony\Contracts\Translation\TranslatorInterface $dataCollectorTranslator,
+        private readonly \Symfony\Component\Routing\RouterInterface         $router
+    )
+    {
+    }
+
+    public static function getSubscribedServices(): array
     {
         return parent::getSubscribedServices() + [
                 'access_manager' => \App\Service\AccessManager::class,
@@ -23,7 +31,7 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
                 'entity_registry' => \App\Entity\Registry::class,
                 'logger' => \Psr\Log\LoggerInterface::class,
                 'router' => \Symfony\Component\Routing\Generator\UrlGeneratorInterface::class,
-                'session' => \Symfony\Component\HttpFoundation\Session\Session::class,
+                'request_stack' => \Symfony\Component\HttpFoundation\RequestStack::class,
                 'translator' => \Symfony\Contracts\Translation\TranslatorInterface::class,
                 'white_october_breadcrumbs' => \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs::class,
             ];
@@ -33,35 +41,35 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
      * @return AccessManager
      */
     protected function getAccessManager() {
-        return $this->get('access_manager');
+        return $this->container->get('access_manager');
     }
 
     /**
      * @return EntityManagerInterface
      */
     protected function getEntityManager() {
-        return $this->get('entity_manager');
+        return $this->container->get('entity_manager');
     }
 
     /**
      * @return Registry
      */
     protected function getEntityRegistry() {
-        return $this->get('entity_registry');
+        return $this->container->get('entity_registry');
     }
 
     /**
      * @return \Psr\Log\LoggerInterface
      */
     protected function getLogger() {
-        return $this->get('logger');
+        return $this->container->get('logger');
     }
 
     /**
      * @return \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
      */
     protected function getBreadcrumbs() {
-        return $this->get('white_october_breadcrumbs');
+        return $this->breadcrumbs;
     }
 
     /**
@@ -69,7 +77,7 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
      */
     protected function getTranslator()
     {
-        return $this->get('translator');
+        return $this->dataCollectorTranslator;
     }
 
     /**
@@ -77,7 +85,7 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
      */
     protected function getDataTableFactory()
     {
-        return $this->get('datatable_factory');
+        return $this->container->get('datatable_factory');
     }
 
     /**
@@ -85,7 +93,7 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
      */
     protected function getRouter()
     {
-        return $this->get('router');
+        return $this->router;
     }
 
     /**
@@ -93,6 +101,6 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
      */
     protected function getSession()
     {
-        return $this->get('session');
+        return $this->container->get('request_stack')->getSession();
     }
 }

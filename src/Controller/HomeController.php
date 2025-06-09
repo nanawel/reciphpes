@@ -6,7 +6,8 @@ use App\Entity\Recipe;
 
 class HomeController extends AbstractController
 {
-    public function index() {
+    public function index(): \Symfony\Component\HttpFoundation\Response
+    {
         return $this->render(
             'home.html.twig',
             [

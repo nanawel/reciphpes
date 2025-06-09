@@ -38,7 +38,8 @@ class Tag extends AbstractEntity
      * @param mixed $id
      * @return Tag
      */
-    public function setId($id) {
+    public function setId($id): static
+    {
         $this->id = $id;
 
         return $this;
@@ -55,7 +56,8 @@ class Tag extends AbstractEntity
      * @param mixed $name
      * @return Tag
      */
-    public function setName($name) {
+    public function setName($name): static
+    {
         if (!strlen(trim((string)$name))) {
             throw new \InvalidArgumentException('A tag cannot have an empty name.');
         }

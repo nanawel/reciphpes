@@ -7,11 +7,21 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SigninController extends AbstractController
 {
-    public function __construct(private readonly AccessManager $accessManager)
+    public function __construct(
+        \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs  $breadcrumbs,
+        \Symfony\Contracts\Translation\TranslatorInterface $dataCollectorTranslator,
+        \Symfony\Component\Routing\RouterInterface         $router,
+        private readonly AccessManager                     $accessManager
+    )
     {
+        parent::__construct(
+            $breadcrumbs,
+            $dataCollectorTranslator,
+            $router
+        );
     }
 
-    public function form(Request $request)
+    public function form(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         if ($this->accessManager->isSignedIn()) {
             $this->addFlash('info', "You are already signed in!");
@@ -36,7 +46,7 @@ class SigninController extends AbstractController
         return $this->render(
             'signin.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }

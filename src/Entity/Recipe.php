@@ -111,7 +111,8 @@ class Recipe extends AbstractEntity
      * @param mixed $id
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id): static
+    {
         $this->id = $id;
 
         return $this;
@@ -128,7 +129,8 @@ class Recipe extends AbstractEntity
      * @param mixed $name
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name): static
+    {
         $this->name = $name;
 
         return $this;
@@ -145,7 +147,8 @@ class Recipe extends AbstractEntity
      * @param mixed $tags
      * @return $this
      */
-    public function setTags($tags) {
+    public function setTags($tags): static
+    {
         $this->tags = $tags;
 
         return $this;
@@ -155,7 +158,8 @@ class Recipe extends AbstractEntity
      * @param Tag $tags
      * @return $this
      */
-    public function addTag($tag) {
+    public function addTag($tag): static
+    {
         $this->tags->add($tag);
 
         return $this;
@@ -165,7 +169,8 @@ class Recipe extends AbstractEntity
      * @param Tag $tags
      * @return $this
      */
-    public function removeTag($tag) {
+    public function removeTag($tag): static
+    {
         $this->tags->removeElement($tag);
 
         return $this;
@@ -182,7 +187,8 @@ class Recipe extends AbstractEntity
      * @param mixed $location
      * @return $this
      */
-    public function setLocation($location) {
+    public function setLocation($location): static
+    {
         $this->location = $location;
 
         return $this;
@@ -199,7 +205,8 @@ class Recipe extends AbstractEntity
      * @param mixed $locationDetails
      * @return $this
      */
-    public function setLocationDetails($locationDetails) {
+    public function setLocationDetails($locationDetails): static
+    {
         $this->locationDetails = $locationDetails;
 
         return $this;
@@ -216,7 +223,8 @@ class Recipe extends AbstractEntity
      * @param mixed $timesOfYear
      * @return $this
      */
-    public function setTimesOfYear($timesOfYear) {
+    public function setTimesOfYear($timesOfYear): static
+    {
         $this->timesOfYear = $timesOfYear;
 
         return $this;
@@ -285,7 +293,8 @@ class Recipe extends AbstractEntity
      * @param mixed $instructions
      * @return $this
      */
-    public function setInstructions($instructions) {
+    public function setInstructions($instructions): static
+    {
         $this->instructions = $instructions;
 
         return $this;
@@ -302,7 +311,8 @@ class Recipe extends AbstractEntity
      * @param mixed $createdAt
      * @return $this
      */
-    public function setCreatedAt($createdAt) {
+    public function setCreatedAt($createdAt): static
+    {
         $this->createdAt = $createdAt;
 
         return $this;

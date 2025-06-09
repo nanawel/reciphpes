@@ -17,7 +17,8 @@ class Tag extends AbstractEntity
         parent::__construct($entityManager, $entityRegistry, $entityType ?? 'tag');
     }
 
-    public function configure(DataTable $dataTable, array $options) {
+    public function configure(DataTable $dataTable, array $options): void
+    {
         parent::configure($dataTable, $options);
         $dataTable
             ->setName('tags-dt')

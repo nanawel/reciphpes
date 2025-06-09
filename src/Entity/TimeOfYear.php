@@ -39,7 +39,8 @@ class TimeOfYear extends AbstractEntity
      * @param mixed $id
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id): static
+    {
         $this->id = $id;
 
         return $this;
@@ -56,7 +57,8 @@ class TimeOfYear extends AbstractEntity
      * @param mixed $code
      * @return $this
      */
-    public function setCode($code) {
+    public function setCode($code): static
+    {
         $this->code = $code;
 
         return $this;
@@ -73,7 +75,8 @@ class TimeOfYear extends AbstractEntity
      * @param mixed $name
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name): static
+    {
         $this->name = $name;
 
         return $this;

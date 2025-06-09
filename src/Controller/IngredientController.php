@@ -34,7 +34,8 @@ class IngredientController extends AbstractController
      *
      * @inheritDoc
      */
-    public function show(Request $request, $entity) {
+    public function show(Request $request, $entity): \Symfony\Component\HttpFoundation\Response
+    {
         $this->showBefore($entity);
 
         /** @var DataTable $recipeDatatable */
@@ -95,7 +96,8 @@ class IngredientController extends AbstractController
         return $this->deleteAction($request, $entity);
     }
 
-    public function search(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer) {
+    public function search(Request $request, IngredientsToJsonTransformer $ingredientsToJsonTransformer): \Symfony\Component\HttpFoundation\JsonResponse
+    {
         $term = Transliterator::sortNameTransliterator()->transliterate($request->get('term'));
 
         /** @var IngredientRepository $repository */

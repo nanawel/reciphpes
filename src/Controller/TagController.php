@@ -30,7 +30,8 @@ class TagController extends AbstractController
      *
      * @inheritDoc
      */
-    public function show(Request $request, $entity) {
+    public function show(Request $request, $entity): \Symfony\Component\HttpFoundation\Response
+    {
         $this->showBefore($entity);
 
         /** @var DataTable $recipeDatatable */

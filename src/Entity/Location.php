@@ -53,7 +53,8 @@ class Location extends AbstractEntity
      * @param mixed $id
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id): static
+    {
         $this->id = $id;
         return $this;
     }
@@ -69,7 +70,8 @@ class Location extends AbstractEntity
      * @param mixed $name
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name): static
+    {
         $this->name = $name;
         return $this;
     }
@@ -85,7 +87,8 @@ class Location extends AbstractEntity
      * @param mixed $recipes
      * @return $this
      */
-    public function setRecipes($recipes) {
+    public function setRecipes($recipes): static
+    {
         foreach ($recipes as $recipe) {
             $recipe->setLocation($this);
         }
@@ -105,7 +108,8 @@ class Location extends AbstractEntity
      * @param mixed $createdAt
      * @return $this
      */
-    public function setCreatedAt($createdAt) {
+    public function setCreatedAt($createdAt): static
+    {
         $this->createdAt = $createdAt;
         return $this;
     }

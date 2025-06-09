@@ -2,7 +2,6 @@
 
 namespace App\Command\Import;
 
-use App\Entity\Registry;
 use App\Import\AbstractImport;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,30 +9,21 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'app:import:entities')]
 class Entities extends Command
 {
     const OPT_ENTITY_TYPE = 'entity-type';
     const OPT_VALIDATION_ONLY = 'validate-only';
     const ARG_INPUT_FILE = 'csv-file';
 
-    protected static $defaultName = 'app:import:entities';
-
-    /** @var ContainerInterface */
-    protected $container;
-
-    /** @var Registry */
-    protected $entityRegistry;
-
     public function __construct(
-        ContainerInterface $container,
-        Registry $entityRegistry,
-        string $name = null
-    ) {
+        protected \Symfony\Component\DependencyInjection\ContainerInterface $container,
+        protected \App\Entity\Registry                                      $entityRegistry,
+        string                                                              $name = null
+    )
+    {
         parent::__construct($name);
-        $this->container = $container;
-        $this->entityRegistry = $entityRegistry;
     }
 
     protected function configure() {
@@ -63,11 +53,12 @@ class Entities extends Command
      * @param ConsoleOutputInterface $output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
         $entityType = $input->getOption(self::OPT_ENTITY_TYPE);
         $csvFile = $input->getArgument(self::ARG_INPUT_FILE);
 
-        if (! $importClass = $this->entityRegistry->getEntityConfig($entityType, 'import_class')) {
+        if (!$importClass = $this->entityRegistry->getEntityConfig($entityType, 'import_class')) {
             throw new \InvalidArgumentException('Unsupported entity type: ' . $entityType);
         }
 
@@ -98,8 +89,7 @@ class Entities extends Command
         if ($input->getOption(self::OPT_VALIDATION_ONLY)) {
             $output->writeln('Validation only, skipping import.');
 
-        }
-        else {
+        } else {
             $output->writeln("Importing file $csvFile...");
             $importService->import($csvFile, $entityType, ['output' => $output]);
             $output->writeln('');

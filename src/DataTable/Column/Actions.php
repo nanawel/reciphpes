@@ -10,7 +10,8 @@ class Actions extends TwigColumn
     /**
      * {@inheritdoc}
      */
-    protected function render($value, $context) {
+    protected function render($value, $context): mixed
+    {
         return $this->twig->render(
             $this->getTemplate(),
             [
@@ -24,14 +25,16 @@ class Actions extends TwigColumn
     /**
      * {@inheritdoc}
      */
-    public function normalize($value) {
+    public function normalize($value): mixed
+    {
         return $value;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configureOptions(OptionsResolver $resolver) {
+    protected function configureOptions(OptionsResolver $resolver): static
+    {
         parent::configureOptions($resolver);
 
         $resolver

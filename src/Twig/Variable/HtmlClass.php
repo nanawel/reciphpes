@@ -3,13 +3,11 @@
 namespace App\Twig\Variable;
 
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class HtmlClass implements \Stringable
 {
-    /** @var Request */
-    protected $request;
+    protected ?\Symfony\Component\HttpFoundation\Request $request;
 
     public function __construct(RequestStack $requestStack)
     {

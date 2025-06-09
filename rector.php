@@ -14,8 +14,13 @@ return RectorConfig::configure()
     ->withSymfonyContainerXml(
         __DIR__ . '/var/cache/dev/App_KernelDevDebugContainer.xml'
     )
+    ->withSets([
+        \Rector\Symfony\Set\SymfonySetList::SYMFONY_64,
+        \Rector\Symfony\Set\SymfonySetList::SYMFONY_CODE_QUALITY,
+        \Rector\Symfony\Set\SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
+    ])
+    ->withPreparedSets(typeDeclarations: true)
     ->withComposerBased(symfony: true)
-    ->withTypeCoverageLevel(0)
-    ->withDeadCodeLevel(0)
-    ->withCodeQualityLevel(0)
+    ->withDeadCodeLevel(1)
+    ->withCodeQualityLevel(1)
     ->withoutParallel();

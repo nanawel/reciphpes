@@ -18,7 +18,8 @@ class Recipe extends AbstractEntity
         parent::__construct($entityManager, $entityRegistry, $entityType ?? 'recipe');
     }
 
-    public function configure(DataTable $dataTable, array $options) {
+    public function configure(DataTable $dataTable, array $options): void
+    {
         parent::configure($dataTable, $options);
         $dataTable
             ->setName('recipes-dt')

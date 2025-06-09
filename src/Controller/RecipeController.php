@@ -73,8 +73,9 @@ class RecipeController extends AbstractController
         return $this->deleteAction($request, $entity);
     }
 
-    public function massCreate(Request $request) {
-        if (! $this->getAccessManager()->hasWriteAccess()) {
+    public function massCreate(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    {
+        if (!$this->getAccessManager()->hasWriteAccess()) {
             $this->addFlash('danger', $this->getTranslator()->trans('Not allowed 😕 Please log in first.'));
 
             return $this->redirectToRoute('index');
@@ -215,7 +216,7 @@ class RecipeController extends AbstractController
         return $this->render(
             sprintf('%s/masscreate.html.twig', $this->getEntityConfig('template_prefix')),
             [
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }
@@ -236,7 +237,8 @@ class RecipeController extends AbstractController
         return $data;
     }
 
-    public function searchTags(Request $request, TagsToJsonTransformer $tagsToJsonTransformer) {
+    public function searchTags(Request $request, TagsToJsonTransformer $tagsToJsonTransformer): \Symfony\Component\HttpFoundation\JsonResponse
+    {
         $term = $request->get('term');
 
         /** @var TagRepository $repository */

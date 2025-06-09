@@ -44,7 +44,8 @@ trait DocumentControllerTrait
     /**
      * @param object $entity
      */
-    public function showBefore($entity) {
+    public function showBefore($entity): void
+    {
         $this->getBreadcrumbs()
             ->addItem(
                 'breadcrumb.home',

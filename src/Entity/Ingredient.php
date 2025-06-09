@@ -69,7 +69,8 @@ class Ingredient extends AbstractEntity
      * @param mixed $id
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id): static
+    {
         $this->id = $id;
 
         return $this;
@@ -86,7 +87,7 @@ class Ingredient extends AbstractEntity
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName($name): static
     {
         $this->name = $name;
 
@@ -105,7 +106,7 @@ class Ingredient extends AbstractEntity
      * @param string $sortName
      * @return $this
      */
-    public function setSortName($sortName)
+    public function setSortName($sortName): static
     {
         $this->sortName = $sortName;
 
@@ -124,7 +125,8 @@ class Ingredient extends AbstractEntity
      * @param mixed $recipeIngredients
      * @return $this
      */
-    public function setRecipeIngredients($recipeIngredients) {
+    public function setRecipeIngredients($recipeIngredients): static
+    {
         $this->recipeIngredients = $recipeIngredients;
 
         return $this;
@@ -141,7 +143,7 @@ class Ingredient extends AbstractEntity
      * @param string $createdAt
      * @return $this
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -152,7 +154,7 @@ class Ingredient extends AbstractEntity
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function updateSortName()
+    public function updateSortName(): void
     {
         $this->sortName = Transliterator::sortNameTransliterator()->transliterate($this->name);
     }

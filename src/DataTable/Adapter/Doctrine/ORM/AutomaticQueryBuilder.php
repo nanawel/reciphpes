@@ -26,11 +26,9 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
     /** @var string */
     private $entityShortName;
 
-    /** @var array */
-    private $selectColumns = [];
+    private array $selectColumns = [];
 
-    /** @var array */
-    private $joins = [];
+    private array $joins = [];
 
     /**
      * AutomaticQueryBuilder constructor.
@@ -44,7 +42,8 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(QueryBuilder $builder, DataTableState $state) {
+    public function process(QueryBuilder $builder, DataTableState $state): void
+    {
         if (empty($this->selectColumns) && empty($this->joins)) {
             foreach ($state->getDataTable()->getColumns() as $column) {
                 $this->processColumn($column);
@@ -67,7 +66,8 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
         }
     }
 
-    private function addSelectColumns(AbstractColumn $column, string $field) {
+    private function addSelectColumns(AbstractColumn $column, string $field): void
+    {
         $currentPart = $this->entityShortName;
         $currentAlias = $currentPart;
         $metadata = $this->metadata;
@@ -97,20 +97,21 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
         }
     }
 
-    private function addSelectColumn($columnTableName, $data) {
+    private function addSelectColumn($columnTableName, $data): static
+    {
         if (isset($this->selectColumns[$columnTableName])) {
-            if (! in_array($data, $this->selectColumns[$columnTableName], true)) {
+            if (!in_array($data, $this->selectColumns[$columnTableName], true)) {
                 $this->selectColumns[$columnTableName][] = $data;
             }
-        }
-        else {
+        } else {
             $this->selectColumns[$columnTableName][] = $data;
         }
 
         return $this;
     }
 
-    private function getIdentifier(ClassMetadata $metadata) {
+    private function getIdentifier(ClassMetadata $metadata): ?string
+    {
         $identifiers = $metadata->getIdentifierFieldNames();
 
         return array_shift($identifiers);
@@ -126,12 +127,12 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
         return $targetMetadata;
     }
 
-    private function setSelectFrom(QueryBuilder $qb) {
+    private function setSelectFrom(QueryBuilder $qb): static
+    {
         foreach ($this->selectColumns as $key => $value) {
             if (false === empty($key)) {
                 $qb->addSelect('partial ' . $key . '.{' . implode(',', $value) . '}');
-            }
-            else {
+            } else {
                 $qb->addSelect($value);
             }
         }
@@ -139,7 +140,8 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
         return $this;
     }
 
-    private function setJoins(QueryBuilder $qb) {
+    private function setJoins(QueryBuilder $qb): static
+    {
         foreach ($this->joins as $key => $value) {
             $qb->{$value['type']}($key, $value['alias']);
         }

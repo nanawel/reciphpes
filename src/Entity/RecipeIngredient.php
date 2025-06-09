@@ -49,7 +49,8 @@ class RecipeIngredient extends AbstractEntity
      * @param mixed $recipe
      * @return $this
      */
-    public function setRecipe($recipe) {
+    public function setRecipe($recipe): static
+    {
         $this->recipe = $recipe;
         return $this;
     }
@@ -65,7 +66,8 @@ class RecipeIngredient extends AbstractEntity
      * @param mixed $ingredient
      * @return $this
      */
-    public function setIngredient($ingredient) {
+    public function setIngredient($ingredient): static
+    {
         $this->ingredient = $ingredient;
         return $this;
     }
@@ -81,7 +83,8 @@ class RecipeIngredient extends AbstractEntity
      * @param mixed $note
      * @return $this
      */
-    public function setNote($note) {
+    public function setNote($note): static
+    {
         $this->note = $note;
         return $this;
     }

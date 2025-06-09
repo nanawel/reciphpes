@@ -17,21 +17,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\RouterInterface;
 
 class RecipeIngredientType extends AbstractType implements DataMapperInterface
 {
-    /** @var RouterInterface */
-    protected $router;
-
-    public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        RouterInterface                         $router
-    ) {
-        $this->router = $router;
+    public function __construct(private readonly EntityManagerInterface $entityManager, protected \Symfony\Component\Routing\RouterInterface $router)
+    {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $builder
             ->add(
                 'name',
@@ -89,7 +83,8 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
     /**
      * @inheritdoc
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults(
             [
                 'row_attr' => [
@@ -112,7 +107,7 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
     /**
      * @inheritDoc
      */
-    public function mapDataToForms($viewData, \Traversable $forms)
+    public function mapDataToForms($viewData, \Traversable $forms): void
     {
         if (null === $viewData) {
             return;
@@ -133,7 +128,7 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
     /**
      * @inheritDoc
      */
-    public function mapFormsToData(\Traversable $forms, &$viewData)
+    public function mapFormsToData(\Traversable $forms, &$viewData): void
     {
         /** @var FormInterface[] $forms */
         $forms = iterator_to_array($forms);

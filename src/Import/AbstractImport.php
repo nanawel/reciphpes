@@ -3,14 +3,11 @@
 namespace App\Import;
 
 use App\Entity\AbstractEntity;
-use App\Entity\Registry;
 use App\Repository\AbstractRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use League\Csv\Reader;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class AbstractImport
 {
@@ -24,29 +21,14 @@ class AbstractImport
      */
     const ENTITY_KEY = 'name';
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var Registry */
-    protected $entityRegistry;
-
     /** @var ClassMetadataInfo[] */
     protected $classMetadata = [];
 
     /** @var array */
     protected $associations = [];
 
-    /** @var PropertyAccessorInterface */
-    protected $propertyAccessor;
-
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        Registry $entityRegistry,
-        PropertyAccessorInterface $propertyAccessor
-    ) {
-        $this->entityManager = $entityManager;
-        $this->entityRegistry = $entityRegistry;
-        $this->propertyAccessor = $propertyAccessor;
+    public function __construct(protected \Doctrine\ORM\EntityManagerInterface $entityManager, protected \App\Entity\Registry $entityRegistry, protected \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor)
+    {
     }
 
     /**
@@ -56,7 +38,8 @@ class AbstractImport
      * @param array $options
      * @return bool
      */
-    public function validate(string $csvFile, string $entityType, array &$errors, array $options = []): bool {
+    public function validate(string $csvFile, string $entityType, array &$errors, array $options = []): bool
+    {
         $output = $options['output'] ?? new NullOutput();
 
         /** @var Reader $csv */
@@ -138,7 +121,8 @@ class AbstractImport
         return [];
     }
 
-    public function import(string $csvFile, string $entityType, array $options = []) {
+    public function import(string $csvFile, string $entityType, array $options = []): void
+    {
         $output = $options['output'] ?? new NullOutput();
 
         /** @var Reader $csv */

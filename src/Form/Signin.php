@@ -10,7 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class Signin extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $builder
             ->add(
                 'password',

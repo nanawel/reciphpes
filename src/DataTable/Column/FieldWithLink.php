@@ -9,8 +9,7 @@ use Twig\Environment;
 
 class FieldWithLink extends AbstractColumn
 {
-    /** @var Environment */
-    protected $twig;
+    protected ?\Twig\Environment $twig;
 
     /**
      * TwigColumn constructor.
@@ -24,7 +23,8 @@ class FieldWithLink extends AbstractColumn
     /**
      * {@inheritdoc}
      */
-    protected function render($value, $context) {
+    protected function render($value, $context): mixed
+    {
         return $this->twig->render(
             $this->getTemplate(),
             [
@@ -38,14 +38,16 @@ class FieldWithLink extends AbstractColumn
     /**
      * {@inheritdoc}
      */
-    public function normalize($value) {
+    public function normalize($value): mixed
+    {
         return $value;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configureOptions(OptionsResolver $resolver) {
+    protected function configureOptions(OptionsResolver $resolver): static
+    {
         parent::configureOptions($resolver);
 
         $resolver

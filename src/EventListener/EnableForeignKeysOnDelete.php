@@ -21,13 +21,14 @@ class EnableForeignKeysOnDelete implements EventSubscriber
     /** @var int */
     protected $callLevel = 0;
 
-    public function preRemove(LifecycleEventArgs $args) {
+    public function preRemove(LifecycleEventArgs $args): void
+    {
         if ($args->getEntityManager()->getConnection()->getDatabasePlatform()->getName() != 'sqlite') {
             return;
         }
 
         $this->isFkEnabledByDefault($args->getEntityManager());
-        if (! $this->callLevel && ! $this->isFkEnabledByDefault($args->getEntityManager())) {
+        if (!$this->callLevel && !$this->isFkEnabledByDefault($args->getEntityManager())) {
             $this->callLevel++;
             $args->getEntityManager()
                 ->createNativeQuery(
@@ -38,13 +39,14 @@ class EnableForeignKeysOnDelete implements EventSubscriber
         }
     }
 
-    public function postRemove(LifecycleEventArgs $args) {
+    public function postRemove(LifecycleEventArgs $args): void
+    {
         if ($args->getEntityManager()->getConnection()->getDatabasePlatform()->getName() != 'sqlite') {
             return;
         }
 
         $this->callLevel--;
-        if (! $this->callLevel && ! $this->isFkEnabledByDefault($args->getEntityManager())) {
+        if (!$this->callLevel && !$this->isFkEnabledByDefault($args->getEntityManager())) {
             $args->getEntityManager()
                 ->createNativeQuery(
                     'PRAGMA foreign_keys = OFF;',
