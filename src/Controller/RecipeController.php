@@ -118,13 +118,12 @@ class RecipeController extends AbstractController
                     /** @var Tag $tag */
                     foreach ($recipe->getTags() as $tag) {
                         if (! $tag->getId()) {
-                            if (isset($newTags[strtolower($tag->getName())])) {
+                            if (isset($newTags[strtolower((string)$tag->getName())])) {
                                 // Replace with the first instance that should have an ID by now
                                 $recipe->removeTag($tag)
-                                    ->addTag($newTags[strtolower($tag->getName())]);
-                            }
-                            else {
-                                $newTags[strtolower($tag->getName())] = $tag;
+                                    ->addTag($newTags[strtolower((string)$tag->getName())]);
+                            } else {
+                                $newTags[strtolower((string)$tag->getName())] = $tag;
                             }
                         }
                     }
@@ -135,14 +134,13 @@ class RecipeController extends AbstractController
                     /** @var RecipeIngredient $recipeIngredient */
                     foreach ($recipe->getRecipeIngredients() as $recipeIngredient) {
                         if (! $recipeIngredient->getIngredient()->getId()) {
-                            if (isset($newIngredients[strtolower($recipeIngredient->getName())])) {
+                            if (isset($newIngredients[strtolower((string)$recipeIngredient->getName())])) {
                                 // Replace with the first instance that should have an ID by now
                                 $recipeIngredient->setIngredient(
-                                    $newIngredients[strtolower($recipeIngredient->getName())]
+                                    $newIngredients[strtolower((string)$recipeIngredient->getName())]
                                 );
-                            }
-                            else {
-                                $newIngredients[strtolower($recipeIngredient->getName())]
+                            } else {
+                                $newIngredients[strtolower((string)$recipeIngredient->getName())]
                                     = $recipeIngredient->getIngredient();
                             }
                         }

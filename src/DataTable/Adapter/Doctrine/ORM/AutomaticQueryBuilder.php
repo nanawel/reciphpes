@@ -20,12 +20,6 @@ use Omines\DataTablesBundle\DataTableState;
  */
 class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /** @var ClassMetadata */
-    private $metadata;
-
     /** @var string */
     private $entityName;
 
@@ -41,10 +35,8 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
     /**
      * AutomaticQueryBuilder constructor.
      */
-    public function __construct(EntityManagerInterface $em, ClassMetadata $metadata) {
-        $this->em = $em;
-        $this->metadata = $metadata;
-
+    public function __construct(private readonly EntityManagerInterface $em, private readonly ClassMetadata $metadata)
+    {
         $this->entityName = $this->metadata->getName();
         $this->entityShortName = mb_strtolower($this->metadata->getReflectionClass()->getShortName());
     }
@@ -86,10 +78,9 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
             array_shift($parts);
         }
 
-        if (sizeof($parts) > 1 && $field = $metadata->hasField(implode('.', $parts))) {
+        if (count($parts) > 1 && $field = $metadata->hasField(implode('.', $parts))) {
             $this->addSelectColumn($currentAlias, implode('.', $parts));
-        }
-        else {
+        } else {
             while (count($parts) > 1) {
                 $previousPart = $currentPart;
                 $previousAlias = $currentAlias;

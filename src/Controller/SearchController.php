@@ -26,7 +26,7 @@ class SearchController extends AbstractController
 
         if ($request->getMethod() === 'POST') {
             // FIXME Ugly workaround - See https://github.com/omines/datatables-bundle/issues/160
-            parse_str(parse_url($request->headers->get('referer'), PHP_URL_QUERY), $queryParts);
+            parse_str(parse_url((string)$request->headers->get('referer'), PHP_URL_QUERY), $queryParts);
             $query = $queryParts['q'] ?? null;
         }
         else {
@@ -35,9 +35,7 @@ class SearchController extends AbstractController
 
         $terms = array_filter(
             preg_split('/\s+/', $query),
-            function ($w) {
-                return strlen($w) > 0;
-            }
+            fn($w) => strlen((string)$w) > 0
         );
 
         $recipeDatatable = $this->buildRecipeDatatable($request, $terms);
@@ -82,7 +80,7 @@ class SearchController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($terms) {
+                    function (QueryBuilder $builder) use ($terms): void {
                         $builder->distinct()
                             ->leftJoin('recipe.tags', 't');
 
@@ -115,7 +113,7 @@ class SearchController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($terms) {
+                    function (QueryBuilder $builder) use ($terms): void {
                         $builder->distinct();
 
                         foreach ($terms as $w => $term) {
@@ -147,7 +145,7 @@ class SearchController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($terms) {
+                    function (QueryBuilder $builder) use ($terms): void {
                         $builder->distinct();
 
                         foreach ($terms as $w => $term) {

@@ -17,4 +17,5 @@ return RectorConfig::configure()
     ->withComposerBased(symfony: true)
     ->withTypeCoverageLevel(0)
     ->withDeadCodeLevel(0)
-    ->withCodeQualityLevel(0);
+    ->withCodeQualityLevel(0)
+    ->withoutParallel();

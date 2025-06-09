@@ -12,26 +12,23 @@ use Omines\DataTablesBundle\DataTableTypeInterface;
 
 abstract class AbstractEntity implements DataTableTypeInterface
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
     /** @var Registry */
     protected $entityRegistry;
 
-    /** @var string */
-    protected $entityType;
-
+    /**
+     * @param string $entityType
+     */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        Registry $entityRegistry,
-        $entityType
-    ) {
-        $this->em = $entityManager;
+        private readonly EntityManagerInterface $em,
+        Registry                                $entityRegistry,
+        protected                               $entityType
+    )
+    {
         $this->entityRegistry = $entityRegistry;
-        $this->entityType = $entityType;
     }
 
-    public function configure(DataTable $dataTable, array $options) {
+    public function configure(DataTable $dataTable, array $options)
+    {
         $dataTable->createAdapter(
             ORMAdapter::class,
             [

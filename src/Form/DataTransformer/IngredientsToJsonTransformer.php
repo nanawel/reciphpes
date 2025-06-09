@@ -5,25 +5,22 @@ namespace App\Form\DataTransformer;
 
 
 use App\Entity\Ingredient;
-use App\Entity\RecipeIngredient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class IngredientsToJsonTransformer implements DataTransformerInterface
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager) {
-        $this->entityManager = $entityManager;
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
     }
 
     /**
      * @param \Doctrine\Common\Collections\Collection|array $tags
      * @return string JSON
      */
-    public function transform($tags) {
+    public function transform($tags)
+    {
         return json_encode($this->transformToArray($tags));
     }
 
@@ -41,12 +38,10 @@ class IngredientsToJsonTransformer implements DataTransformerInterface
 
         return array_reduce(
             $ingredients,
-            function ($carry, $ingredient) {
-                return array_merge(
-                    $carry,
-                    [['id' => $ingredient->getId(), 'value' => $ingredient->getName()]]
-                );
-            },
+            fn($carry, $ingredient) => array_merge(
+                $carry,
+                [['id' => $ingredient->getId(), 'value' => $ingredient->getName()]]
+            ),
             []
         );
     }

@@ -48,7 +48,7 @@ class TagController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($entity) {
+                    function (QueryBuilder $builder) use ($entity): void {
                         $builder->distinct()
                             ->innerJoin('recipe.tags', 't')
                             ->where('t = :tag')->setParameter('tag', $entity);

@@ -19,9 +19,6 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
 {
     const INGREDIENT_ROWS = 1;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
     /** @var RouterInterface */
     protected $router;
 
@@ -32,12 +29,11 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
     protected $tagsToJsonTransformer;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
-        RouterInterface $router,
-        TranslatorInterface $translator,
-        TagsToJsonTransformer $tagsToJsonTransformer
+        private readonly EntityManagerInterface $entityManager,
+        RouterInterface                         $router,
+        TranslatorInterface                     $translator,
+        TagsToJsonTransformer                   $tagsToJsonTransformer
     ) {
-        $this->entityManager = $entityManager;
         $this->router = $router;
         $this->translator = $translator;
         $this->tagsToJsonTransformer = $tagsToJsonTransformer;
@@ -161,14 +157,16 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
     /**
      * @inheritDoc
      */
-    public function mapDataToForms($viewData, $forms) {
+    public function mapDataToForms($viewData, \Traversable $forms)
+    {
         // not used
     }
 
     /**
      * @inheritDoc
      */
-    public function mapFormsToData($forms, &$viewData) {
+    public function mapFormsToData(\Traversable $forms, &$viewData)
+    {
         $forms = \iterator_to_array($forms);
 
         $viewData = (new Recipe())
@@ -176,7 +174,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
             ->setLocationDetails($forms['locationDetails']->getData())
             ->setTags($forms['tags']->getData());
         foreach ($forms['recipeIngredients']->getData() as $recipeIngredient) {
-            if (trim($recipeIngredient->getName())) {
+            if (trim((string)$recipeIngredient->getName())) {
                 $viewData->addRecipeIngredient($recipeIngredient);
             }
         }

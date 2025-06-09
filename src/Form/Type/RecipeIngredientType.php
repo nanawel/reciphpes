@@ -21,17 +21,13 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RecipeIngredientType extends AbstractType implements DataMapperInterface
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
     /** @var RouterInterface */
     protected $router;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
-        RouterInterface $router
+        private readonly EntityManagerInterface $entityManager,
+        RouterInterface                         $router
     ) {
-        $this->entityManager = $entityManager;
         $this->router = $router;
     }
 
@@ -116,13 +112,14 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
     /**
      * @inheritDoc
      */
-    public function mapDataToForms($viewData, $forms) {
+    public function mapDataToForms($viewData, \Traversable $forms)
+    {
         if (null === $viewData) {
             return;
         }
 
         // invalid data type
-        if (! $viewData instanceof RecipeIngredient) {
+        if (!$viewData instanceof RecipeIngredient) {
             throw new Exception\UnexpectedTypeException($viewData, RecipeIngredient::class);
         }
 
@@ -136,21 +133,22 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
     /**
      * @inheritDoc
      */
-    public function mapFormsToData($forms, &$viewData) {
+    public function mapFormsToData(\Traversable $forms, &$viewData)
+    {
         /** @var FormInterface[] $forms */
         $forms = iterator_to_array($forms);
 
-        $name = trim($forms['name']->getData());
-        $note = trim($forms['note']->getData());
+        $name = trim((string)$forms['name']->getData());
+        $note = trim((string)$forms['note']->getData());
 
         $ingredient = $this->entityManager->getRepository(Ingredient::class)
             ->findOneBy(['name' => $name]);
 
-        if (! $ingredient) {
+        if (!$ingredient) {
             $ingredient = (new Ingredient())
                 ->setName($name);
         }
-        if (! $viewData) {
+        if (!$viewData) {
             // This section is necessary to deal with issue #24 (removing and re-adding an ingredient to
             // an existing recipe in a single submit)
             /** @var Recipe $recipe */

@@ -52,7 +52,7 @@ class IngredientController extends AbstractController
                     )
                 ],
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($entity) {
+                    function (QueryBuilder $builder) use ($entity): void {
                         $builder->distinct()
                             ->leftJoin('recipe.recipeIngredients', 'ri')
                             ->where('ri.ingredient = :ingredient')->setParameter('ingredient', $entity);

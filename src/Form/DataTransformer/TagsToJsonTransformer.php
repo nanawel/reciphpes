@@ -13,18 +13,16 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class TagsToJsonTransformer implements DataTransformerInterface
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager) {
-        $this->entityManager = $entityManager;
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
     }
 
     /**
      * @param \Doctrine\Common\Collections\Collection|array $tags
      * @return string JSON
      */
-    public function transform($tags) {
+    public function transform($tags)
+    {
         return json_encode($this->transformToArray($tags));
     }
 
@@ -42,9 +40,7 @@ class TagsToJsonTransformer implements DataTransformerInterface
 
         return array_reduce(
             $tags,
-            function ($carry, $item) {
-                return array_merge($carry, [['id' => $item->getId(), 'value' => $item->getName()]]);
-            },
+            fn($carry, $item) => array_merge($carry, [['id' => $item->getId(), 'value' => $item->getName()]]),
             []
         );
     }

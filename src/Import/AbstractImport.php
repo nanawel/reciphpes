@@ -118,8 +118,8 @@ class AbstractImport
      */
     protected function mergeEntityData(array &$entityData, array $recordData, string $entityType) {
         foreach ($recordData as $header => $recordDatum) {
-            if (strlen(trim($recordDatum)) > 0) {
-                if (! is_array($entityData[$header])) {
+            if (strlen(trim((string)$recordDatum)) > 0) {
+                if (!is_array($entityData[$header])) {
                     $entityData[$header] = [$entityData[$header]];
                 }
                 $entityData[$header][] = $recordDatum;
@@ -154,7 +154,7 @@ class AbstractImport
         $progress = new ProgressBar($output);
         $progress->start();
 
-        foreach ($this->getEntitiesData($csv->getRecords(), $entityType) as $entityRecordId => $entityData) {
+        foreach ($this->getEntitiesData($csv->getRecords(), $entityType) as $entityData) {
             $entity = $this->importEntity($entityData, $entityType);
 
             $this->entityManager->persist($entity);
@@ -232,14 +232,14 @@ class AbstractImport
         $associations = $this->getAssociations($this->entityRegistry->getEntityConfig($entityType, 'class'));
 
         $originalField = $field;
-        if (strpos($originalField, '.') !== false) {
+        if (str_contains($originalField, '.')) {
             if (substr_count($originalField, '.') > 1) {
                 throw new \Exception('Only one dot max. is supported in field name: ' . $originalField);
             }
-            list($field, $subField) = explode('.', $originalField);
+            [$field, $subField] = explode('.', $originalField);
 
             if (array_key_exists($field, $associations)) {
-                if (! is_array($value)) {
+                if (!is_array($value)) {
                     $value = [$value];
                 }
                 if ($associations[$field]['type'] & ClassMetadataInfo::TO_MANY) {

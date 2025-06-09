@@ -9,28 +9,19 @@ class AccessManager
     private const SESSION_LOGGED_IN_FLAG = 'is-logged-in';
     private const SESSION_WRITE_ACCESS_FLAG = 'has-write-access';
 
-    /** @var Session */
-    private $session;
-
-    /** @var string */
-    private $writeAccessPassword;
-
     /**
      * @param Session $session
      * @param string $writeAccessPassword
      */
-    public function __construct(
-        Session $session,
-        $writeAccessPassword
-    ) {
-        $this->session = $session;
-        $this->writeAccessPassword = $writeAccessPassword;
+    public function __construct(private readonly Session $session, private $writeAccessPassword)
+    {
     }
 
     /**
      * @return bool
      */
-    public function isRestrictedAccessEnabled() {
+    public function isRestrictedAccessEnabled()
+    {
         return strlen($this->writeAccessPassword) > 0;
     }
 

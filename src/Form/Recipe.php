@@ -72,10 +72,8 @@ class Recipe extends AbstractType
                     'help' => 'Optional',
                     'required' => false,
                     'class' => \App\Entity\Location::class,
-                    'query_builder' => function (LocationRepository $r) {
-                        return $r->createQueryBuilder('l')
-                            ->orderBy('l.name', 'ASC');
-                    },
+                    'query_builder' => fn(LocationRepository $r) => $r->createQueryBuilder('l')
+                        ->orderBy('l.name', 'ASC'),
                     'choice_label' => 'name',
                     'placeholder' => 'Choose a location...',
                 ]

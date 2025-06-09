@@ -39,7 +39,7 @@ class LocationController extends AbstractController
             [
                 'entity' => $this->getEntityRegistry()->getEntityConfig('recipe', 'class'),
                 'criteria' => [
-                    function (QueryBuilder $builder) use ($entity) {
+                    function (QueryBuilder $builder) use ($entity): void {
                         $builder->distinct()
                             ->where('recipe.location = :location')->setParameter('location', $entity);
                     },

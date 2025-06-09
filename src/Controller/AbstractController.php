@@ -17,15 +17,15 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
     public static function getSubscribedServices()
     {
         return parent::getSubscribedServices() + [
-                'access_manager' => 'App\Service\AccessManager',
-                'datatable_factory' => 'Omines\DataTablesBundle\DataTableFactory',
-                'entity_manager' => 'Doctrine\ORM\EntityManagerInterface',
-                'entity_registry' => 'App\Entity\Registry',
-                'logger' => 'Psr\Log\LoggerInterface',
-                'router' => 'Symfony\Component\Routing\Generator\UrlGeneratorInterface',
-                'session' => 'Symfony\Component\HttpFoundation\Session\Session',
-                'translator' => 'Symfony\Contracts\Translation\TranslatorInterface',
-                'white_october_breadcrumbs' => 'WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs',
+                'access_manager' => \App\Service\AccessManager::class,
+                'datatable_factory' => \Omines\DataTablesBundle\DataTableFactory::class,
+                'entity_manager' => \Doctrine\ORM\EntityManagerInterface::class,
+                'entity_registry' => \App\Entity\Registry::class,
+                'logger' => \Psr\Log\LoggerInterface::class,
+                'router' => \Symfony\Component\Routing\Generator\UrlGeneratorInterface::class,
+                'session' => \Symfony\Component\HttpFoundation\Session\Session::class,
+                'translator' => \Symfony\Contracts\Translation\TranslatorInterface::class,
+                'white_october_breadcrumbs' => \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs::class,
             ];
     }
 

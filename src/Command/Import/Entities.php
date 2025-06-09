@@ -90,7 +90,7 @@ class Entities extends Command
                     );
                 }
             }
-            return 1;
+            return \Symfony\Component\Console\Command\Command::FAILURE;
         }
 
         $output->writeln("<info>Validating passed!</info>");
@@ -106,6 +106,6 @@ class Entities extends Command
             $output->writeln("<info>Import complete!</info>");
         }
 
-        return 0;
+        return \Symfony\Component\Console\Command\Command::SUCCESS;
     }
 }

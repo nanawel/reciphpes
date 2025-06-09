@@ -7,16 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SigninController extends AbstractController
 {
-    /** @var AccessManager */
-    private $accessManager;
-
-    public function __construct(
-        AccessManager $accessManager
-    ) {
-        $this->accessManager = $accessManager;
+    public function __construct(private readonly AccessManager $accessManager)
+    {
     }
 
-    public function form(Request $request) {
+    public function form(Request $request)
+    {
         if ($this->accessManager->isSignedIn()) {
             $this->addFlash('info', "You are already signed in!");
 
