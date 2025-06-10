@@ -239,7 +239,6 @@ class Recipe extends AbstractEntity
 
     /**
      * @param RecipeIngredient[] $recipeIngredients
-     * @return $this
      */
     public function setRecipeIngredient($recipeIngredients): Recipe {
         foreach ($recipeIngredients as $recipeIngredient) {
@@ -247,6 +246,7 @@ class Recipe extends AbstractEntity
                 $recipeIngredient->setRecipe($this);
             }
         }
+
         $this->recipeIngredients = $recipeIngredients;
 
         return $this;
@@ -254,7 +254,6 @@ class Recipe extends AbstractEntity
 
     /**
      * @param RecipeIngredient $recipeIngredient
-     * @return $this
      */
     public function addRecipeIngredient($recipeIngredient): Recipe {
         if ($recipeIngredient instanceof RecipeIngredient && !$this->recipeIngredients->contains($recipeIngredient)) {
@@ -267,7 +266,6 @@ class Recipe extends AbstractEntity
 
     /**
      * @param RecipeIngredient $recipeIngredient
-     * @return $this
      */
     public function removeRecipeIngredient($recipeIngredient): Recipe
     {
@@ -328,7 +326,6 @@ class Recipe extends AbstractEntity
      * Alias for self::setRecipeIngredients()
      *
      * @param RecipeIngredient[] $recipeIngredients
-     * @return $this
      */
     public function setIngredient($recipeIngredients): Recipe {
         return $this->setRecipeIngredient($recipeIngredients);

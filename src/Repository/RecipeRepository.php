@@ -14,12 +14,13 @@ class RecipeRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
-    public function search(string $term) {
+    public function search(string $term): iterable
+    {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('r');
         $qb->leftJoin('r.tags', 't')
-            ->where('r.name LIKE :term')->setParameter('term', "%{$term}%")
-            ->orWhere('t.name LIKE :term')->setParameter('term', "%{$term}%");
+            ->where('r.name LIKE :term')->setParameter('term', sprintf('%%%s%%', $term))
+            ->orWhere('t.name LIKE :term')->setParameter('term', sprintf('%%%s%%', $term));
 
         return $qb
             ->getQuery()

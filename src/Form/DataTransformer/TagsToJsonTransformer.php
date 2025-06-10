@@ -28,13 +28,13 @@ class TagsToJsonTransformer implements DataTransformerInterface
 
     /**
      * @param \Doctrine\Common\Collections\Collection|array $tags
-     * @return array
      */
     public function transformToArray($tags): array
     {
         if (!$tags) {
             return [];
         }
+
         if (!is_array($tags)) {
             $tags = $tags->toArray();
         }

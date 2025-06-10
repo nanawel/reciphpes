@@ -22,22 +22,19 @@ class AbstractImport
     const ENTITY_KEY = 'name';
 
     /** @var ClassMetadataInfo[] */
-    protected $classMetadata = [];
+    protected array $classMetadata = [];
 
     /** @var array */
-    protected $associations = [];
+    protected array $associations = [];
 
-    public function __construct(protected \Doctrine\ORM\EntityManagerInterface $entityManager, protected \App\Entity\Registry $entityRegistry, protected \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor)
+    public function __construct(
+        protected \Doctrine\ORM\EntityManagerInterface                        $entityManager,
+        protected \App\Entity\Registry                                        $entityRegistry,
+        protected \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor
+    )
     {
     }
 
-    /**
-     * @param string $csvFile
-     * @param string $entityType
-     * @param array $errors
-     * @param array $options
-     * @return bool
-     */
     public function validate(string $csvFile, string $entityType, array &$errors, array $options = []): bool
     {
         $output = $options['output'] ?? new NullOutput();
@@ -61,6 +58,7 @@ class AbstractImport
                 $errors[$entityRecordId + 1] = $entityErrors;
                 $hasErrors |= $entityErrors !== [];
             }
+
             $progress->advance();
         }
 
@@ -71,8 +69,6 @@ class AbstractImport
     }
 
     /**
-     * @param \Iterator $it
-     * @param string $entityType
      * @return \Generator
      */
     protected function getEntitiesData(\Iterator $it, string $entityType) {
@@ -83,6 +79,7 @@ class AbstractImport
                 if (isset($currentEntityData)) {
                     yield $currentEntityRecordId => $currentEntityData;
                 }
+
                 $currentEntityRecordId = $recordId;
                 $currentEntityData = $record;
             }
@@ -90,31 +87,23 @@ class AbstractImport
                 $this->mergeEntityData($currentEntityData, $record, $entityType);
             }
         }
+
         // Don't forget to return the last entity (that has no successor hence not yielded in the loop)
         yield $currentEntityRecordId => $currentEntityData;
     }
 
-    /**
-     * @param array $entityData
-     * @param array $recordData
-     * @param string $entityType
-     */
     protected function mergeEntityData(array &$entityData, array $recordData, string $entityType) {
         foreach ($recordData as $header => $recordDatum) {
             if (strlen(trim((string)$recordDatum)) > 0) {
                 if (!is_array($entityData[$header])) {
                     $entityData[$header] = [$entityData[$header]];
                 }
+
                 $entityData[$header][] = $recordDatum;
             }
         }
     }
 
-    /**
-     * @param array $entityData
-     * @param string $entityType
-     * @return array
-     */
     protected function validateEntityData(array $entityData, string $entityType): array {
         // To be overridden
 
@@ -150,6 +139,7 @@ class AbstractImport
 
                 $progress->advance($batchSize);
             }
+
             $i++;
         }
 
@@ -161,11 +151,6 @@ class AbstractImport
         $progress->finish();
     }
 
-    /**
-     * @param array $entityData
-     * @param string $entityType
-     * @return AbstractEntity
-     */
     protected function importEntity(array $entityData, string $entityType): AbstractEntity {
         $entityClass = $this->entityRegistry->getEntityConfig($entityType, 'class');
         /** @var AbstractRepository $repository */
@@ -188,18 +173,12 @@ class AbstractImport
     }
 
     /**
-     * @param AbstractEntity $entity
-     * @param string $property
      * @param mixed $value
      */
     protected function setEntityProperty(AbstractEntity $entity, string $property, $value) {
         $this->propertyAccessor->setValue($entity, $property, $value);
     }
 
-    /**
-     * @param array $entityData
-     * @param string $entityType
-     */
     protected function normalizeEntityData(array $entityData, string $entityType): array {
         foreach ($entityData as $field => $value) {
             $this->normalizeEntityFieldData($entityData, $field, $value, $entityType);
@@ -208,10 +187,6 @@ class AbstractImport
         return $entityData;
     }
 
-    /**
-     * @param array $entityData
-     * @param string $entityType
-     */
     protected function normalizeEntityFieldData(array &$entityData, string $field, $value, string $entityType) {
         $associations = $this->getAssociations($this->entityRegistry->getEntityConfig($entityType, 'class'));
 
@@ -220,12 +195,14 @@ class AbstractImport
             if (substr_count($originalField, '.') > 1) {
                 throw new \Exception('Only one dot max. is supported in field name: ' . $originalField);
             }
+
             [$field, $subField] = explode('.', $originalField);
 
             if (array_key_exists($field, $associations)) {
                 if (!is_array($value)) {
                     $value = [$value];
                 }
+
                 if (($associations[$field]['type'] & ClassMetadataInfo::TO_MANY) !== 0) {
                     $counter = count($value);
                     for ($i = 0; $i < $counter; $i++) {
@@ -248,14 +225,12 @@ class AbstractImport
                     );
                 }
             }
+
             unset($entityData[$originalField]);
         }
     }
 
     /**
-     * @param array $entityData
-     * @param string $field
-     * @param string $subField
      * @param mixed $value
      * @param array $entityAssociations
      */
@@ -269,17 +244,14 @@ class AbstractImport
         if (! array_key_exists($field, $entityData)) {
             $entityData[$field] = null;
         }
+
         $this->initTargetEntity($entityData[$field], $entityAssociation['targetEntity'], $subField, $value[0]);
 
         $this->propertyAccessor->setValue($entityData[$field], $subField, $value[0]);
     }
 
     /**
-     * @param array $entityData
-     * @param string $field
-     * @param string $subField
      * @param mixed $value
-     * @param array $entityAssociation
      */
     protected function setToManyAssociationFieldValue(
         array &$entityData,
@@ -292,6 +264,7 @@ class AbstractImport
         if (! array_key_exists($idx, $entityData[$field] ?? [])) {
             $entityData[$field][$idx] = null;
         }
+
         $this->initTargetEntity($entityData[$field][$idx], $entityAssociation['targetEntity'], $subField, $value);
 
         $this->propertyAccessor->setValue($entityData[$field][$idx], $subField, $value);
@@ -309,10 +282,6 @@ class AbstractImport
         }
     }
 
-    /**
-     * @param string $className
-     * @return ClassMetadataInfo
-     */
     protected function getClassMetadataInfo(string $className): ClassMetadataInfo {
         if (! isset($this->classMetadata[$className])) {
             $this->classMetadata[$className] = $this->entityManager->getClassMetadata($className);
@@ -321,10 +290,6 @@ class AbstractImport
         return $this->classMetadata[$className];
     }
 
-    /**
-     * @param string $className
-     * @return array
-     */
     protected function getAssociations(string $className): array {
         if (! isset($this->associations[$className])) {
             $this->associations[$className] = $this->getClassMetadataInfo($className)->getAssociationMappings();

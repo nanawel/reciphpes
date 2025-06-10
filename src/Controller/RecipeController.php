@@ -158,6 +158,7 @@ class RecipeController extends AbstractController
 
                     $this->getEntityManager()->persist($recipe);
                 }
+
                 $this->getEntityManager()->flush();
 
                 // Prepare redirect URL with selected common location and/or tags
@@ -165,6 +166,7 @@ class RecipeController extends AbstractController
                 if ($location = $formData['location']) {
                     $redirectParams['location'] = $location->getId();
                 }
+
                 foreach ($formData['tags'] as $tag) {
                     $redirectParams['tags'][] = $tag->getId();
                 }
@@ -221,15 +223,12 @@ class RecipeController extends AbstractController
         );
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     protected function prepareFormData(Request $request): array {
         $data = [];
         if (($location = (int)$request->get('location')) !== 0) {
             $data['location'] = $this->getEntityManager()->getRepository(Location::class)->find($location);
         }
+
         if ($tags = $request->get('tags')) {
             $data['tags'] = $this->getEntityManager()->getRepository(Tag::class)->findBy(['id' => $tags]);
         }

@@ -14,7 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Entities extends Command
 {
     const OPT_ENTITY_TYPE = 'entity-type';
+
     const OPT_VALIDATION_ONLY = 'validate-only';
+
     const ARG_INPUT_FILE = 'csv-file';
 
     public function __construct(
@@ -49,9 +51,7 @@ class Entities extends Command
     }
 
     /**
-     * @param InputInterface $input
      * @param ConsoleOutputInterface $output
-     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -65,7 +65,7 @@ class Entities extends Command
         /** @var AbstractImport $importService */
         $importService = $this->container->get($importClass);
 
-        $output->writeln("Validating file $csvFile...");
+        $output->writeln(sprintf('Validating file %s...', $csvFile));
 
         $errors = [];
         if ($importService->validate($csvFile, $entityType, $errors, ['output' => $output])) {
@@ -81,6 +81,7 @@ class Entities extends Command
                     );
                 }
             }
+
             return \Symfony\Component\Console\Command\Command::FAILURE;
         }
 
@@ -90,7 +91,7 @@ class Entities extends Command
             $output->writeln('Validation only, skipping import.');
 
         } else {
-            $output->writeln("Importing file $csvFile...");
+            $output->writeln(sprintf('Importing file %s...', $csvFile));
             $importService->import($csvFile, $entityType, ['output' => $output]);
             $output->writeln('');
             $output->writeln("<info>Import complete!</info>");

@@ -21,7 +21,7 @@ final class Version20200607200830 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf(
             $this->connection->getDatabasePlatform()->getName() !== 'sqlite',
-            'Migration can only be executed safely on \'sqlite\'.'
+            "Migration can only be executed safely on 'sqlite'."
         );
 
         $this->addSql(
@@ -68,7 +68,7 @@ final class Version20200607200830 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf(
             $this->connection->getDatabasePlatform()->getName() !== 'sqlite',
-            'Migration can only be executed safely on \'sqlite\'.'
+            "Migration can only be executed safely on 'sqlite'."
         );
 
         $this->addSql('DROP TABLE timeofyear');

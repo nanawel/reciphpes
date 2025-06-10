@@ -24,8 +24,9 @@ class HtmlClass implements \Stringable
         if (count($routeParts) > 1) {
             $htmlClass[] = sprintf('%s-%s', $routeParts[0], $routeParts[1]);
         }
+
         if (count($routeParts) > 2) {
-            $htmlClass[] = "action-{$routeParts[2]}";
+            $htmlClass[] = 'action-' . $routeParts[2];
         }
 
         return implode(' ', array_unique($htmlClass));

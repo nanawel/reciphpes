@@ -21,7 +21,7 @@ final class Version20200613204928 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf(
             $this->connection->getDatabasePlatform()->getName() !== 'sqlite',
-            'Migration can only be executed safely on \'sqlite\'.'
+            "Migration can only be executed safely on 'sqlite'."
         );
 
         $this->addSql('DROP INDEX TAG_NAME_IDX');
@@ -98,7 +98,7 @@ final class Version20200613204928 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf(
             $this->connection->getDatabasePlatform()->getName() !== 'sqlite',
-            'Migration can only be executed safely on \'sqlite\'.'
+            "Migration can only be executed safely on 'sqlite'."
         );
 
         $this->addSql('DROP INDEX IDX_DA88B13764D218E');

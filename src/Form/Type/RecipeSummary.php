@@ -4,7 +4,6 @@ namespace App\Form\Type;
 
 use App\Entity\Recipe;
 use App\Entity\RecipeIngredient;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -16,7 +15,7 @@ class RecipeSummary extends AbstractType implements DataMapperInterface
 {
     const INGREDIENT_ROWS = 1;
 
-    public function __construct(private readonly EntityManagerInterface $entityManager, protected \Symfony\Component\Routing\RouterInterface $router, protected \Symfony\Contracts\Translation\TranslatorInterface $translator, protected \App\Form\DataTransformer\TagsToJsonTransformer $tagsToJsonTransformer)
+    public function __construct(protected \Symfony\Component\Routing\RouterInterface $router, protected \Symfony\Contracts\Translation\TranslatorInterface $translator, protected \App\Form\DataTransformer\TagsToJsonTransformer $tagsToJsonTransformer)
     {
     }
 

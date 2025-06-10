@@ -12,8 +12,6 @@ class Recipe extends AbstractImport
     protected $ingredientsCache;
 
     /**
-     * @param AbstractEntity $entity
-     * @param string $property
      * @param mixed $value
      */
     protected function setEntityProperty(AbstractEntity $entity, string $property, $value) {
@@ -65,11 +63,6 @@ class Recipe extends AbstractImport
         }
     }
 
-    /**
-     * @param string $field
-     * @param string $name
-     * @return Ingredient
-     */
     protected function getIngredient(string $field, string $name): Ingredient {
         if (! isset($this->ingredientsCache[$name])) {
             $this->ingredientsCache[$name] = $this->entityManager->getRepository(Ingredient::class)

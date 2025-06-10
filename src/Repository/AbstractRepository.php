@@ -8,23 +8,22 @@ use Doctrine\ORM\EntityRepository;
 abstract class AbstractRepository extends EntityRepository
 {
     /**
-     * @param string $term
-     * @param string $field
-     * @return array The entities.
+     * @return iterable The entities.
      */
-    public function findLike(string $term, string $field = 'name') {
+    public function findLike(string $term, string $field = 'name'): iterable
+    {
         return $this->createQueryBuilder('t')
-            ->where("t.$field LIKE :pattern")
-            ->setParameter('pattern', "%$term%")
+            ->where(sprintf('t.%s LIKE :pattern', $field))
+            ->setParameter('pattern', sprintf('%%%s%%', $term))
             ->getQuery()
             ->execute();
     }
 
     /**
-     * @param string $term
-     * @return mixed
+     * @return iterable
      */
-    public function search(string $term) {
+    public function search(string $term): iterable
+    {
         return $this->findLike($term);
     }
 }

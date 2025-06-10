@@ -92,6 +92,7 @@ class Location extends AbstractEntity
         foreach ($recipes as $recipe) {
             $recipe->setLocation($this);
         }
+
         $this->recipes = $recipes;
 
         return $this;

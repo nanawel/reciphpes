@@ -19,7 +19,17 @@ return RectorConfig::configure()
         \Rector\Symfony\Set\SymfonySetList::SYMFONY_CODE_QUALITY,
         \Rector\Symfony\Set\SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
     ])
-    ->withPreparedSets(typeDeclarations: true, codeQuality: true)
+    ->withPreparedSets(
+        typeDeclarations: true,
+        codeQuality: true,
+        codingStyle: true,
+        deadCode: true,
+        symfonyCodeQuality: true,
+        symfonyConfigs: true
+    )
+//    ->withRules([
+//        \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector::class,
+//        \Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration::class,
+//    ])
     ->withComposerBased(symfony: true)
-    ->withDeadCodeLevel(1)
     ->withoutParallel();

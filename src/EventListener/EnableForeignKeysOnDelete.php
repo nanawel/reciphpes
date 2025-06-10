@@ -75,6 +75,7 @@ class EnableForeignKeysOnDelete implements EventSubscriber
             if (count($result) === 0) {
                 throw new \OutOfBoundsException('No row returned, cannot check for FK status.');
             }
+
             $this->fkEnabledByDefault = (bool)$result[0]['fk'];
         }
 

@@ -76,7 +76,6 @@ trait DocumentControllerTrait
     }
 
     /**
-     * @param Request $request
      * @param object|null $entity
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -87,9 +86,10 @@ trait DocumentControllerTrait
             return $this->redirectToRoute('index');
         }
 
-        if (! $entity) {
+        if ($entity === null) {
             $entity = $this->newEntity($request);
         }
+
         $form = $this->createForm($this->getEntityConfig('form_class'), $entity);
 
         $this->getBreadcrumbs()
@@ -171,8 +171,6 @@ trait DocumentControllerTrait
     }
 
     /**
-     * @param Request $request
-     * @param object $entity
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, object $entity) {
@@ -187,8 +185,8 @@ trait DocumentControllerTrait
             $this->getEntityManager()->flush();
 
             $this->addFlash('success', 'Élément supprimé avec succès.');
-        } catch (\Throwable $e) {
-            $this->addFlash('danger', "Impossible de supprimer l'élément : {$e->getMessage()}");
+        } catch (\Throwable $throwable) {
+            $this->addFlash('danger', 'Impossible de supprimer l\'élément : ' . $throwable->getMessage());
 
             return $this->redirectToRoute(
                 sprintf(

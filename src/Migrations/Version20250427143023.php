@@ -20,7 +20,7 @@ final class Version20250427143023 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', 'Migration can only be executed safely on \'sqlite\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', "Migration can only be executed safely on 'sqlite'.");
 
         $this->addSql('DROP INDEX UNIQ_6BAF78705E237E06');
         $this->addSql('DROP INDEX INGREDIENT_NAME_IDX');
@@ -75,7 +75,7 @@ final class Version20250427143023 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', 'Migration can only be executed safely on \'sqlite\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', "Migration can only be executed safely on 'sqlite'.");
 
         $this->addSql('DROP INDEX UNIQ_6BAF78705E237E06');
         $this->addSql('DROP INDEX UNIQ_6BAF787088C2E7C');

@@ -143,6 +143,7 @@ class RecipeIngredientType extends AbstractType implements DataMapperInterface
             $ingredient = (new Ingredient())
                 ->setName($name);
         }
+
         if (!$viewData) {
             // This section is necessary to deal with issue #24 (removing and re-adding an ingredient to
             // an existing recipe in a single submit)

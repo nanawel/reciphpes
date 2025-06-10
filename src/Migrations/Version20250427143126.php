@@ -40,6 +40,7 @@ final class Version20250427143126 extends AbstractMigration
             $ingredient->setSortName($ingredient->getName());
             $em->persist($ingredient);
         }
+
         $em->flush();
     }
 

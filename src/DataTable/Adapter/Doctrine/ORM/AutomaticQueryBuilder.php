@@ -49,6 +49,7 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
                 $this->processColumn($column);
             }
         }
+
         $builder->from($this->entityName, $this->entityShortName);
         $this->setSelectFrom($builder);
         $this->setJoins($builder);
@@ -61,12 +62,13 @@ class AutomaticQueryBuilder implements QueryBuilderProcessorInterface
         if (! isset($field) && isset($this->metadata->fieldMappings[$column->getName()])) {
             $field = $column->getName();
         }
+
         if (null !== $field) {
-            $this->addSelectColumns($column, $field);
+            $this->addSelectColumns($field);
         }
     }
 
-    private function addSelectColumns(AbstractColumn $column, string $field): void
+    private function addSelectColumns(string $field): void
     {
         $currentPart = $this->entityShortName;
         $currentAlias = $currentPart;

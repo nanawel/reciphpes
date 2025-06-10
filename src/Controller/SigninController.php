@@ -38,6 +38,7 @@ class SigninController extends AbstractController
 
                 return $this->redirectToRoute('index');
             }
+
             $this->addFlash('danger', $this->getTranslator()->trans("Invalid password 😕"));
 
             return $this->redirectToRoute('signin');

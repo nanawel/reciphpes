@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\DataTable\Adapter\Doctrine\ORM\AutomaticQueryBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
-use Omines\DataTablesBundle\DataTable;
 use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends AbstractController
@@ -36,7 +35,7 @@ class SearchController extends AbstractController
 
         $terms = array_filter(
             preg_split('/\s+/', $query),
-            fn($w): bool => strlen((string)$w) > 0
+            fn($w): bool => strlen($w) > 0
         );
 
         $recipeDatatable = $this->buildRecipeDatatable($request, $terms);
@@ -67,7 +66,6 @@ class SearchController extends AbstractController
 
     protected function buildRecipeDatatable(Request $request, array $terms): \Omines\DataTablesBundle\DataTable
     {
-        /** @var DataTable $table */
         $recipeDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('recipe', 'datatable_type_class'));
         $recipeDatatable->getAdapter()->configure(
@@ -87,8 +85,8 @@ class SearchController extends AbstractController
                             ->leftJoin('recipe.tags', 't');
 
                         foreach ($terms as $w => $term) {
-                            $builder->andWhere("(recipe.name LIKE :term{$w}) OR (t.name LIKE :term{$w})")
-                                ->setParameter("term{$w}", "%$term%");
+                            $builder->andWhere(sprintf('(recipe.name LIKE :term%s) OR (t.name LIKE :term%s)', $w, $w))
+                                ->setParameter('term' . $w, sprintf('%%%s%%', $term));
                         }
                     },
                     new SearchCriteriaProvider(),
@@ -101,7 +99,6 @@ class SearchController extends AbstractController
 
     protected function buildIngredientDatatable(Request $request, array $terms): \Omines\DataTablesBundle\DataTable
     {
-        /** @var DataTable $table */
         $ingredientDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('ingredient', 'datatable_type_class'));
         $ingredientDatatable->getAdapter()->configure(
@@ -120,8 +117,8 @@ class SearchController extends AbstractController
                         $builder->distinct();
 
                         foreach ($terms as $w => $term) {
-                            $builder->andWhere("(ingredient.name LIKE :term{$w})")
-                                ->setParameter("term{$w}", "%$term%");
+                            $builder->andWhere(sprintf('(ingredient.name LIKE :term%s)', $w))
+                                ->setParameter('term' . $w, sprintf('%%%s%%', $term));
                         }
                     },
                     new SearchCriteriaProvider(),
@@ -134,7 +131,6 @@ class SearchController extends AbstractController
 
     protected function buildLocationDatatable(Request $request, array $terms): \Omines\DataTablesBundle\DataTable
     {
-        /** @var DataTable $table */
         $locationDatatable = $this->getDataTableFactory()
             ->createFromType($this->getEntityRegistry()->getEntityConfig('location', 'datatable_type_class'));
         $locationDatatable->getAdapter()->configure(
@@ -153,8 +149,8 @@ class SearchController extends AbstractController
                         $builder->distinct();
 
                         foreach ($terms as $w => $term) {
-                            $builder->andWhere("(location.name LIKE :term{$w})")
-                                ->setParameter("term{$w}", "%$term%");
+                            $builder->andWhere(sprintf('(location.name LIKE :term%s)', $w))
+                                ->setParameter('term' . $w, sprintf('%%%s%%', $term));
                         }
                     },
                     new SearchCriteriaProvider(),

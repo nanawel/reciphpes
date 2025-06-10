@@ -33,6 +33,7 @@ class IngredientsToJsonTransformer implements DataTransformerInterface
         if (!$ingredients) {
             return [];
         }
+
         if (!is_array($ingredients)) {
             $ingredients = $ingredients->toArray();
         }
