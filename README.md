@@ -43,8 +43,6 @@ chmod -R g+w /opt/reciphpes/data/*
 
 Example of `docker-compose.yml` (here listening on port `8000`):
 ```yml
-version: '3.2'
-
 services:
   app:
     image: nanawel/reciphpes
@@ -119,9 +117,9 @@ commands provided in the section below.
 ### Local setup
 
 > **Requirements**
-> - Apache 2 with PHP 7.1+
+> - Apache 2 with PHP 8.2+
 > - Composer
-> - NodeJS 14+
+> - NodeJS 18+
 > - yarn
 
 ```shell
