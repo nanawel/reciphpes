@@ -19,9 +19,6 @@ abstract class AbstractRepository extends EntityRepository
             ->execute();
     }
 
-    /**
-     * @return iterable
-     */
     public function search(string $term): iterable
     {
         return $this->findLike($term);

@@ -24,7 +24,6 @@ class AbstractImport
     /** @var ClassMetadataInfo[] */
     protected array $classMetadata = [];
 
-    /** @var array */
     protected array $associations = [];
 
     public function __construct(

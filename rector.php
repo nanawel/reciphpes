@@ -25,11 +25,7 @@ return RectorConfig::configure()
         codingStyle: true,
         deadCode: true,
         symfonyCodeQuality: true,
-        symfonyConfigs: true
+        symfonyConfigs: true,
     )
-//    ->withRules([
-//        \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector::class,
-//        \Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration::class,
-//    ])
     ->withComposerBased(symfony: true)
     ->withoutParallel();

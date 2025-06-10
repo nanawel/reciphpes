@@ -12,7 +12,7 @@ class AccessManager
 
     public function __construct(
         private readonly RequestStack $requestStack,
-        private string                $writeAccessPassword = ''
+        private readonly string $writeAccessPassword = ''
     )
     {
     }
