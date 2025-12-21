@@ -7,6 +7,7 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.scss';
+import MarkdownEditor from "markdown-text-editor/dist/markdown-text-editor";
 
 const $ = require('jquery');
 window.$ = window.jQuery = $;
@@ -19,8 +20,16 @@ require('datatables.net-responsive-bs5');
 require('jquery-ui/ui/widgets/autocomplete');
 window.Tagify = require('@yaireo/tagify/dist/tagify.min');
 require('../../vendor/omines/datatables-bundle/src/Resources/public/js/datatables');
-const EasyMDE = require('easymde/dist/easymde.min');
-$('textarea.markdown').each(el => new EasyMDE({element: el, spellChecker: false}));
+
+$('textarea.markdown').each(function (i, el) {
+    new MarkdownEditor(el, {
+        placeholder: '',
+        toolbar: [
+            'heading', 'bold', 'italic', 'strikethrough', 'ul', 'ol', 'checklist',
+            'blockquote', 'link', 'image', 'preview'
+        ],
+    });
+});
 
 // Prevent multiple form submit
 $('form').submit(function (ev) {
@@ -45,42 +54,49 @@ const refreshElementObservers = function () {
 
     // Tagify
     $('input.autocomplete-tag').each(function (i, el) {
-        var requests = [];
-        if (!$(el).data('tagify')) {
-            const tagify = new Tagify(el, {
-                'autoComplete.rightKey': true
-            });
-            tagify.on('input', function (e) {
-                const value = e.detail.value;
-                const fetchUrl = $(el).data('fetch-url');
-
-                tagify.settings.whitelist.length = 0;
-                tagify.loading(true).dropdown.hide.call(tagify);
-
-                // Abort unfinished requests (prevent duplicate results)
-                requests.forEach(function (r) {
-                    r.abort();
-                });
-
-                requests.push(
-                    $.get(
-                        fetchUrl,
-                        {term: value},
-                        function (data, textStatus, jqXHR) {
-                            tagify.settings.whitelist.splice(0, data.length, ...data);
-                            tagify.loading(false).dropdown.show.call(tagify, value);
-                        }
-                    ).always(function (data, textStatus, jqXHR) {
-                        // Remove finished request from the "abortable" list
-                        requests.splice(requests.indexOf(jqXHR), 1);
-                    })
-                );
-            });
+        if ($(el).data('tagify-applied')) {    // $(el).data('tagify') does not work :\
+            return;
         }
+
+        var requests = [];
+        const tagify = new Tagify(el, {
+            'autoComplete.rightKey': true
+        });
+        $(el).data('tagify-applied', true);
+        tagify.on('input', function (e) {
+            const value = e.detail.value;
+            const fetchUrl = $(el).data('fetch-url');
+
+            tagify.settings.whitelist.length = 0;
+            tagify.loading(true).dropdown.hide.call(tagify);
+
+            // Abort unfinished requests (prevent duplicate results)
+            requests.forEach(function (r) {
+                r.abort();
+            });
+
+            requests.push(
+                $.get(
+                    fetchUrl,
+                    {term: value},
+                    function (data, textStatus, jqXHR) {
+                        tagify.settings.whitelist.splice(0, data.length, ...data);
+                        tagify.loading(false).dropdown.show.call(tagify, value);
+                    }
+                ).always(function (data, textStatus, jqXHR) {
+                    // Remove finished request from the "abortable" list
+                    requests.splice(requests.indexOf(jqXHR), 1);
+                })
+            );
+        });
     });
 
     // JQuery-ui Autocomplete
     $('input.jq-autocomplete').each(function (i, el) {
+        if ($(el).data('autocomplete-applied')) {
+            return;
+        }
+
         $(el).attr('autocomplete', 'off');
         $(el).autocomplete({
             source: function (request, response) {
@@ -109,6 +125,7 @@ const refreshElementObservers = function () {
                 );
             }
         });
+        $(el).data('autocomplete-applied', true);
     });
 
     // Init CollectionType inputs with fixed index
@@ -122,7 +139,9 @@ const refreshElementObservers = function () {
 
     // Disable ENTER key default handling (form submission)
     $(document).on('keydown', 'form.no-submit-on-enter', function (ev) {
-        if (!$(document.activeElement).hasClass('tagify__input')) {
+        if (!$(document.activeElement).hasClass('tagify__input')
+            && document.activeElement.tagName.toLowerCase() != 'textarea'
+        ) {
             return ev.key !== 'Enter';
         }
     });

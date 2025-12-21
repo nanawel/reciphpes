@@ -10,8 +10,8 @@ $primary: darken(#428bca, 20%);
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "~@yaireo/tagify/src/tagify.scss";
-@import "~easymde/dist/easymde.min.css";
 @import "~jquery-ui/themes/base/all.css";
+@import "~markdown-text-editor/dist/markdown-text-editor.css";
 
 html.action-edit,
 html.action-masscreate {
@@ -43,6 +43,7 @@ a {
     width: 1.5em;
     height: 1.5em;
     margin-right: .5em;
+    display: inline-block;
 }
 
 #home-logo {

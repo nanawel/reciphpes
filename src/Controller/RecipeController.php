@@ -233,6 +233,9 @@ class RecipeController extends AbstractController
             $data['tags'] = $this->getEntityManager()->getRepository(Tag::class)->findBy(['id' => $tags]);
         }
 
+        // Add an empty row by default
+        $data['recipeIngredient'] = [new RecipeIngredient()];
+
         return $data;
     }
 
